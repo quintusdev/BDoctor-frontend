@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: 'AppHeader', 
+    name: 'AppFooter', 
     data() {
         return {
             
@@ -17,7 +17,7 @@ export default {
 
 <template lang="">
     <div>
-        <h1>Header</h1>
+        <h1>Footer</h1>
     </div>
 </template>
 
