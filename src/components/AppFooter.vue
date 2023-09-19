@@ -1,24 +1,22 @@
 <script>
 export default {
-    name: 'AppFooter', 
+    name: 'AppFooter',
     data() {
         return {
-            
+
         }
     },
     created() {
-        
+
     },
     methods: {
-        
+
     },
 }
 </script>
 
 <template lang="">
-    <div>
-        <h1>Footer</h1>
-    </div>
+    <h1>Footer</h1>
 </template>
 
 <style lang="">
