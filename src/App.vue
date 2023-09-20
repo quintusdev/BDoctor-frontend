@@ -2,9 +2,10 @@
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
 import AppFooter from './components/AppFooter.vue';
+import * as bootstrap from 'bootstrap'
 
 
-export default{
+export default {
   components: {
     AppHeader,
     AppMain,
@@ -22,5 +23,5 @@ export default{
 </template>
 
 <style lang="scss">
-  @use './styles/generals.scss' as *;
+@use './styles/generals.scss' as *;
 </style>
