@@ -1,5 +1,10 @@
 <script>
+import AppJumbotron from './AppJumbotron.vue';
 export default {
+  components: {
+    AppJumbotron,
+  },
+
   name: 'AppHeader',
   data() {
     return {
@@ -73,16 +78,7 @@ export default {
         </div>
       </div>
     </nav>
-    <div class="jumbotron-lg">
-        
-    </div>
-    <div class="container">
-     <div class="row">
-        <div class="col-12">
-            
-        </div>
-     </div>
-    </div>
+    <AppJumbotron />
 </template>
 
 <style lang="scss" scoped>
@@ -91,14 +87,20 @@ export default {
 }
 
 li,
-li a {
+ul#professionista a {
+  list-style-type: none;
+  text-decoration: none;
+  color: white;
+}
+
+ul#utente a {
   list-style-type: none;
   text-decoration: none;
   color: #3058a6;
 }
 
 ul#professionista {
-  background-color: #b5dcc9;
+  background-color: #3058a6;
   border-radius: 50px;
 }
 
@@ -106,21 +108,14 @@ ul#professionista {
   width: 100%;
 }
 
-.jumbotron-lg {
-  width: 100vw;
-  height: 600px;
-  background-image: url('./img/usman-yousaf-2o0DZVkRvYg-unsplash-large.png');
-  background-size: contain;
-}
 
 .sticky-navbar {
   top: 0;
-  background-color: #b5dcc9;
   z-index: 100;
   transition: background-color 1s;
 }
 
 .sticky-navbar.scrolled {
-  background-color: #a7c6e5;
+  background-color: white;
 }
 </style>
