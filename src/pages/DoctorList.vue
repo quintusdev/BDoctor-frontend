@@ -7,43 +7,43 @@ import DoctorCard from '../components/DoctorCard.vue';
 
 export default {
   name: 'DoctorList',
-  components:{
+  components: {
     // AppLoader,
     DoctorCard
   },
 
-  data(){
-    return{
+  data() {
+    return {
       store,
       doctors: [],
-    //   currentPage: 1,
-    //   lastPage: null
+      //   currentPage: 1,
+      //   lastPage: null
     }
   },
-  created(){
+  created() {
     this.getDoctors();
   },
-  methods:{
-    getDoctors(){
+  methods: {
+    getDoctors() {
       this.store.loading = true;
-       axios.get(`${this.baseUrl}/api/doctors`).then((response) => {
-        
-        if(response.data.success){
-           this.doctors = response.data.results;
-           this.loading = false;
+      axios.get(`${this.baseUrl}/api/doctors`).then((response) => {
+
+        if (response.data.success) {
+          this.doctors = response.data.results;
+          this.loading = false;
         }
 
-        else{
+        else {
 
         }
-    })
+      })
 
-    //   axios.get(`${this.store.baseUrl}/api/projects`, { params: { page:num_page }}).then((response) => {
-    //     this.projects = response.data.results.data;
-    //     this.currentPage = response.data.results.current_page;
-    //     this.lastPage = response.data.results.last_page;
-    //     this.store.loading = false;
-    //   })
+      //   axios.get(`${this.store.baseUrl}/api/projects`, { params: { page:num_page }}).then((response) => {
+      //     this.projects = response.data.results.data;
+      //     this.currentPage = response.data.results.current_page;
+      //     this.lastPage = response.data.results.last_page;
+      //     this.store.loading = false;
+      //   })
 
     },
   }
@@ -51,15 +51,12 @@ export default {
 </script>
 
 <template>
-
   <main>
-    ciao
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid vitae sequi, ut fuga, architecto impedit magnam quis
+    ad reiciendis quam repellendus corrupti unde ea. Minima sequi amet corrupti adipisci porro!
   </main>
-
 </template>
 
 <style lang="scss" scoped>
-
 @use '../styles/generals.scss';
-
 </style>
