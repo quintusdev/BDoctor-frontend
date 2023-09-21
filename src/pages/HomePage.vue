@@ -1,14 +1,14 @@
 <script>
-import AppJumbotron from '../components/AppJumbotron.vue';
+import AppJumbotronHome from '../components/AppJumbotronHome.vue';
 export default {
     components: {
-        AppJumbotron,
+        AppJumbotronHome,
     }
 }
 </script>
 
 <template lang="">
-    <AppJumbotron />
+    <AppJumbotronHome />
     <div class="container">
         <div class="row">
             <div class="col-12">

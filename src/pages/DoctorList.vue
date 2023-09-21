@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-
+import AppJumbotronPagine from '../components/AppJumbotronPagine.vue';
 import { store } from '../store.js';
 // import AppLoader from '../components/AppLoader.vue';
 import DoctorCard from '../components/DoctorCard.vue';
@@ -9,7 +9,8 @@ export default {
   name: 'DoctorList',
   components: {
     // AppLoader,
-    DoctorCard
+    DoctorCard,
+    AppJumbotronPagine,
   },
 
   data() {
@@ -51,6 +52,7 @@ export default {
 </script>
 
 <template>
+  <AppJumbotronPagine />
   <main>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid vitae sequi, ut fuga, architecto impedit magnam quis
     ad reiciendis quam repellendus corrupti unde ea. Minima sequi amet corrupti adipisci porro!

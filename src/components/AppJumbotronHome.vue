@@ -12,7 +12,18 @@
             </div>
         </div>
     </div>
-    <div class="jumbotron-md d-xxl-none d-lg-block d-none">
+    <div class="jumbotron-md d-xxl-none d-lg-flex d-none align-items-center" id="jumbotron">
+        <div class="container">
+            <div class="row d-flex justify-content-end">
+                <div class="col-5">
+                    <div class="d-flex justify-content-end flex-column align-items-end">
+                        <h1>Benvenuti Su</h1>
+                        <img src="./img/Logo-BDoctor.png" alt="" class="logo-jumbotron">
+                        <h3>Salute in un clic: Trova il tuo <br> medico ideale con noi!</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
