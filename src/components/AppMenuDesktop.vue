@@ -89,7 +89,15 @@ ul#professionista a {
 ul#utente a {
   list-style-type: none;
   text-decoration: none;
+  padding: 7px;
+  border-radius: 30px;
   color: #3058a6;
+}
+
+ul#utente a:hover {
+  transition-duration: 0.3s;
+  background-color: #3058a6;
+  color: white;
 }
 
 ul#professionista {
