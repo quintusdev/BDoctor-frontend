@@ -1,10 +1,14 @@
 <script>
+import AppJumbotron from '../components/AppJumbotron.vue';
 export default {
-    
+    components: {
+        AppJumbotron,
+    }
 }
 </script>
 
 <template lang="">
+    <AppJumbotron />
     <div class="container">
         <div class="row">
             <div class="col-12">

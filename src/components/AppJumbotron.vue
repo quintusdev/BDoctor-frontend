@@ -7,9 +7,6 @@
                         <h1>Benvenuti Su</h1>
                         <img src="./img/Logo-BDoctor.png" alt="" class="logo-jumbotron">
                         <h3>Salute in un clic: Trova il tuo <br> medico ideale con noi!</h3>
-                        <button type="button" class="btn">
-                            <h4 class="text-white p-2">Trova subito il tuo professionista <i class="fas fa-magnifying-glass-location"></i></h4>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -61,11 +58,5 @@ export default {
     font-weight: 700;
     color: white;
     text-align: end;
-}
-
-.position-center {
-    position: absolute;
-    top: 20px;
-
 }
 </style>
