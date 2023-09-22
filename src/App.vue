@@ -1,7 +1,7 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
-import * as bootstrap from 'bootstrap'
+import * as bootstrap from 'bootstrap';
 
 
 export default {
