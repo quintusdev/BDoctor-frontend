@@ -33,6 +33,9 @@ export default {
         <div class="card-header">
             <h5>{{ doctorData.user.name }} {{ doctorData.user.surname }}</h5>
         </div>
+        <div class="card-image-top w-50">
+            <img :src="`${store.baseUrl}/storage/${doctorData.picture}`" alt="img">
+        </div>
         <div class="card-body">
             <h5>Specializzazioni del professionista:</h5>
             <!-- visualizzo le specializzazioni di ciascun dottore -->
@@ -44,24 +47,26 @@ export default {
             <h5>{{ doctorData.address }}</h5>
             <h6> {{ doctorData.phone }}</h6>
         </div>
-        <!-- <div class="card-image-top">
-            <img :src="`${store.baseUrl}/storage/${project.picture}`" alt="img">
+        <div class="card-footer">
+            <div class="btn btn-sm btn-success">
+                <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
+                <a class="text-white" href="#">Contatta</a>
+            </div>
         </div>
-        <div class="card-body">
+      <!--   
             <div>
             <span v-if="project.type">{{ doctor.specialization.name }}</span>
             <span v-else>Categoria non assegnata</span>
-            </div>
-            <div v-if="project.technologies">
+            </div> -->
+            <!-- div v-if="project.technologies">
             <span class="badge text-bg-primary me-3" v-for="specialization in project.technologies" :key="specialization.id">
                 {{ specialization.name }}
-            </span>
-            </div>
-            <div>
+            </span> -->
+            <!-- </div> -->
+            <!-- <div>
                 {{ truncateText(project.content) }}
-            </div>
-        </div>
-        <div class="card-footer">
+            </div> -->
+        <!-- <div class="card-footer">
             <router-link class="btn btn-sm btn-primary" :to="{ name: 'single-project', params: { slug: project.slug }}">Visualizza progetto</router-link>
         </div> -->
     </div>
