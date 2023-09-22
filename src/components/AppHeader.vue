@@ -6,6 +6,7 @@ export default {
     AppMenuDesktop,
     AppMenuMobile,
   },
+  name: "AppHeader"
 
 }
 </script>

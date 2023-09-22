@@ -16,7 +16,7 @@ export default {
         },
         {
           label: 'Come Funziona',
-          routeName: 'home'
+          routeName: 'come-funziona'
         },
         {
           label: 'Chi siamo',
@@ -62,10 +62,10 @@ export default {
             </ul>
             <!--PROFESSIONISTI-->
             <ul class="d-flex flex-row my-auto py-2" id="professionista">
-              <li class="pe-3">
+              <li>
                 Sei un professionista?
               </li>
-              <li>
+              <li class="px-2">
                 <a href="http://127.0.0.1:8000/login" class="pe-3 link-nav-professionista">
                   <strong>Portale Professionisti</strong>
                 </a>
