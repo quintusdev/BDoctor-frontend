@@ -22,40 +22,39 @@ export default {
   },
   created() {
     this.getDoctors();
-    /* this.getUsers(); */
   },
   methods: {
     getDoctors() {
-      /* this.store.loading = true; */
-      axios.get(`${this.store.baseUrl}/api/doctors`).then((response) => {
-        // Verifica che la risposta contenga i dati dei dottori
-        if (response.data && response.data.results) {
-          // Assegna i dati dei dottori all'array doctors
-          this.doctors = response.data.results;
-        } else {
-          console.error('La risposta API non contiene i dati dei dottori:', response.data.results);
-        }
-      })
-      .catch((error) => {
-        console.error('Errore nella chiamata API:', error);
-      });
-    },
-    /* getUsers() {
-      axios.get(`${this.store.baseUrl}/api/users`).then((response) => {
-        // Verifica che la risposta contenga i dati dei dottori
-        if (response.data && response.data.results) {
-          // Assegna i dati dei dottori all'array doctors
-          this.doctors = response.data.results;
-        } else {
-          console.error('La risposta API non contiene i dati dei dottori:', response.data.results);
-        }
-      })
-      .catch((error) => {
-        console.error('Errore nella chiamata API:', error);
-      });
-    }, */
-  }
-};
+      axios.get(`${this.store.baseUrl}/api/doctors`)
+        .then((response) => {
+          // Verifica che la risposta contenga i dati dei dottori
+          if (response.data && response.data.results) {
+            // Assegna i dati dei dottori all'array doctors
+            this.doctors = response.data.results;
+            // Ora, per ogni dottore, esegui una chiamata separata per ottenere le specializzazioni
+            this.doctors.forEach((doctor) => {
+              axios.get(`${this.store.baseUrl}/api/doctors/${doctor.id}/specializations`)
+                .then((specializationsResponse) => {
+                  // Verifica che la risposta contenga i dati delle specializzazioni
+                  if (specializationsResponse.data) {
+                    // Assegna i dati delle specializzazioni al dottore corrispondente
+                    doctor.specializations = specializationsResponse.data.results;
+                  }
+                })
+                .catch((error) => {
+                  console.error('Errore nella chiamata API delle specializzazioni:', error);
+                });
+            });
+          } else {
+            console.error('La risposta API non contiene i dati dei dottori:', response.data.results);
+          }
+        })
+        .catch((error) => {
+          console.error('Errore nella chiamata API dei dottori:', error);
+        });
+      },
+    }
+  };
 </script>
 
 <template>

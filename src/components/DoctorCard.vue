@@ -34,7 +34,15 @@ export default {
             <h5>{{ doctorData.user.name }} {{ doctorData.user.surname }}</h5>
         </div>
         <div class="card-body">
-            <h4>{{ doctorData.address }} {{ doctorData.phone }}</h4>
+            <h5>Specializzazioni del professionista:</h5>
+            <!-- visualizzo le specializzazioni di ciascun dottore -->
+            <ul>
+                <li v-for="specialization in doctorData.specializations" :key="specialization.id">
+                    {{ specialization.name }}
+                </li>
+            </ul>
+            <h5>{{ doctorData.address }}</h5>
+            <h6> {{ doctorData.phone }}</h6>
         </div>
         <!-- <div class="card-image-top">
             <img :src="`${store.baseUrl}/storage/${project.picture}`" alt="img">
