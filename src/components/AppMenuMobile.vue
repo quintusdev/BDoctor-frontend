@@ -52,8 +52,8 @@ export default {
                 Sei un professionista?
               </button>
               <ul class="dropdown-menu" id="professionista">
-                <li><a class="dropdown-item" href="#">Accedi</a></li>
-                <li><a class="dropdown-item" href="#">Registrati</a></li>
+                <li><a class="dropdown-item" href="http://127.0.0.1:8000/login">Accedi</a></li>
+                <li><a class="dropdown-item" href="http://127.0.0.1:8000/register">Registrati</a></li>
               </ul>
             </div>
           </div>
