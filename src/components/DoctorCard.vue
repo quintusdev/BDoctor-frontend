@@ -5,11 +5,12 @@ import { store } from '../store.js';
 export default {
     name: "DoctorCard",
     props:{
-        project: Object
+        doctorData: Object,
     },
     data(){
         return{
             store,
+            doctors:[],
         }
     },
     methods: {
@@ -20,7 +21,7 @@ export default {
     
           return text
         }
-}
+    }
 }
 </script>
 
@@ -28,7 +29,7 @@ export default {
 
     <div class="card my-3 min_height-377">
         <div class="card-header">
-            {{ doctor.phone }}
+            <h4>{{ doctorData.address }} {{ doctorData.phone }}</h4>
         </div>
         <!-- <div class="card-image-top">
             <img :src="`${store.baseUrl}/storage/${project.picture}`" alt="img">

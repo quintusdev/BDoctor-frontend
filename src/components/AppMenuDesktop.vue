@@ -10,7 +10,7 @@ export default {
                     routeName: 'home'
                 },
                 {
-                    label: 'Trova un profeessionista',
+                    label: 'Trova un professionista',
                     routeName: 'doctors'
                 },
                 {

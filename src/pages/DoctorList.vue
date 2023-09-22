@@ -12,7 +12,6 @@ export default {
     DoctorCard,
     AppJumbotronPagine,
   },
-
   data() {
     return {
       store,
@@ -26,22 +25,19 @@ export default {
   },
   methods: {
     getDoctors() {
-      this.store.loading = true;
-      axios.get(`${this.baseUrl}/api/doctors`).then((response) => {
-
-        if (response.data.success) {
+      /* this.store.loading = true; */
+      axios.get(`${this.store.baseUrl}/api/doctors`).then((response) => {
+        // Verifica che la risposta contenga i dati dei dottori
+        if (response.data && response.data.results) {
+          // Assegna i dati dei dottori all'array doctors
           this.doctors = response.data.results;
-          this.loading = false;
+        } else {
+          console.error('La risposta API non contiene i dati dei dottori:', response.data.results);
         }
       })
-
-      //   axios.get(`${this.store.baseUrl}/api/projects`, { params: { page:num_page }}).then((response) => {
-      //     this.projects = response.data.results.data;
-      //     this.currentPage = response.data.results.current_page;
-      //     this.lastPage = response.data.results.last_page;
-      //     this.store.loading = false;
-      //   })
-
+      .catch((error) => {
+        console.error('Errore nella chiamata API:', error);
+      });
     },
   }
 };
@@ -50,40 +46,16 @@ export default {
 <template>
   <AppJumbotronPagine />
   <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <h1 class="text-center my-4">Dottori</h1>
+    <div class="row">
+      <div class="col-12">
+        <h1 class="text-center my-4">Dottori</h1>
+        <div class="col-12 col-md-3 my-1" v-for="doctor in doctors" :key="doctor.id">
+          <DoctorCard :doctorData="doctor" />
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-4" v-for="doctor in doctors" :key="doctor.id">
-          <DoctorCard :doctor="doctor" />
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <nav class="d-flex justify-content-center">
-            <!-- <ul class="pagination">
-              <li :class="currentPage === 1 ? 'disabled' : ''">
-                <button class="page-link" @click="getProjects(currentPage - 1)">
-                  Precedente
-                </button>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">{{ currentPage }}</a></li>
-              <li :class="currentPage === lastPage ? 'disabled' : ''">
-                <button class="page-link" @click="getProjects(currentPage + 1)">
-                  Successivo
-                </button>
-              </li>
-            </ul> -->
-          </nav>
-        </div>
-      </div>
-    </div>
+  </div>
+
 </template>
 
 <style lang="scss" scoped>
