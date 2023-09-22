@@ -62,12 +62,12 @@ export default {
                 Sei un professionista?
               </li>
               <li>
-                <a href="#" class="pe-3">
+                <a href="http://127.0.0.1:8000/login" class="pe-3" target="_blank">
                   <strong>Accedi</strong>
                 </a>
               </li>
               <li  class="pe-4">
-                <a href="#">
+                <a href="http://127.0.0.1:8000/register" target="_blank">
                   <strong>Registrati</strong>
                 </a>
               </li>
