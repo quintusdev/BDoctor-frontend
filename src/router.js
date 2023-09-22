@@ -15,7 +15,8 @@ const router = createRouter({
             path: '/doctors',
             name: 'doctors',
             component: DoctorList
-        }
+        },
+
     ]
 });
 

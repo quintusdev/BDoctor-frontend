@@ -6,11 +6,13 @@ export default {
     name: "DoctorCard",
     props:{
         doctorData: Object,
+        /* userData: Object, */
     },
     data(){
         return{
             store,
             doctors:[],
+            /* users:[], */
         }
     },
     methods: {
@@ -29,6 +31,9 @@ export default {
 
     <div class="card my-3 min_height-377">
         <div class="card-header">
+            <h5>{{ doctorData.user.name }} {{ doctorData.user.surname }}</h5>
+        </div>
+        <div class="card-body">
             <h4>{{ doctorData.address }} {{ doctorData.phone }}</h4>
         </div>
         <!-- <div class="card-image-top">
