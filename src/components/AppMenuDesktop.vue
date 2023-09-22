@@ -4,6 +4,25 @@ export default {
   data() {
     return {
       isScrolled: false,
+
+      menuItems: [
+        {
+          label: 'Home',
+          routeName: 'home'
+        },
+        {
+          label: 'Trova un professionista',
+          routeName: 'doctors'
+        },
+        {
+          label: 'Come Funziona',
+          routeName: 'home'
+        },
+        {
+          label: 'Chi siamo',
+          routeName: 'home'
+        },
+      ]
     }
   },
   created() {
@@ -21,6 +40,8 @@ export default {
   beforeDestroy() {
     window.removeEventListener('scroll', this.handleScroll);
   },
+
+
 }
 </script>
 <template lang="">
@@ -29,28 +50,15 @@ export default {
         <div class="row">
           <div class="col-12 d-flex justify-content-between align-items-center">
             <div class="col-1 d-flex align-items-baseline justify-content-between">
-              <a href="#">
+              <router-link :to="{name: menuItems[0].routeName}">
                 <img src="./img/Logo-BDoctor.png" class="logo" alt="">
-              </a>
+              </router-link >
             </div>
             <!--UTENTI-->
             <ul class="d-flex flex-row my-auto justify-content-between col-5" id="utente">
-                <li>
-                <a href="#">
-                  <strong>Trova un professionista</strong>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <strong>Come funziona</strong>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <strong>Chi siamo</strong>
-                </a>
-              </li>
-              
+              <li v-for="(item, index) in menuItems" :key="index">
+                <router-link class="link-nav-utente"  v-if="item.label !== 'Home'" :to="{name: item.routeName}"><strong>{{ item.label }}</strong></router-link>
+              </li>              
             </ul>
             <!--PROFESSIONISTI-->
             <ul class="d-flex flex-row my-auto py-2" id="professionista">
@@ -58,13 +66,8 @@ export default {
                 Sei un professionista?
               </li>
               <li>
-                <a href="#" class="pe-3">
-                  <strong>Accedi</strong>
-                </a>
-              </li>
-              <li  class="pe-4">
-                <a href="#">
-                  <strong>Registrati</strong>
+                <a href="http://127.0.0.1:8000/login" class="pe-3 link-nav-professionista">
+                  <strong>Portale Professionisti</strong>
                 </a>
               </li>
             </ul>
@@ -80,13 +83,13 @@ export default {
 }
 
 li,
-ul#professionista a {
+.link-nav-professionista {
   list-style-type: none;
   text-decoration: none;
   color: white;
 }
 
-ul#utente a {
+.link-nav-utente {
   list-style-type: none;
   text-decoration: none;
   padding: 7px;
@@ -94,7 +97,7 @@ ul#utente a {
   color: #3058a6;
 }
 
-ul#utente a:hover {
+.link-nav-utente:hover {
   transition-duration: 0.3s;
   background-color: #3058a6;
   color: white;
