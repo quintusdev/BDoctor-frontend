@@ -4,6 +4,22 @@ export default {
   data() {
     return {
       isScrolled: false,
+      menuItems: [
+                {
+                    label: 'Home',
+                    routeName: 'home'
+                },
+                {
+                    label: 'Trova un profeessionista',
+                    routeName: 'doctors'
+                },
+                {
+                    label: 'Come funziona',
+                },
+                {
+                    label: 'Chi siamo',
+                }
+            ]
     }
   },
   created() {
@@ -35,20 +51,8 @@ export default {
             </div>
             <!--UTENTI-->
             <ul class="d-flex flex-row my-auto justify-content-between col-5" id="utente">
-                <li>
-                <a href="#">
-                  <strong>Trova un professionista</strong>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <strong>Come funziona</strong>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <strong>Chi siamo</strong>
-                </a>
+              <li class="nav-item" v-for="(item, index) in menuItems" :key="index">
+                <router-link class="nav-link" :to="{ name: item.routeName }">{{ item.label }}</router-link>
               </li>
               
             </ul>
