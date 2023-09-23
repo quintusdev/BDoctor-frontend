@@ -62,11 +62,22 @@ export default {
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1 class="text-center my-4">Dottori</h1>
+        
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>Sezione in evidenza:</h1>
+        
+      </div>
+    </div>
+    <div class="row">
+      <h1 class="text-center my-4">Dottori</h1>
         <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
           <DoctorCard :doctorData="doctor" />
         </div>
-      </div>
     </div>
   </div>
 
