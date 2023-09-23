@@ -12,7 +12,6 @@ export default {
     DoctorCard,
     AppJumbotronPagine,
   },
-
   data() {
     return {
       store,
@@ -26,50 +25,62 @@ export default {
   },
   methods: {
     getDoctors() {
-      this.store.loading = true;
-      axios.get(`${store.baseUrl}/api/doctors`).then((response) => {
-
-        if (response.data.success) {
-          this.doctors = response.data.results;
-          this.loading = false;
-          console.log(response.data)
-        }
-
-        else {
-
-        }
-      })
-
-      //   axios.get(`${this.store.baseUrl}/api/projects`, { params: { page:num_page }}).then((response) => {
-      //     this.projects = response.data.results.data;
-      //     this.currentPage = response.data.results.current_page;
-      //     this.lastPage = response.data.results.last_page;
-      //     this.store.loading = false;
-      //   })
-
-    },
-  }
-};
+      axios.get(`${this.store.baseUrl}/api/doctors`)
+        .then((response) => {
+          // Verifica che la risposta contenga i dati dei dottori
+          if (response.data && response.data.results) {
+            // Assegna i dati dei dottori all'array doctors
+            this.doctors = response.data.results;
+            // Ora, per ogni dottore, esegui una chiamata separata per ottenere le specializzazioni
+            this.doctors.forEach((doctor) => {
+              axios.get(`${this.store.baseUrl}/api/doctors/${doctor.id}/specializations`)
+                .then((specializationsResponse) => {
+                  // Verifica che la risposta contenga i dati delle specializzazioni
+                  if (specializationsResponse.data) {
+                    // Assegna i dati delle specializzazioni al dottore corrispondente
+                    doctor.specializations = specializationsResponse.data.results;
+                  }
+                })
+                .catch((error) => {
+                  console.error('Errore nella chiamata API delle specializzazioni:', error);
+                });
+            });
+          } else {
+            console.error('La risposta API non contiene i dati dei dottori:', response.data.results);
+          }
+        })
+        .catch((error) => {
+          console.error('Errore nella chiamata API dei dottori:', error);
+        });
+      },
+    }
+  };
 </script>
 
 <template>
   <AppJumbotronPagine />
-  <main>
-    <div class="container my-4">
-      <div class="row">
-        <div class="col-12 d-flex flex-row flex-wrap">
-          <div class="card m-3" style="width: 18rem;" v-for="(doctor, index) in  doctors " :key="doctor.id">
-            <img :src="doctor.picture" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">{{ doctor.address }}</p>
-              <a href="#" class="btn btn-primary">{{ doctor.phone }}</a>
-            </div>
-          </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        
       </div>
     </div>
-  </main>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>Sezione in evidenza:</h1>
+        
+      </div>
+    </div>
+    <div class="row">
+      <h1 class="text-center my-4">Dottori</h1>
+        <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
+          <DoctorCard :doctorData="doctor" />
+        </div>
+    </div>
+  </div>
+
 </template>
 
 <style lang="scss" scoped>

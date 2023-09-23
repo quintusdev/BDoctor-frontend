@@ -4,7 +4,6 @@ export default {
   data() {
     return {
       isScrolled: false,
-
       menuItems: [
         {
           label: 'Home',
@@ -45,7 +44,7 @@ export default {
 }
 </script>
 <template lang="">
-     <nav class="navbar navbar-expand-lg bg-body-transparent fixed-top d-lg-block d-none" :class="{ 'sticky-navbar': isScrolled, 'scrolled': isScrolled }">
+     <nav class="navbar navbar-expand-lg bg-body-white fixed-top d-lg-block d-none" :class="{ 'sticky-navbar': isScrolled, 'scrolled': isScrolled }">
       <div class="container">
         <div class="row">
           <div class="col-12 d-flex justify-content-between align-items-center">
@@ -58,7 +57,7 @@ export default {
             <ul class="d-flex flex-row my-auto justify-content-between col-5" id="utente">
               <li v-for="(item, index) in menuItems" :key="index">
                 <router-link class="link-nav-utente"  v-if="item.label !== 'Home'" :to="{name: item.routeName}"><strong>{{ item.label }}</strong></router-link>
-              </li>              
+              </li>             
             </ul>
             <!--PROFESSIONISTI-->
             <ul class="d-flex flex-row my-auto py-2" id="professionista">
