@@ -29,28 +29,46 @@ export default {
 
 <template>
 
-    <div class="card my-3 min_height-377">
-        <div class="card-header">
-            <h5>{{ doctorData.user.name }} {{ doctorData.user.surname }}</h5>
-        </div>
-        <div class="card-image-top w-50">
-            <img :src="`${store.baseUrl}/storage/${doctorData.picture}`" alt="img">
+    <div class="card my-3 custom_card">
+        <div class="card-header text-center">
+            <h5><strong>{{ doctorData.user.name }} {{ doctorData.user.surname }}</strong></h5>
         </div>
         <div class="card-body">
-            <h5>Specializzazioni del professionista:</h5>
-            <!-- visualizzo le specializzazioni di ciascun dottore -->
-            <ul>
-                <li v-for="specialization in doctorData.specializations" :key="specialization.id">
-                    {{ specialization.name }}
-                </li>
-            </ul>
-            <h5>{{ doctorData.address }}</h5>
-            <h6> {{ doctorData.phone }}</h6>
+            <div class="row ">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <!-- Immagine profilo -->
+                            <div class="card-image-top w-100 justify-content-center align-items-center">
+                                <img :src="`${store.baseUrl}/storage/${doctorData.picture}`" alt="img">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="special">
+                                <h6>Specializzazioni:</h6>
+                                <!-- visualizzo le specializzazioni di ciascun dottore -->
+                                <ul>
+                                    <li v-for="specialization in doctorData.specializations" :key="specialization.id">
+                                        {{ specialization.name }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <hr>
+                            <h6><strong>Indirizzo:</strong></h6>
+                            <h6>{{ doctorData.address }}</h6>
+                            <hr>
+                            <h6><strong>Numero di Telefono:</strong></h6>
+                            <h6> {{ doctorData.phone }}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-footer">
-            <div class="btn btn-sm btn-success">
+        <div class="card-footer text-center">
+            <!-- bottone che porta al form di contatto dall'utente al medico -->
+            <div class="btn btn-sm btn-warning btn-footer w-50">
                 <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
-                <a class="text-white" href="#">Contatta</a>
+                <a class="text-black" href="#"><strong>Contattami</strong></a>
             </div>
         </div>
       <!--   
@@ -58,7 +76,7 @@ export default {
             <span v-if="project.type">{{ doctor.specialization.name }}</span>
             <span v-else>Categoria non assegnata</span>
             </div> -->
-            <!-- div v-if="project.technologies">
+            <!-- <div v-if="project.technologies">
             <span class="badge text-bg-primary me-3" v-for="specialization in project.technologies" :key="specialization.id">
                 {{ specialization.name }}
             </span> -->
@@ -79,7 +97,15 @@ img{
   width: 100%;
 }
 
-.min_height-377{
-  min-height: 377px;
+.min_height-350{
+  min-height: 350px;
 }
+
+.custom_card{
+    height: 500px;
+}
+
+    .btn-footer a {
+        text-decoration: none; /* Rimuove la sottolineatura dal collegamento */
+    }
 </style>

@@ -40,7 +40,7 @@ export default {
 }
 </script>
 <template lang="">
-     <nav class="navbar navbar-expand-lg bg-body-transparent fixed-top d-lg-block d-none" :class="{ 'sticky-navbar': isScrolled, 'scrolled': isScrolled }">
+     <nav class="navbar navbar-expand-lg bg-body-white fixed-top d-lg-block d-none" :class="{ 'sticky-navbar': isScrolled, 'scrolled': isScrolled }">
       <div class="container">
         <div class="row">
           <div class="col-12 d-flex justify-content-between align-items-center">
@@ -50,7 +50,7 @@ export default {
               </a>
             </div>
             <!--UTENTI-->
-            <ul class="d-flex flex-row my-auto justify-content-between col-5" id="utente">
+            <ul class="d-flex flex-row my-auto justify-content-between col-6" id="utente">
               <li class="nav-item" v-for="(item, index) in menuItems" :key="index">
                 <router-link class="nav-link" :to="{ name: item.routeName }">{{ item.label }}</router-link>
               </li>
