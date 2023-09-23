@@ -55,11 +55,19 @@ export default {
 <template>
   <AppJumbotronPagine />
   <main>
-    <div v-for="(doctor, index) in doctors" :key="doctor.id">
-      <h5>{{ doctor.address }}</h5>
-      <h4>{{ doctor.cv }}</h4>
-      <h4>{{ doctor.phone }}</h4>
-
+    <div class="container my-4">
+      <div class="row">
+        <div class="col-12 d-flex flex-row flex-wrap">
+          <div class="card m-3" style="width: 18rem;" v-for="(doctor, index) in  doctors " :key="doctor.id">
+            <img :src="doctor.picture" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">{{ doctor.address }}</p>
+              <a href="#" class="btn btn-primary">{{ doctor.phone }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </template>
