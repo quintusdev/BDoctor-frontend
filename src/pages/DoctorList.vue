@@ -27,11 +27,12 @@ export default {
   methods: {
     getDoctors() {
       this.store.loading = true;
-      axios.get(`${this.baseUrl}/api/doctors`).then((response) => {
+      axios.get(`${store.baseUrl}/api/doctors`).then((response) => {
 
         if (response.data.success) {
           this.doctors = response.data.results;
           this.loading = false;
+          console.log(response.data)
         }
 
         else {
@@ -54,8 +55,12 @@ export default {
 <template>
   <AppJumbotronPagine />
   <main>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid vitae sequi, ut fuga, architecto impedit magnam quis
-    ad reiciendis quam repellendus corrupti unde ea. Minima sequi amet corrupti adipisci porro!
+    <div v-for="(doctor, index) in doctors" :key="doctor.id">
+      <h5>{{ doctor.address }}</h5>
+      <h4>{{ doctor.cv }}</h4>
+      <h4>{{ doctor.phone }}</h4>
+
+    </div>
   </main>
 </template>
 
