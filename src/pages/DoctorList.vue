@@ -18,10 +18,25 @@ export default {
       doctors: [],
       //   currentPage: 1,
       //   lastPage: null
+      /* Sezione filtri ricerca */
+      filterOption1: false,
+      filterOption2: false,
+        items: [
+            { id: 1, name: 'Elemento 1', option1: true, option2: false },
+            { id: 2, name: 'Elemento 2', option1: false, option2: true },
+        ],
     }
   },
   created() {
     this.getDoctors();
+  },
+  computed: {
+    filteredItems() {
+      return this.items.filter(item => {
+          return (!this.filterOption1 || item.option1) &&
+                  (!this.filterOption2 || item.option2);
+      });
+    }
   },
   methods: {
     getDoctors() {
@@ -61,20 +76,36 @@ export default {
   <AppJumbotronPagine />
   <div class="container">
     <div class="row">
-      <div class="col-12">
-        
+      <!-- SEZIONE FILTRI RICERCA -->
+      <div class="col-2">
+        <h6>Filtra la tua ricerca:</h6>
+        <label>
+            <input type="checkbox" v-model="filterOption1"> Media Voti
+        </label><br>
+        <label>
+            <input type="checkbox" v-model="filterOption2"> Numero Recensioni
+        </label>
+        <ul>
+            <li v-for="item in filteredItems" :key="item.id">{{ item.name }}</li>
+        </ul>
+      </div>
+      <!-- SEZIONE RICERCA -->
+      <div class="col-10">
+        barra di ricerca
       </div>
     </div>
   </div>
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1>Sezione in evidenza:</h1>
-        
+        <h1 class="text-center my-4">Professionisti in Evidenza</h1>
+        <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
+          <DoctorCard :doctorData="doctor" />
+        </div>
       </div>
     </div>
     <div class="row">
-      <h1 class="text-center my-4">Dottori</h1>
+      <h1 class="text-center my-4">Altri Professionisti</h1>
         <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
           <DoctorCard :doctorData="doctor" />
         </div>
