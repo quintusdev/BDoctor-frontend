@@ -6,13 +6,11 @@ export default {
     name: "DoctorCard",
     props: {
         doctorData: Object,
-        /* userData: Object, */
     },
     data() {
         return {
             store,
             doctors: [],
-            /* users:[], */
         }
     },
     methods: {
