@@ -6,6 +6,8 @@ export const store = reactive({
     doctors: [],
     users: [],
     specializations: ['Cardiologia', 'Ortopedia', 'Chirurgia', 'Ostetricia', 'Odontostomatologia', 'Pneumologia', 'Neurologia', 'Psichiatria'],
+    votes: ['1', '2', '3', '4', '5'],
     nameSearched: '',
     SpecSelected: '',
+    VoteSelected: '',
 })
