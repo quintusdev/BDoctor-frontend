@@ -70,6 +70,15 @@ export default {
                             <div v-else>
                                 <h6>Nessuna Valutazione</h6>
                             </div>
+                            <h6><strong>Recensioni</strong></h6>
+                            <ul v-if="doctorData.reviews.length > 0">
+                                <li v-for="review in doctorData.reviews" :key="review.id">
+                                    {{ reviews.text }}
+                                </li>
+                            </ul>
+                            <div v-else>
+                                <h6>Nessuna Recensione</h6>
+                            </div>
 
                         </div>
                     </div>
