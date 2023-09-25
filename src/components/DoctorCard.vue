@@ -25,7 +25,7 @@ export default {
 <template>
     <div class="card my-3 custom_card">
         <div class="card-header text-center">
-            <h5><strong>{{ doctorData.user.name }} {{ doctorData.user.surname }}</strong></h5>
+            <h5><strong>{{ doctorData.user.id }}{{ doctorData.user.name }} {{ doctorData.user.surname }}</strong></h5>
         </div>
         <div class="card-body">
             <div class="row ">
@@ -64,15 +64,12 @@ export default {
                                 <h6>Nessuna Valutazione</h6>
                             </div>
                             <h6><strong>Recensioni</strong></h6>
-                            <ul v-if="doctorData.reviews.length > 0">
-                                <li v-for="review in doctorData.reviews" :key="review.id">
-                                    {{ reviews.text }}
-                                </li>
+                            <ul>
+                                <div v-for="review in reviews" :key="review.id">{{ review.text }}</div>
                             </ul>
-                            <div v-else>
+                            <!-- <div v-else>
                                 <h6>Nessuna Recensione</h6>
-                            </div>
-
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -80,11 +77,7 @@ export default {
         </div>
         <div class="card-footer text-center">
             <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
-            <router-link :to="'/doctors/' + doctorData.id" class="text-black">
-                <div class="btn btn-sm btn-warning btn-footer w-50">
-                    <strong>Dettagli profilo e contatti</strong>
-                </div>
-            </router-link>   
+            <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctorData.user.id } }" v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
         </div>
     </div>
 </template>

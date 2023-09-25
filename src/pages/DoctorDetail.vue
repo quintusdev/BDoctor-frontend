@@ -17,6 +17,7 @@ export default {
         };
     },
     created() {
+        console.log(this.doctorData); 
         this.getDoctorDetail();
     },
     methods: {
@@ -48,7 +49,7 @@ export default {
       <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3>{{ localDoctorData.user.name }} {{ localDoctorData.user.surname }}</h3>
+                <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user.name }} {{ localDoctorData.user.surname }}</h3>
             </div>
             <div class="card-body">
             <h6>Specializzazioni:</h6>
