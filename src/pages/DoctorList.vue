@@ -15,7 +15,6 @@ export default {
     AppJumbotronPagine,
     AppSelect,
     AppSearch,
-
   },
   props:{
     doctorData: Object,
@@ -121,6 +120,9 @@ export default {
     <div class="row">
       <div class="col-12">
         <h1>Sezione in evidenza:</h1>
+        <!-- <div class="col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
+          <DoctorCard :doctorData="doctor" />
+        </div> -->
       </div>
     </div>
 
@@ -138,7 +140,6 @@ export default {
       <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
         <DoctorCard :doctorData="doctor" />
       </div>
-
     </div>
   </div>
 </template>
