@@ -1,6 +1,8 @@
 <script>
 import axios from 'axios';
 import AppJumbotronPagine from '../components/AppJumbotronPagine.vue';
+import AppSelect from '../components/AppSelect.vue';
+import AppSearch from '../components/AppSearch.vue';
 import { store } from '../store.js';
 // import AppLoader from '../components/AppLoader.vue';
 import DoctorCard from '../components/DoctorCard.vue';
@@ -11,6 +13,9 @@ export default {
     // AppLoader,
     DoctorCard,
     AppJumbotronPagine,
+    AppSelect,
+    AppSearch,
+
   },
   props:{
     doctorData: Object,
@@ -30,87 +35,80 @@ export default {
   created() {
     this.getDoctors();
   },
-  computed: {
-  // Calcola l'elenco dei medici filtrati in base al termine di ricerca e specializzazione
-    filteredDoctors() {
-      const searchTerm = this.searchTerm.toLowerCase().trim();
-      const specializationSearch = this.selectedSpecialization.toLowerCase().trim();
-      
-      return this.doctors.filter(doctor => {
-        const specializations = doctor.specializations.map(s => s.name.toLowerCase()).join(', '); // Utilizza doctor.specializations
-        
-        return (specializations.includes(searchTerm)) && (specializationSearch === '' || specializations.includes(specializationSearch));
-      })
-    },
-    // Calcola l'elenco dei medici da visualizzare in base a se c'è un termine di ricerca o no
-    displayedDoctors() {
-      return this.searchTerm ? this.filteredDoctors : this.getDoctors;
-    },
-    filteredItems() {
-      return this.items.filter(item => {
-          return (!this.filterOption1 || item.option1) &&
-                  (!this.filterOption2 || item.option2);
-      });
-    },
+  mounted() {
+    this.nameSearched()
   },
   methods: {
-    getDoctors() {
-    axios.get(`${this.store.baseUrl}/api/doctors`)
-      .then((response) => {
-        // Verifica che la risposta contenga i dati dei dottori
-        if (response.data && response.data.results) {
-          // Assegna i dati dei dottori all'array doctors
-          this.doctors = response.data.results;
-          // Ora, per ogni dottore, esegui una chiamata separata per ottenere le specializzazioni
-          this.doctors.forEach((doctor) => {
-            axios.get(`${this.store.baseUrl}/api/doctors/${doctor.id}/specializations`)
-              .then((specializationsResponse) => {
-                // Verifica che la risposta contenga i dati delle specializzazioni
-                if (specializationsResponse.data) {
-                  // Assegna i dati delle specializzazioni al dottore corrispondente
-                  doctor.specializations = specializationsResponse.data.results;
-                }
-              })
-              .catch((error) => {
-                console.error('Errore nella chiamata API delle specializzazioni:', error);
-              });
-          });
-        } else {
-          console.error('La risposta API non contiene i dati dei dottori:', response.data.results);
-        }
+    nameSearched() {
+      let myUrl = `${store.baseUrl}/api/doctors/search`;
+
+      const queryParams = [];
+
+      if (store.nameSearched !== '') {
+        queryParams.push(`name=${store.nameSearched}`);
+      }
+      console.log(this.nameSearched)
+
+      if (store.typeSelected !== '') {
+        queryParams.push(`specialization=${store.SpecSelected}`);
+      }
+
+      if (queryParams.length > 0) {
+        myUrl += '?' + queryParams.join('&');
+      }
+
+      axios.get(myUrl).then((response) => {
+        store.doctors = response.data.results;
+        store.load = false
       })
-      .catch((error) => {
-        console.error('Errore nella chiamata API dei dottori:', error);
-      });
-    }
-  },
-  };
+
+    },
+
+    getDoctors() {
+      axios.get(`${this.store.baseUrl}/api/doctors`)
+        .then((response) => {
+          // Verifica che la risposta contenga i dati dei dottori
+          if (response.data && response.data.results) {
+            // Assegna i dati dei dottori all'array doctors
+            this.doctors = response.data.results;
+            // Ora, per ogni dottore, esegui una chiamata separata per ottenere le specializzazioni
+            this.doctors.forEach((doctor) => {
+              axios.get(`${this.store.baseUrl}/api/doctors/${doctor.id}/specializations`)
+                .then((specializationsResponse) => {
+                  // Verifica che la risposta contenga i dati delle specializzazioni
+                  if (specializationsResponse.data) {
+                    // Assegna i dati delle specializzazioni al dottore corrispondente
+                    doctor.specializations = specializationsResponse.data.results;
+                  }
+                })
+                .catch((error) => {
+                  console.error('Errore nella chiamata API delle specializzazioni:', error);
+                });
+            });
+          } else {
+            console.error('La risposta API non contiene i dati dei dottori:', response.data.results);
+          }
+        })
+        .catch((error) => {
+          console.error('Errore nella chiamata API dei dottori:', error);
+        });
+    },
+  }
+};
+
 </script>
 
 <template>
   <AppJumbotronPagine />
   <div class="container">
     <div class="row">
-      <!-- SEZIONE FILTRI RICERCA -->
-      <div class="col-2">
-        <h6>Filtra la tua ricerca:</h6>
-        <label>
-            <input type="checkbox" v-model="filterOption1"> Media Voti
-        </label><br>
-        <label>
-            <input type="checkbox" v-model="filterOption2"> Numero Recensioni
-        </label>
-        <!-- <ul>
-            <li v-for="item in filteredItems" :key="item.id">{{ item.name }}</li>
-        </ul> -->
-      </div>
-      <!-- SEZIONE RICERCA -->
-      <div class="col-10 text-center">
-        <h6>Filtra per specializzazione:</h6>
-        <select v-model="selectedSpecialization">
-          <option value="">Tutte le specializzazioni</option>
-          <option v-for="specialization in doctor.specializations" :key="specialization.id">{{ specialization.name }}</option>
-        </select>
+
+      <div class="col-12 my-3">
+        <h1>Ricerca Avanzata</h1>
+        <div class="col-12 d-flex flex-row">
+          <AppSearch @search="nameSearched" />
+          <AppSelect @search="nameSearched" />
+        </div>
       </div>
     </div>
   </div>
@@ -118,21 +116,23 @@ export default {
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1 class="text-center my-4">Professionisti in Evidenza</h1>
-        <div class="col-md-6 my-1" v-for="doctor in displayedDoctors" :key="doctor.id">
-          <DoctorCard :doctorData="doctor" />
-        </div>
+        <h1>Sezione in evidenza:</h1>
       </div>
     </div>
-    <!-- SEZIONE ALTRI PROFESSIONISTI -->
-    <div class="row">
-      <h1 class="text-center my-4">Altri Professionisti</h1>
+    <div class="row" v-if="store.doctors.length > 0">
+      <h1 class="text-center my-4">Dottori</h1>
+      <div class="col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
+        <DoctorCard :doctorData="doctor" />
+      </div>
+    </div>
+    <div class="row" v-else>
+      <h1 class="text-center my-4">Dottori</h1>
       <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
-          <DoctorCard :doctorData="doctor" />
-        </div>
+        <DoctorCard :doctorData="doctor" />
+      </div>
+
     </div>
   </div>
-
 </template>
 
 <style lang="scss" scoped>
