@@ -28,7 +28,7 @@ const router = createRouter({
             name: 'DoctorDetail',
             component: DoctorDetail,
             props: true // Per passare i parametri come props alla componente
-        }
+        },
     ]
 });
 
