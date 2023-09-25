@@ -33,8 +33,8 @@ export default {
                     <div class="row">
                         <div class="col-md-5">
                             <!-- Immagine profilo -->
-                            <div class="card-image-top w-100 justify-content-center align-items-center">
-                                <img :src="`${store.baseUrl}/storage/${doctorData.picture}`" alt="img">
+                            <div class="card-image-top  justify-content-center align-items-center">
+                                <img :src="`${doctorData.picture}`" alt="img">
                             </div>
                         </div>
                         <div class="col-md-7">
