@@ -52,17 +52,27 @@ export default {
                 <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user.name }} {{ localDoctorData.user.surname }}</h3>
             </div>
             <div class="card-body">
+            <h6>Foto Profilo:</h6>
+                <img :src="localDoctorData.picture" alt="Immagine profilo">
+            <hr>
+            <h6>CV del Medico:</h6>
+                <img :src="localDoctorData.cv" alt="File CV">
+            <hr>
             <h6>Specializzazioni:</h6>
             <ul>
-              <!-- <li v-for="specialization in localDoctorData.specializations" :key="specialization.id">
+              <li v-for="specialization in localDoctorData.specializations" :key="specialization.id">
                 {{ specialization.name }}
-              </li> -->
+              </li>
             </ul>
+            <hr>
             <h6>Indirizzo:</h6>
             <p>{{ localDoctorData.address }}</p>
+            <hr>
             <h6>Numero di Telefono:</h6>
             <p>{{ localDoctorData.phone }}</p>
-            <!-- Altri dettagli del medico -->
+            <hr>
+            <h6>E-Mail:</h6>
+            <p>{{ localDoctorData.user.email }}</p>
             </div>
             <div class="card-footer text-center">
                 <!-- <EditReview :editDoctorData="editDoctorData" /> -->

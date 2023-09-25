@@ -15,6 +15,7 @@ export default {
         return {
             store,
             doctors: [],
+            reviews: [], // Inizializza l'array delle recensioni come vuoto
         }
     },
     methods: {
@@ -63,13 +64,15 @@ export default {
                             <div v-else>
                                 <h6>Nessuna Valutazione</h6>
                             </div>
+                            <div>
                             <h6><strong>Recensioni</strong></h6>
-                            <ul>
-                                <div v-for="review in reviews" :key="review.id">{{ review.text }}</div>
-                            </ul>
-                            <!-- <div v-else>
+                                <ul v-if="reviews.text > 0">
+                                    <li v-for="review in reviews" :key="review.id">{{ review.text }}</li>
+                                </ul>
+                                <div v-else>
                                 <h6>Nessuna Recensione</h6>
-                            </div> -->
+                                </div>
+                        </div>
                         </div>
                     </div>
                 </div>

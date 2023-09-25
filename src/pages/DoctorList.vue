@@ -140,9 +140,9 @@ export default {
       <div class="alert alert-danger" role="alert">
         Nessun dottore trovato
       </div>
-      <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
+<!--       <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
         <DoctorCard :doctorData="doctor" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
