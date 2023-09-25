@@ -8,7 +8,7 @@ export default {
     components: {
         DoctorDetail,
     },
-    props:{
+    props: {
         doctorData: Object,
     },
     data() {
@@ -33,8 +33,8 @@ export default {
                     <div class="row">
                         <div class="col-md-5">
                             <!-- Immagine profilo -->
-                            <div class="card-image-top w-100 justify-content-center align-items-center">
-                                <img :src="`${store.baseUrl}/storage/${doctorData.picture}`" alt="img">
+                            <div class="card-image-top  justify-content-center align-items-center">
+                                <img :src="`${doctorData.picture}`" alt="img">
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -55,10 +55,10 @@ export default {
                             <h6> {{ doctorData.phone }}</h6>
                             <hr>
                             <h6><strong>Voto</strong></h6>
-                            <ul v-if="doctorData.votes.length > 0">
-                                <li v-for="vote in doctorData.votes" :key="vote.id">
-                                    {{ doctor.avg_vote }}
-                                </li>
+                            <ul v-if="doctorData.avr_vote !== null">
+                                <h6 v-for="avr_vote in doctorData.avr_vote" :key="avr_vote.id">
+                                    {{ avr_vote }}
+                                </h6>
                             </ul>
                             <div v-else>
                                 <h6>Nessuna Valutazione</h6>
