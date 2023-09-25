@@ -84,22 +84,6 @@ export default {
                 </div>
             </router-link>   
         </div>
-        <!--   
-            <div>
-            <span v-if="project.type">{{ doctor.specialization.name }}</span>
-            <span v-else>Categoria non assegnata</span>
-            </div> -->
-        <!-- <div v-if="project.technologies">
-            <span class="badge text-bg-primary me-3" v-for="specialization in project.technologies" :key="specialization.id">
-                {{ specialization.name }}
-            </span> -->
-        <!-- </div> -->
-        <!-- <div>
-                {{ truncateText(project.content) }}
-            </div> -->
-        <!-- <div class="card-footer">
-            <router-link class="btn btn-sm btn-primary" :to="{ name: 'single-project', params: { slug: project.slug }}">Visualizza progetto</router-link>
-        </div> -->
     </div>
 </template>
 
