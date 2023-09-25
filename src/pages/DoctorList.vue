@@ -48,8 +48,12 @@ export default {
       }
       console.log(this.nameSearched)
 
-      if (store.typeSelected !== '') {
+      if (store.SpecSelected !== '') {
         queryParams.push(`specialization=${store.SpecSelected}`);
+      }
+
+      if (store.VoteSelected !== '') {
+        queryParams.push(`votes=${store.VoteSelected}`);
       }
 
       if (queryParams.length > 0) {
@@ -103,7 +107,7 @@ export default {
     <div class="row">
 
       <div class="col-12 my-3">
-        <h1>Ricerca Avanzata</h1>
+        <h1>Ricerca</h1>
         <div class="col-12 d-flex flex-row">
           <AppSearch @search="nameSearched" />
           <AppSelect @search="nameSearched" />
@@ -121,6 +125,7 @@ export default {
         </div> -->
       </div>
     </div>
+
     <div class="row" v-if="store.doctors.length > 0">
       <h1 class="text-center my-4">Dottori</h1>
       <div class="col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
@@ -129,6 +134,9 @@ export default {
     </div>
     <div class="row" v-else>
       <h1 class="text-center my-4">Dottori</h1>
+      <div class="alert alert-danger" role="alert">
+        Nessun dottore trovato
+      </div>
       <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
         <DoctorCard :doctorData="doctor" />
       </div>

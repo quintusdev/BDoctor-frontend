@@ -12,6 +12,7 @@ export default {
     methods: {
         sendSearch() {
             console.log(store.SpecSelected)
+            console.log(store.VoteSelected)
             this.$emit('search')
         }
     },
@@ -22,6 +23,11 @@ export default {
         <option value="" selected>Tutte le specializzazioni</option>
         <option v-for="(specialization, index) in store.specializations" :key="index">
             {{ specialization }}</option>
+    </select>
+    <select class="form-select w-25" aria-label="Default select example" v-model="store.VoteSelected" @change="sendSearch">
+        <option value="" selected>Nessuna Valutazione</option>
+        <option v-for="(vote, index) in store.votes" :key="index">
+            {{ vote }}</option>
     </select>
 </template>
 <style lang="">

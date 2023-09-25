@@ -11,26 +11,25 @@ export default {
     props:{
         doctorData: Object,
     },
-    data(){
-        return{
+    data() {
+        return {
             store,
-            doctors:[],
+            doctors: [],
         }
     },
     methods: {
-        truncateText(text){
-          if(text.length > 100){
-            return text.substr(0, 50) + '...';
-          }
-    
-          return text
+        truncateText(text) {
+            if (text.length > 100) {
+                return text.substr(0, 50) + '...';
+            }
+
+            return text
         }
     }
 }
 </script>
 
 <template>
-
     <div class="card my-3 custom_card">
         <div class="card-header text-center">
             <h5><strong>{{ doctorData.user.name }} {{ doctorData.user.surname }}</strong></h5>
@@ -61,6 +60,17 @@ export default {
                             <hr>
                             <h6><strong>Numero di Telefono:</strong></h6>
                             <h6> {{ doctorData.phone }}</h6>
+                            <hr>
+                            <h6><strong>Voto</strong></h6>
+                            <ul v-if="doctorData.votes.length > 0">
+                                <li v-for="vote in doctorData.votes" :key="vote.id">
+                                    {{ vote.value }}
+                                </li>
+                            </ul>
+                            <div v-else>
+                                <h6>Nessuna Valutazione</h6>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -74,41 +84,41 @@ export default {
                 </div>
             </router-link>   
         </div>
-      <!--   
+        <!--   
             <div>
             <span v-if="project.type">{{ doctor.specialization.name }}</span>
             <span v-else>Categoria non assegnata</span>
             </div> -->
-            <!-- <div v-if="project.technologies">
+        <!-- <div v-if="project.technologies">
             <span class="badge text-bg-primary me-3" v-for="specialization in project.technologies" :key="specialization.id">
                 {{ specialization.name }}
             </span> -->
-            <!-- </div> -->
-            <!-- <div>
+        <!-- </div> -->
+        <!-- <div>
                 {{ truncateText(project.content) }}
             </div> -->
         <!-- <div class="card-footer">
             <router-link class="btn btn-sm btn-primary" :to="{ name: 'single-project', params: { slug: project.slug }}">Visualizza progetto</router-link>
         </div> -->
     </div>
-
 </template>
 
 <style lang="scss" scoped>
-img{
-  height: 200px;
-  width: 100%;
+img {
+    height: 200px;
+    width: 100%;
 }
 
-.min_height-350{
-  min-height: 350px;
+.min_height-350 {
+    min-height: 350px;
 }
 
-.custom_card{
+.custom_card {
     height: 500px;
 }
 
-    .btn-footer a {
-        text-decoration: none; /* Rimuove la sottolineatura dal collegamento */
-    }
+.btn-footer a {
+    text-decoration: none;
+    /* Rimuove la sottolineatura dal collegamento */
+}
 </style>
