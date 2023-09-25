@@ -8,7 +8,7 @@ export default {
     components: {
         DoctorDetail,
     },
-    props:{
+    props: {
         doctorData: Object,
     },
     data() {
@@ -62,10 +62,10 @@ export default {
                             <h6> {{ doctorData.phone }}</h6>
                             <hr>
                             <h6><strong>Voto</strong></h6>
-                            <ul v-if="doctorData.votes.length > 0">
-                                <li v-for="vote in doctorData.votes" :key="vote.id">
-                                    {{ vote.value }}
-                                </li>
+                            <ul v-if="doctorData.avr_vote !== null">
+                                <h6 v-for="avr_vote in doctorData.avr_vote" :key="avr_vote.id">
+                                    {{ avr_vote }}
+                                </h6>
                             </ul>
                             <div v-else>
                                 <h6>Nessuna Valutazione</h6>
@@ -91,7 +91,7 @@ export default {
                 <div class="btn btn-sm btn-warning btn-footer w-50">
                     <strong>Dettagli profilo e contatti</strong>
                 </div>
-            </router-link>   
+            </router-link>
         </div>
         <!--   
             <div>
