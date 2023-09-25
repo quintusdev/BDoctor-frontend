@@ -22,16 +22,17 @@ export default {
             <!--Grid row-->
             <div class="row my-4">
             <!--Grid column-->
-            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+            <div class="col-lg-3 col-md-6 mb-4 mr-4 mb-md-0">
 
-                <div class="bg-white shadow-1-strong rounded d-flex align-items-center justify-content-center mb-4 mx-auto" style="width: 250px; height: 80px;">
-                    <img src="./img/Logo-BDoctor.png" height="70" alt="Logo Aziendale"
+                <div class="bg-white shadow-1-strong rounded d-flex align-items-center justify-content-center mb-4 mx-auto">
+                    <img src="./img/Logo-BDoctor.png" height="50" alt="Logo Aziendale"
                         loading="lazy" />
                     </div>
 
-                <p class="text-center">BDoctor: Trova medici specialisti<br>. Mettiti in contatto e ottieni assistenza sanitaria di alta qualità.<br> Semplice e veloce!</p>
+                <p class="text-center">BDoctor: Trova medici specialisti.<br> Mettiti in contatto e ottieni assistenza di alta qualità.<br> Semplice e veloce!</p>
 
                 <ul class="list-unstyled d-flex flex-row justify-content-center">
+                    <!-- LINK SOCIAL -->
                 <li>
                     <a class="text-white px-2" href="#!">
                     <i class="fab fa-facebook-square"></i>
@@ -54,30 +55,42 @@ export default {
 
             <!--Grid column-->
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase mb-4">Animals</h5>
-
+                <h5 class="text-uppercase mb-4">Link Utili</h5>
+                <!-- LISTA LINK UTILI -->
                 <ul class="list-unstyled">
-                <li class="mb-2">
-                    <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>When your pet is missing</a>
-                </li>
-                <li class="mb-2">
-                    <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Recently found</a>
-                </li>
-                <li class="mb-2">
-                    <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>How to adopt?</a>
-                </li>
-                <li class="mb-2">
-                    <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Pets for adoption</a>
-                </li>
-                <li class="mb-2">
-                    <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Material gifts</a>
-                </li>
-                <li class="mb-2">
-                    <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Help with walks</a>
-                </li>
-                <li class="mb-2">
-                    <a href="#!" class="text-white"><i class="fas fa-paw pe-3"></i>Volunteer activities</a>
-                </li>
+                    <li class="mb-4">
+                        <a href="/" class="text-white"><i class="fas fa-house pe-3"></i>Home</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="/doctors" class="text-white"><i class="fa-solid fa-magnifying-glass pe-3"></i>Trova un professionista</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#!" class="text-white"><i class="fa-solid fa-question pe-3 pl-2"></i>Come funziona?</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#!" class="text-white"><i class="fa-solid fa-laptop-medical pe-3"></i>Chi Siamo</a>
+                    </li>
+                </ul>
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase mb-4">Link Esterni</h5>
+                <!-- LISTA LINK UTILI -->
+                <ul class="list-unstyled">
+                    <li class="mb-4">
+                        <a href="#!" class="text-white"><i class="fas fa-house pe-3"></i>Il nostro centro</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#!" class="text-white"><i class="fa-solid fa-magnifying-glass pe-3"></i>Trova un professionista</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#!" class="text-white"><i class="fa-solid fa-question pe-3 pl-2"></i>Come funziona?</a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="#!" class="text-white"><i class="fa-solid fa-laptop-medical pe-3"></i>Chi Siamo</a>
+                    </li>
                 </ul>
             </div>
             <!--Grid column-->
@@ -85,17 +98,17 @@ export default {
             <!--Grid column-->
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase mb-4">Contatti</h5>
-
+                <!-- LISTA CONTATTI -->
                 <ul class="list-unstyled">
-                <li>
-                    <p><i class="fas fa-map-marker-alt pe-2"></i>Milan, Italy</p>
-                </li>
-                <li>
-                    <p><i class="fas fa-phone pe-2"></i>+ 01 234 567 89</p>
-                </li>
-                <li>
-                    <p><i class="fas fa-envelope pe-2 mb-0"></i>admin@gmail.com</p>
-                </li>
+                    <li>
+                        <p><i class="fas fa-map-marker-alt pe-2"></i>Milan, Italy</p>
+                    </li>
+                    <li>
+                        <p><i class="fas fa-phone pe-2"></i>+ 01 234 567 89</p>
+                    </li>
+                    <li>
+                        <p><i class="fas fa-envelope pe-2 mb-0"></i>info@gmail.com</p>
+                    </li>
                 </ul>
             </div>
             <!--Grid column-->
@@ -113,6 +126,11 @@ export default {
     </footer>
 </template>
 
-<style lang="">
-    
+<style lang="scss">
+@use '../styles/generals.scss';
+
+    /* Rimuovi la sottolineatura dai link */
+    a {
+        text-decoration: none;
+    }
 </style>
