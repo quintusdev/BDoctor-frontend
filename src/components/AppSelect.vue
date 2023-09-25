@@ -29,6 +29,12 @@ export default {
         <option v-for="(vote, index) in store.votes" :key="index">
             {{ vote }}</option>
     </select>
+    <select class="form-select w-25" aria-label="Default select example" v-model="store.ReviewSelected"
+        @change="sendSearch">
+        <option value="" selected>Nessuna Recensione</option>
+        <option v-for="(reviews, index) in store.reviews" :key="index">
+            {{ reviews }}</option>
+    </select>
 </template>
 <style lang="">
     

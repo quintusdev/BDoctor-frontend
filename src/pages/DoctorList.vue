@@ -17,7 +17,7 @@ export default {
     AppSearch,
 
   },
-  props:{
+  props: {
     doctorData: Object,
   },
   data() {
@@ -26,7 +26,7 @@ export default {
       searchTerm: '', // Termine di ricerca inserito dall'utente
       doctors: [],
       selectedSpecialization: '', // Specializzazione selezionata nel menu a tendina
-      
+
       // Filtri
       filterOption1: false,
       filterOption2: false,
@@ -109,7 +109,7 @@ export default {
 
       <div class="col-12 my-3">
         <h1>Ricerca</h1>
-        <div class="col-12 d-flex flex-row">
+        <div class="col-12 d-flex flex-row justify-content-between">
           <AppSearch @search="nameSearched" />
           <AppSelect @search="nameSearched" />
         </div>
