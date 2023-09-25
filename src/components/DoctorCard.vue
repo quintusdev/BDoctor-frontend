@@ -1,10 +1,14 @@
 <script>
+import DoctorDetail from '../pages/DoctorDetail.vue';
 import { store } from '../store.js';
 
 
 export default {
     name: "DoctorCard",
-    props: {
+    components: {
+        DoctorDetail,
+    },
+    props:{
         doctorData: Object,
     },
     data() {
@@ -82,11 +86,12 @@ export default {
             </div>
         </div>
         <div class="card-footer text-center">
-            <!-- bottone che porta al form di contatto dall'utente al medico -->
-            <div class="btn btn-sm btn-warning btn-footer w-50">
-                <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
-                <a class="text-black" href="#"><strong>Contattami</strong></a>
-            </div>
+            <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
+            <router-link :to="'/doctors/' + doctorData.id" class="text-black">
+                <div class="btn btn-sm btn-warning btn-footer w-50">
+                    <strong>Dettagli profilo e contatti</strong>
+                </div>
+            </router-link>   
         </div>
         <!--   
             <div>
