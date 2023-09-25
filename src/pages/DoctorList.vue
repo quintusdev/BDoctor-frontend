@@ -34,16 +34,17 @@ export default {
   },
   methods: {
     nameSearched() {
-      let myUrl = `${store.baseUrl}/api/doctors`;
+      let myUrl = `${store.baseUrl}/api/doctors/search`;
 
       const queryParams = [];
 
       if (store.nameSearched !== '') {
-        queryParams.push(`doctorData.user.name=${store.nameSearched}`);
+        queryParams.push(`name=${store.nameSearched}`);
       }
+      console.log(this.nameSearched)
 
-      if (store.typeSelected !== 'All') {
-        queryParams.push(`doctorData.specialization=${store.SpecSelected}`);
+      if (store.typeSelected !== '') {
+        queryParams.push(`specialization=${store.SpecSelected}`);
       }
 
       if (queryParams.length > 0) {
@@ -51,7 +52,7 @@ export default {
       }
 
       axios.get(myUrl).then((response) => {
-        store.doctors = response.data.docs;
+        store.doctors = response.data.results;
         store.load = false
       })
 
@@ -110,7 +111,13 @@ export default {
 
       </div>
     </div>
-    <div class="row">
+    <div class="row" v-if="store.doctors.length > 0">
+      <h1 class="text-center my-4">Dottori</h1>
+      <div class="col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
+        <DoctorCard :doctorData="doctor" />
+      </div>
+    </div>
+    <div class="row" v-else>
       <h1 class="text-center my-4">Dottori</h1>
       <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
         <DoctorCard :doctorData="doctor" />

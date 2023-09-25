@@ -19,7 +19,7 @@ export default {
 </script>
 <template>
     <select class="form-select w-25" aria-label="Default select example" v-model="store.SpecSelected" @change="sendSearch">
-        <option value="All">Tutte le specializzazioni</option>
+        <option value="" selected>Tutte le specializzazioni</option>
         <option v-for="(specialization, index) in store.specializations" :key="index">
             {{ specialization }}</option>
     </select>
