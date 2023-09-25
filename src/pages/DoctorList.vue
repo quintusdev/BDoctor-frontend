@@ -132,7 +132,6 @@ export default {
       <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
         <DoctorCard :doctorData="doctor" />
       </div>
-
     </div>
   </div>
 </template>

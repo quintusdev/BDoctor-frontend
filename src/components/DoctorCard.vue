@@ -10,7 +10,6 @@ export default {
     },
     props:{
         doctorData: Object,
-        doctorDt: Object,
     },
     data(){
         return{
