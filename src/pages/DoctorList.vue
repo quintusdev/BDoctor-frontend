@@ -109,7 +109,10 @@ export default {
       <div class="col-12 my-3">
         <h1>Ricerca</h1>
         <div class="col-12 d-flex flex-row justify-content-between">
-          <AppSearch @search="nameSearched" />
+          <div class="">
+            <h6>Nome e Cognome</h6>
+            <AppSearch @search="nameSearched" />
+          </div>
           <AppSelect @search="nameSearched" />
         </div>
       </div>
