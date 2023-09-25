@@ -18,13 +18,6 @@ export default {
         }
     },
     methods: {
-        truncateText(text) {
-            if (text.length > 100) {
-                return text.substr(0, 50) + '...';
-            }
-
-            return text
-        }
     }
 }
 </script>
@@ -64,7 +57,7 @@ export default {
                             <h6><strong>Voto</strong></h6>
                             <ul v-if="doctorData.votes.length > 0">
                                 <li v-for="vote in doctorData.votes" :key="vote.id">
-                                    {{ vote.value }}
+                                    {{ doctor.avg_vote }}
                                 </li>
                             </ul>
                             <div v-else>
