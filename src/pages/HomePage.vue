@@ -27,7 +27,7 @@ export default {
                 </div>
                 <AppSelect @search="nameSearched" />
                 </div>
-                <router-link :to="{ name: 'doctors' }" id="search-btn" class="btn btn-lg z-3"
+                <router-link :to="{ name: 'doctors' }" id="search-btn" class="btn btn-lg"
                     type="button">Cerca
                 </router-link>
             </div>
