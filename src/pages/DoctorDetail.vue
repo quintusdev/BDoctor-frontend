@@ -14,10 +14,14 @@ export default {
             doctors: [],
             localDoctorData: { ...this.doctorData },
             editDoctorData: { ...this.doctorData },
+            text: '',
+            // rating: null,
+            name: '', // Inizializza il campo name con una stringa vuota
+            surname: '', // Inizializza il campo surname con una stringa vuota
+            email: ''
         };
     },
     created() {
-        console.log(this.doctorData); 
         this.getDoctorDetail();
     },
     methods: {
@@ -38,8 +42,43 @@ export default {
                 console.error('Errore nella chiamata API:', error);
             });
         },
-    },
-    components: { EditReview }
+        submitReview() {
+  // Inserisci un console.log per verificare i dati prima dell'invio
+  console.log('Dati inviati:', {
+    doctor_id: this.localDoctorData.id,
+    text: this.text,
+    name: this.name,
+    surname: this.surname,
+    email: this.email,
+  });
+
+  // Invia la recensione e il voto al server
+  const doctorId = this.localDoctorData.id; // ID del medico corrente
+  axios.post(`/api/reviews`, {
+    doctor_id: doctorId,
+    text: this.text,
+    name: this.name,
+    surname: this.surname,
+    email: this.email,
+  })
+  .then(response => {
+    // Gestisci la risposta di successo
+    console.log('Recensione inviata con successo:', response.data);
+
+    // Reimposta la form
+    this.text = '';
+    this.name = '';
+    this.surname = '';
+    this.email = '';
+  })
+  .catch(error => {
+    // Gestisci gli errori nella richiesta
+    console.error('Errore nell\'invio della recensione:', error);
+  });
+},
+
+        components: { EditReview }
+    }
 }
 </script>
 
@@ -75,7 +114,32 @@ export default {
             <p>{{ localDoctorData.user.email }}</p>
             </div>
             <div class="card-footer text-center">
-                <!-- <EditReview :editDoctorData="editDoctorData" /> -->
+                <h4>Lascia una recensione</h4>
+                <form @submit="submitReview">
+                    <div class="form-group">
+                        <label for="name">Nome:</label>
+                        <input type="text" id="name" v-model="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="surname">Cognome:</label>
+                        <input type="text" id="surname" v-model="surname" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" v-model="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Recensione:</label>
+                        <textarea id="text" v-model="text" required></textarea>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="rating">Voto (da 1 a 5):</label>
+                        <input type="number" id="rating" v-model="rating" min="1" max="5" required>
+                    </div> -->
+                    <button type="submit">Invia Recensione</button>
+                </form>
             </div>
         </div>
       </div>
