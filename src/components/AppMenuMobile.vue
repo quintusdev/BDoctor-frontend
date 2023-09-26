@@ -1,6 +1,27 @@
 <script>
 export default {
-
+  data() {
+    return {
+      menuItems: [
+        {
+          label: 'Home',
+          routeName: 'home'
+        },
+        {
+          label: 'Trova un professionista',
+          routeName: 'doctors'
+        },
+        {
+          label: 'Come Funziona',
+          routeName: 'come-funziona'
+        },
+        {
+          label: 'Chi siamo',
+          routeName: 'home'
+        },
+      ]
+    }
+  },
 }
 </script>
 
@@ -29,22 +50,9 @@ export default {
                 <div class="d-flex align-items-center flex-column">
               <!--UTENTI-->
             <ul class="d-flex flex-column align-items-center me-4" id="utente">
-                <li>
-                <a href="#">
-                  <strong>Trova un professionista</strong>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <strong>Come funziona</strong>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <strong>Chi siamo</strong>
-                </a>
-              </li>
-              
+              <li v-for="(item, index) in menuItems" :key="index">
+                <router-link class="link-nav-utente" :to="{name: item.routeName}"><strong>{{ item.label }}</strong></router-link>
+              </li>             
             </ul>
             <!--PROFESSIONISTI-->
             <div class="dropdown-center d-flex justify-content-center">

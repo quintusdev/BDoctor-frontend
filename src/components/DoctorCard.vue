@@ -26,7 +26,7 @@ export default {
 <template>
     <div class="card my-3 custom_card">
         <div class="card-header text-center">
-            <h5><strong>{{ doctorData.user.id }}{{ doctorData.user.name }} {{ doctorData.user.surname }}</strong></h5>
+            <h5><strong>{{ doctorData.user.name }} {{ doctorData.user.surname }}</strong></h5>
         </div>
         <div class="card-body">
             <div class="row ">
@@ -55,7 +55,7 @@ export default {
                             <h6><strong>Numero di Telefono:</strong></h6>
                             <h6> {{ doctorData.phone }}</h6>
                             <hr>
-                            <h6><strong>Voto</strong></h6>
+                            <h6><strong>Voto Medio</strong></h6>
                             <ul v-if="doctorData.avr_vote !== null">
                                 <h6 v-for="avr_vote in doctorData.avr_vote" :key="avr_vote.id">
                                     {{ avr_vote }}
@@ -65,14 +65,14 @@ export default {
                                 <h6>Nessuna Valutazione</h6>
                             </div>
                             <div>
-                            <h6><strong>Recensioni</strong></h6>
+                                <h6><strong>Recensioni</strong></h6>
                                 <ul v-if="reviews.text > 0">
                                     <li v-for="review in reviews" :key="review.id">{{ review.text }}</li>
                                 </ul>
                                 <div v-else>
-                                <h6>Nessuna Recensione</h6>
+                                    <h6>Nessuna Recensione</h6>
                                 </div>
-                        </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,8 @@ export default {
         </div>
         <div class="card-footer text-center">
             <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
-            <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctorData.user.id } }" v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
+            <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctorData.user.id } }"
+                v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
         </div>
     </div>
 </template>
