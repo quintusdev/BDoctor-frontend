@@ -56,30 +56,30 @@ export default {
       submitReview(e) {
         e.preventDefault();
         const formData = {
-            doctor_id: this.$route.params.doctor_id, // Usa doctor_id per ottenere l'ID del dottore
+            doctor_id: this.$route.params.doctor_id,
             email: this.email,
             name: this.name,
             surname: this.surname,
             text: this.text,
-            /* rating: this.rating, */
-        }
-        /* console.log(formData) */
-        axios.post(`${this.store.baseUrl}/api/reviews`, formData).then((response) => {
-            this.success = response.data.success;
-            if (this.success) {
-                this.showAlert(),
-                    this.doctor_id = '',
-                    this.email = '',
-                    this.name = '',
-                    this.surname = '',
-                    this.text = '',
-                    /* this.rating = '', */
-                    this.success = false
-            } else {
-                this.errors = response.data.errors;
-                console.log(this.errors)
-            }
-        });
+            rating: this.rating, // Aggiungi il rating
+        };
+
+        axios.post(`${this.store.baseUrl}/api/reviews`, formData)
+            .then((response) => {
+                this.success = response.data.success;
+                if (this.success) {
+                    alert('Form inviato con successo!');
+                    this.doctor_id = '';
+                    this.email = '';
+                    this.name = '';
+                    this.surname = '';
+                    this.text = '';
+                    this.rating = '';
+                } else {
+                    this.errors = response.data.errors;
+                    console.log(this.errors);
+                }
+            });
     }
     },
   }
@@ -141,10 +141,10 @@ export default {
                         <label for="text">Recensione:</label>
                         <textarea id="text" v-model="text" required></textarea>
                     </div>
-                    <!-- <div class="form-group">
-                        <label for="rating">Voto (da 1 a 5):</label>
-                        <input type="number" id="rating" v-model="rating" min="1" max="5" required>
-                    </div> -->
+                    <div class="form-group">
+                        <label for="rating">Voto (da 0 a 5):</label>
+                        <input type="number" id="rating" v-model="rating" min="0" max="5" required>
+                    </div>
                     <button type="submit">Invia Recensione</button>
                 </form>
             </div>
