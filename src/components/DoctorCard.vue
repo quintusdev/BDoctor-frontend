@@ -19,8 +19,13 @@ export default {
         }
     },
     methods: {
+        
+    },
+    created() {
+        this.doctorData.picture
     }
 }
+
 </script>
 
 <template>
@@ -35,7 +40,8 @@ export default {
                         <div class="col-md-5">
                             <!-- Immagine profilo -->
                             <div class="card-image-top  justify-content-center align-items-center">
-                                <img :src="`${doctorData.picture}`" alt="img">
+                                <img :src="`http://localhost:8000/storage/${doctorData.picture}`" alt="img">
+                                
                             </div>
                         </div>
                         <div class="col-md-7">
