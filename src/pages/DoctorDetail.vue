@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 import { store } from '../store.js'
-import EditReview from '../components/EditReview.vue';
 
 export default {
     name: "DoctorDetail",
@@ -13,12 +12,10 @@ export default {
             store,
             doctors: [],
             localDoctorData: { ...this.doctorData },
-            editDoctorData: { ...this.doctorData },
-            text: '',
-            // rating: null,
-            name: '', // Inizializza il campo name con una stringa vuota
-            surname: '', // Inizializza il campo surname con una stringa vuota
-            email: ''
+            text : '',
+            name : '',
+            surname : '',
+            email : ''
         };
     },
     created() {
@@ -43,42 +40,33 @@ export default {
             });
         },
         submitReview() {
-  // Inserisci un console.log per verificare i dati prima dell'invio
-  console.log('Dati inviati:', {
-    doctor_id: this.localDoctorData.id,
-    text: this.text,
-    name: this.name,
-    surname: this.surname,
-    email: this.email,
-  });
+        // Creare un oggetto con i dati della recensione
+        const reviewData = {
+            doctor_id: this.localDoctorData.id,
+            text: this.text,
+            name: this.name,
+            surname: this.surname,
+            email: this.email,
+        };
 
-  // Invia la recensione e il voto al server
-  const doctorId = this.localDoctorData.id; // ID del medico corrente
-  axios.post(`/api/reviews`, {
-    doctor_id: doctorId,
-    text: this.text,
-    name: this.name,
-    surname: this.surname,
-    email: this.email,
-  })
-  .then(response => {
-    // Gestisci la risposta di successo
-    console.log('Recensione inviata con successo:', response.data);
+        // Effettuare la richiesta POST per inviare la recensione
+        axios.post(`/api/doctors/reviews`, reviewData)
+            .then(response => {
+                // Gestire la risposta di successo
+                console.log('Recensione inviata con successo:', response.data);
 
-    // Reimposta la form
-    this.text = '';
-    this.name = '';
-    this.surname = '';
-    this.email = '';
-  })
-  .catch(error => {
-    // Gestisci gli errori nella richiesta
-    console.error('Errore nell\'invio della recensione:', error);
-  });
-},
+                // Reimpostare il modulo
+                this.text = '';
+                this.name = '';
+                this.surname = '';
+                this.email = '';
+            })
+            .catch(error => {
+                // Gestire gli errori nella richiesta
+                console.error('Errore nell\'invio della recensione:', error);
+            });
+    }}
 
-        components: { EditReview }
-    }
 }
 </script>
 
