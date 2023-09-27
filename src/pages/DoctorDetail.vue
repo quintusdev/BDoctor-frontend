@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 import { store } from '../store.js'
-import EditReview from '../components/EditReview.vue';
 
 export default {
     name: "DoctorDetail",
@@ -14,11 +13,10 @@ export default {
             doctors: [],
             localDoctorData: { ...this.doctorData },
             editDoctorData: { ...this.doctorData },
-            text: '',
-            // rating: null,
             name: '', // Inizializza il campo name con una stringa vuota
             surname: '', // Inizializza il campo surname con una stringa vuota
-            email: ''
+            email: '',
+            text: '',
         };
     },
     created() {
@@ -43,42 +41,25 @@ export default {
             });
         },
         submitReview() {
-  // Inserisci un console.log per verificare i dati prima dell'invio
-  console.log('Dati inviati:', {
-    doctor_id: this.localDoctorData.id,
-    text: this.text,
-    name: this.name,
-    surname: this.surname,
-    email: this.email,
-  });
+          let data = new FormData();
+          data.append('name', this.name);
+          data.append('surname', this.surname);
+          data.append('email', this.email);
+          data.append('text', this.text);
 
-  // Invia la recensione e il voto al server
-  const doctorId = this.localDoctorData.id; // ID del medico corrente
-  axios.post(`/api/reviews`, {
-    doctor_id: doctorId,
-    text: this.text,
-    name: this.name,
-    surname: this.surname,
-    email: this.email,
-  })
-  .then(response => {
-    // Gestisci la risposta di successo
-    console.log('Recensione inviata con successo:', response.data);
-
-    // Reimposta la form
-    this.text = '';
-    this.name = '';
-    this.surname = '';
-    this.email = '';
-  })
-  .catch(error => {
-    // Gestisci gli errori nella richiesta
-    console.error('Errore nell\'invio della recensione:', error);
-  });
-},
-
-        components: { EditReview }
-    }
+          axios.post('/reviews', data).then((response)=> {
+            // Reimposta i campi del form dopo l'invio
+            this.name = '';
+            this.surname = '';
+            this.email = '';
+            this.text = '';
+          })
+          .catch(error => {
+            // Gestisci gli errori qui, ad esempio, registrando l'errore
+            console.error(error);
+          });
+        },
+    },
 }
 </script>
 
@@ -87,10 +68,10 @@ export default {
     <div class="row">
       <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user.name }} {{ localDoctorData.user.surname }}</h3>
-            </div>
-            <div class="card-body">
+          <div class="card-header">
+              <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user.name }} {{ localDoctorData.user.surname }}</h3>
+          </div>
+          <div class="card-body">
             <h6>Foto Profilo:</h6>
                 <img :src="localDoctorData.picture" alt="Immagine profilo">
             <hr>
@@ -111,36 +92,40 @@ export default {
             <p>{{ localDoctorData.phone }}</p>
             <hr>
             <h6>E-Mail:</h6>
-            <p>{{ localDoctorData.user.email }}</p>
-            </div>
-            <div class="card-footer text-center">
-                <h4>Lascia una recensione</h4>
-                <form @submit="submitReview">
-                    <div class="form-group">
-                        <label for="name">Nome:</label>
-                        <input type="text" id="name" v-model="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="surname">Cognome:</label>
-                        <input type="text" id="surname" v-model="surname" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" v-model="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="text">Recensione:</label>
-                        <textarea id="text" v-model="text" required></textarea>
-                    </div>
-                    <!-- <div class="form-group">
-                        <label for="rating">Voto (da 1 a 5):</label>
-                        <input type="number" id="rating" v-model="rating" min="1" max="5" required>
-                    </div> -->
-                    <button type="submit">Invia Recensione</button>
-                </form>
-            </div>
+            <p v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user.email }}</p>
+          </div>
+          <div class="card-footer text-center">
+            <h4>Lascia una recensione</h4>
+            <!-- FORM RECENSIONE -->
+            <form enctype="multipart/form-data" @submit="submitReview">
+              <!-- CAMPO NOME -->
+              <div class="form-group">
+                  <label for="name">Nome:</label>
+                  <input type="text" id="name" v-model="name" required>
+              </div>
+              <!-- CAMPO COGNOME -->
+              <div class="form-group">
+                  <label for="surname">Cognome:</label>
+                  <input type="text" id="surname" v-model="surname" required>
+              </div>
+              <!-- CAMPO E-MAIL -->
+              <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" id="email" v-model="email" required>
+              </div>
+              <!-- CAMPO TESTO RECENSIONE -->
+              <div class="form-group">
+                  <label for="text">Recensione:</label>
+                  <textarea id="text" v-model="text" required></textarea>
+              </div>
+              <!-- <div class="form-group">
+                  <label for="rating">Voto (da 1 a 5):</label>
+                  <input type="number" id="rating" v-model="rating" min="1" max="5" required>
+              </div> -->
+              <!-- PULSANTE INVIO DATI AL BACKEND -->
+              <button type="submit">Invia Recensione</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
