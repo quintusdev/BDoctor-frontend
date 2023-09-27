@@ -12,7 +12,6 @@ export default {
             store,
             doctors: [],
             localDoctorData: { ...this.doctorData },
-            editDoctorData: { ...this.doctorData },
             name: '', // Inizializza il campo name con una stringa vuota
             surname: '', // Inizializza il campo surname con una stringa vuota
             email: '',
@@ -53,45 +52,37 @@ export default {
             // Gestisci eventuali errori nella chiamata API
             console.error('Errore nella chiamata API:', error);
         });
+      },
+      submitReview(e) {
+        e.preventDefault();
+        const formData = {
+            doctor_id: this.$route.params.doctor_id, // Usa doctor_id per ottenere l'ID del dottore
+            email: this.email,
+            name: this.name,
+            surname: this.surname,
+            text: this.text,
+            /* rating: this.rating, */
+        }
+        /* console.log(formData) */
+        axios.post(`${this.store.baseUrl}/api/reviews`, formData).then((response) => {
+            this.success = response.data.success;
+            if (this.success) {
+                this.showAlert(),
+                    this.doctor_id = '',
+                    this.email = '',
+                    this.name = '',
+                    this.surname = '',
+                    this.text = '',
+                    /* this.rating = '', */
+                    this.success = false
+            } else {
+                this.errors = response.data.errors;
+                console.log(this.errors)
+            }
+        });
+    }
     },
-
-        submitReview() {
-  // Inserisci un console.log per verificare i dati prima dell'invio
-  console.log('Dati inviati:', {
-    doctor_id: this.localDoctorData.id,
-    text: this.text,
-    name: this.name,
-    surname: this.surname,
-    email: this.email,
-  });
-
-  // Invia la recensione e il voto al server
-  const doctorId = this.localDoctorData.id; // ID del medico corrente
-  axios.post(`/api/reviews`, {
-    doctor_id: doctorId,
-    text: this.text,
-    name: this.name,
-    surname: this.surname,
-    email: this.email,
-  })
-  .then(response => {
-    // Gestisci la risposta di successo
-    console.log('Recensione inviata con successo:', response.data);
-
-    // Reimposta la form
-    this.text = '';
-    this.name = '';
-    this.surname = '';
-    this.email = '';
-  })
-  .catch(error => {
-    // Gestisci gli errori nella richiesta
-    console.error('Errore nell\'invio della recensione:', error);
-  });
-},
-    },
-    components: { EditReview } // Aggiunto qui
-}
+  }
 
 </script>
 
@@ -131,7 +122,7 @@ export default {
             </div>
             <div class="card-footer text-center">
                 <h4>Lascia una recensione</h4>
-                <form @submit="submitReview">
+                <form method="post" @submit="submitReview">
                     <div class="form-group">
                         <label for="name">Nome:</label>
                         <input type="text" id="name" v-model="name" required>
