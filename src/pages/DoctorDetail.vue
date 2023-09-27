@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 import { store } from '../store.js'
-import EditReview from '../components/EditReview.vue';
 
 export default {
     name: "DoctorDetail",
@@ -14,11 +13,10 @@ export default {
             doctors: [],
             localDoctorData: { ...this.doctorData },
             editDoctorData: { ...this.doctorData },
-            text: '',
-            // rating: null,
             name: '', // Inizializza il campo name con una stringa vuota
             surname: '', // Inizializza il campo surname con una stringa vuota
-            email: ''
+            email: '',
+            text: '',
         };
     },
     created() {
@@ -102,6 +100,7 @@ export default {
     <div class="row">
       <div class="col-12">
         <div class="card">
+
             <div class="card-header">
                 <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user?.name }} {{ localDoctorData.user?.surname }}</h3>
             </div>
