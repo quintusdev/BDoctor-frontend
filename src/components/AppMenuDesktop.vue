@@ -66,7 +66,10 @@ export default {
               </li>
               <li class="px-2">
                 <a href="http://127.0.0.1:8000/login" class="pe-3 link-nav-professionista">
-                  <strong>Portale Professionisti</strong>
+                  <strong>Accedi</strong>
+                </a>
+                <a href="http://127.0.0.1:8000/register" class="pe-3 link-nav-professionista">
+                  <strong>Registrati</strong>
                 </a>
               </li>
             </ul>
