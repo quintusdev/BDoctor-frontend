@@ -12,16 +12,26 @@ export default {
             store,
             doctors: [],
             localDoctorData: { ...this.doctorData },
+            /* form data recensioni */
             reviewFormData: {
                 doctor_id: this.$route.params.doctor_id,
                 email: '',
                 name: '',
                 surname: '',
                 text: '',
-                rating: '',
             },
             success: false,
             errors: [],
+            /* form data voto */
+            ratingFormData: {
+              rname: '',
+              rsurname: '',
+              remail:'',
+              vote_id: '',
+            },
+            success: false,
+            errors: [],
+            /* form data messaggi */
             messageFormData: {
                 doctor_id: this.$route.params.doctor_id,
                 email: '',
@@ -76,7 +86,6 @@ export default {
             name: this.name,
             surname: this.surname,
             text: this.text,
-            rating: this.rating,
         };
 
         axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
@@ -88,43 +97,75 @@ export default {
               this.name = '';
               this.surname = '';
               this.text = '';
-              this.rating = '';
           } else {
               this.errors = response.data.errors;
               console.log(this.errors);
           }
         });
       },
+      submitRating() {
+      // Esempio di validazione lato client
+      /* if (this.vote_id < 1 || this.vote_id > 5) {
+          alert('Il voto deve essere compreso tra 1 e 5.');
+          return; // Non inviare la richiesta se la validazione fallisce
+      } */
 
-      submitMessage(e) {
-      e.preventDefault();
-      const messageFormData = {
-          user_id: this.$route.params.doctor_id,
-          memail: this.memail,
-          mname: this.mname,
-          msurname: this.msurname,
-          mtext: this.mtext,
+      const ratingFormData = {
+          doctor_id: this.$route.params.doctor_id,
+          rname: this.rname,
+          rsurname: this.rsurname,
+          remail: this.remail,
+          vote_id: this.vote_id,
       };
 
-      axios.post(`${this.store.baseUrl}/api/messages`, messageFormData).then((response) => {
-          this.success = response.data.success;
-          if (response.data.success) {
-              alert('Messaggio inviato con successo!');
-              this.user_id = '';
-              this.memail = '';
-              this.mname = '';
-              this.msurname = '';
-              this.mtext = '';
-          } else {
-              this.errors = response.data.errors;
-              console.log(this.errors);
-          }
-      })
-      .catch((error) => {
-          console.error(error);
-      });
+      axios.post(`${this.store.baseUrl}/api/vote_doctor`, ratingFormData)
+          .then((response) => {
+              this.success = response.data.success;
+              if (this.success) {
+                  alert('Voto inviato con successo!');
+                  this.doctor_id = '';
+                  this.rname = '';
+                  this.rsurname = '';
+                  this.remail = '';
+                  this.vote_id = '';
+              } else {
+                  this.errors = response.data.errors;
+                  console.log(this.errors);
+              }
+          })
+          .catch((error) => {
+              console.error(error);
+          });
       },
-    },
+        submitMessage(e) {
+        e.preventDefault();
+        const messageFormData = {
+            user_id: this.$route.params.doctor_id,
+            memail: this.memail,
+            mname: this.mname,
+            msurname: this.msurname,
+            mtext: this.mtext,
+        };
+
+        axios.post(`${this.store.baseUrl}/api/messages`, messageFormData).then((response) => {
+            this.success = response.data.success;
+            if (response.data.success) {
+                alert('Messaggio inviato con successo!');
+                this.user_id = '';
+                this.memail = '';
+                this.mname = '';
+                this.msurname = '';
+                this.mtext = '';
+            } else {
+                this.errors = response.data.errors;
+                console.log(this.errors);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+        },
+      },
 }
 
 </script>
@@ -190,12 +231,31 @@ export default {
                       <label for="text" class="form-label font-weight-bold">Recensione:</label>
                       <textarea id="text" class="form-control w-50 mx-auto" v-model="text" required></textarea>
                   </div>
-                  <div class="form-group mb-3">
-                      <label for="rating" class="form-label font-weight-bold">Voto (da 0 a 5):</label>
-                      <input type="number" class="form-control w-25 mx-auto" id="rating" v-model="rating" min="0" max="5" required>
-                  </div>
                   <button type="submit" class="btn btn-primary mb-3">Invia Recensione</button>
                 </form>
+              </div>
+              <div class="content-footer col-md-6 my-4">
+                <h5>Lascia un voto</h5>
+                <form method="post" @submit="submitRating" class="text-center">
+                  <div class="form-group mb-3">
+                      <label for="rname" class="form-label font-weight-bold text-left">Nome:</label>
+                      <input type="text" class="form-control w-50 mx-auto" id="rname" v-model="rname" required>
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                      <label for="rsurname" class="form-label font-weight-bold">Cognome:</label>
+                      <input type="text" class="form-control w-50 mx-auto" id="rsurname" v-model="rsurname" required>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="remail" class="form-label font-weight-bold">Email:</label>
+                      <input type="email" class="form-control w-50 mx-auto" id="remail" v-model="remail" required>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="vote_id" class="form-label font-weight-bold">Voto (da 0 a 5):</label>
+                      <input type="number" class="form-control w-25 mx-auto" id="vote_id" v-model="vote_id" min="1" max="5" required>
+                  </div>
+                </form>
+                <button type="submit" class="btn btn-primary mb-3">Invia Voto</button>
               </div>
               <div class="content-footer col-md-6 my-4">
                 <h5>Invia un messaggio</h5>
