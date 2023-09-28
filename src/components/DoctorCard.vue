@@ -67,9 +67,9 @@ export default {
                             </div>
                             <div>
                                 <h6><strong>Recensioni</strong></h6>
-                                <ul v-if="reviews.text > 0">
-                                    <li v-for="  review   in   reviews  " :key="review.id">{{ review.text }}</li>
-                                </ul>
+                                <div v-if="doctorData.reviews_count > 0">
+                                    {{ doctorData.reviews_count }}
+                                </div>
                                 <div v-else>
                                     <h6>Nessuna Recensione</h6>
                                 </div>
