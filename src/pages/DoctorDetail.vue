@@ -11,6 +11,9 @@ export default {
         return {
             store,
             doctors: [],
+            success: false,
+            errors: [],
+            stars: [false, false, false, false, false],
             localDoctorData: { ...this.doctorData },
             /* form data recensioni */
             reviewFormData: {
@@ -20,17 +23,15 @@ export default {
                 surname: '',
                 text: '',
             },
-            success: false,
-            errors: [],
             /* form data voto */
             ratingFormData: {
-              rname: '',
-              rsurname: '',
-              remail:'',
-              vote_id: '',
+                doctor_id: this.$route.params.doctor_id,
+                rname: '',
+                rsurname: '',
+                remail: '',
+                vote_id: '',
             },
-            success: false,
-            errors: [],
+
             /* form data messaggi */
             messageFormData: {
                 doctor_id: this.$route.params.doctor_id,
@@ -39,8 +40,6 @@ export default {
                 msurname: '',
                 mtext: '',
             },
-            success: false,
-            errors: [],
         };
     },
     created() {
@@ -48,45 +47,76 @@ export default {
         this.localDoctorData.specializations;
     },
     methods: {
-      getDoctorDetail() {
-        const doctorId = this.$route.params.doctor_id; // Ottenere l'ID dal parametro nell'URL
-        axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}`).then((response) => {
-            if (response.data.success) {
-                this.localDoctorData = response.data.results;
-                this.editDoctorData = { ...this.localDoctorData };
-                // Ora, esegui una chiamata separata per ottenere le specializzazioni
-                axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}/specializations`)
-                    .then((specializationsResponse) => {
-                        // Verifica che la risposta contenga i dati delle specializzazioni
-                        if (specializationsResponse.data) {
-                            // Assegna i dati delle specializzazioni al dottore corrispondente
-                            this.localDoctorData.specializations = specializationsResponse.data.results;
-                            this.editDoctorData.specializations = specializationsResponse.data.results;
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Errore nella chiamata API delle specializzazioni:', error);
-                    });
+        getDoctorDetail() {
+            const doctorId = this.$route.params.doctor_id; // Ottenere l'ID dal parametro nell'URL
+            axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}`).then((response) => {
+                if (response.data.success) {
+                    this.localDoctorData = response.data.results;
+                    this.editDoctorData = { ...this.localDoctorData };
+                    // Ora, esegui una chiamata separata per ottenere le specializzazioni
+                    axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}/specializations`)
+                        .then((specializationsResponse) => {
+                            // Verifica che la risposta contenga i dati delle specializzazioni
+                            if (specializationsResponse.data) {
+                                // Assegna i dati delle specializzazioni al dottore corrispondente
+                                this.localDoctorData.specializations = specializationsResponse.data.results;
+                                this.editDoctorData.specializations = specializationsResponse.data.results;
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Errore nella chiamata API delle specializzazioni:', error);
+                        });
+                } else {
+                    // Gestisci il caso in cui il dottore non sia stato trovato
+                    console.error('Dottore non trovato');
+                }
+            })
+                .catch((error) => {
+                    // Gestisci eventuali errori nella chiamata API
+                    console.error('Errore nella chiamata API:', error);
+                });
+        },
+        submitReview(e) {
+            e.preventDefault();
+            const reviewFormData = {
+                doctor_id: this.$route.params.doctor_id,
+                email: this.email,
+                name: this.name,
+                surname: this.surname,
+                text: this.text,
+            };
+
+            axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
+                this.success = response.data.success;
+                if (this.success) {
+                    alert('Recensione inviata con successo!');
+                    this.doctor_id = '';
+                    this.email = '';
+                    this.name = '';
+                    this.surname = '';
+                    this.text = '';
+                } else {
+                    this.errors = response.data.errors;
+                }
+            });
+        },
+
+        setRating(rating) {
+            // Imposta lo stato delle stelle in base al voto selezionato
+            for (let i = 0; i < this.stars.length; i++) {
+                this.stars[i] = i < rating;
             }
-            else {
-                // Gestisci il caso in cui il dottore non sia stato trovato
-                console.error('Dottore non trovato');
+            this.vote_id = rating; // Imposta il valore del voto numerico
+        },
+
+
+        submitRating(e) {
+            e.preventDefault();
+            // Esempio di validazione lato client
+            if (this.vote_id < 1 || this.vote_id > 5) {
+                alert('Il voto deve essere compreso tra 1 e 5.');
+                return; // Non inviare la richiesta se la validazione fallisce
             }
-        })
-        .catch((error) => {
-            // Gestisci eventuali errori nella chiamata API
-            console.error('Errore nella chiamata API:', error);
-        });
-      },
-      submitReview(e) {
-        e.preventDefault();
-        const reviewFormData = {
-            doctor_id: this.$route.params.doctor_id,
-            email: this.email,
-            name: this.name,
-            surname: this.surname,
-            text: this.text,
-        };
 
         axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
           this.success = response.data.success;
@@ -103,71 +133,62 @@ export default {
           }
         });
       },
-      submitRating() {
-      // Esempio di validazione lato client
-      if (this.vote_id < 1 || this.vote_id > 5) {
-          alert('Il voto deve essere compreso tra 1 e 5.');
-          return; // Non inviare la richiesta se la validazione fallisce
-      }
 
-      const ratingFormData = {
-          doctor_id: this.$route.params.doctor_id,
-          rname: this.rname,
-          rsurname: this.rsurname,
-          remail: this.remail,
-          vote_id: this.vote_id,
-      };
+            const ratingFormData = {
+                doctor_id: this.$route.params.doctor_id,
+                rname: this.rname,
+                rsurname: this.rsurname,
+                remail: this.remail,
+                vote_id: this.vote_id,
+            };
 
-      axios.post(`${this.store.baseUrl}/api/vote_doctor`, ratingFormData)
-          .then((response) => {
-              this.success = response.data.success;
-              if (this.success) {
-                  alert('Voto inviato con successo!');
-                  this.doctor_id = '';
-                  this.rname = '';
-                  this.rsurname = '';
-                  this.remail = '';
-                  this.vote_id = '';
-              } else {
-                  this.errors = response.data.errors;
-                  console.log(this.errors);
-              }
-          })
-          .catch((error) => {
-              console.error(error);
-          });
-      },
-        submitMessage(e) {
-        e.preventDefault();
-        const messageFormData = {
-            user_id: this.$route.params.doctor_id,
-            memail: this.memail,
-            mname: this.mname,
-            msurname: this.msurname,
-            mtext: this.mtext,
-        };
-
-        axios.post(`${this.store.baseUrl}/api/messages`, messageFormData).then((response) => {
-            this.success = response.data.success;
-            if (response.data.success) {
-                alert('Messaggio inviato con successo!');
-                this.user_id = '';
-                this.memail = '';
-                this.mname = '';
-                this.msurname = '';
-                this.mtext = '';
-            } else {
-                this.errors = response.data.errors;
-                console.log(this.errors);
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+            axios.post(`${this.store.baseUrl}/api/vote`, ratingFormData)
+                .then((response) => {
+                    this.success = response.data.success;
+                    if (this.success) {
+                        alert('Voto inviato con successo!');
+                        this.doctor_id = '';
+                        this.rname = '';
+                        this.rsurname = '';
+                        this.remail = '';
+                        this.vote_id = '';
+                    } else {
+                        this.errors = response.data.errors;
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         },
-      },
-}
+        submitMessage(e) {
+            e.preventDefault();
+            const messageFormData = {
+                user_id: this.$route.params.doctor_id,
+                memail: this.memail,
+                mname: this.mname,
+                msurname: this.msurname,
+                mtext: this.mtext,
+            };
 
+            axios.post(`${this.store.baseUrl}/api/messages`, messageFormData).then((response) => {
+                this.success = response.data.success;
+                if (response.data.success) {
+                    alert('Messaggio inviato con successo!');
+                    this.user_id = '';
+                    this.memail = '';
+                    this.mname = '';
+                    this.msurname = '';
+                    this.mtext = '';
+                } else {
+                    this.errors = response.data.errors;
+                }
+            })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+    },
+}
 </script>
 
 <template>
@@ -252,9 +273,20 @@ export default {
                       <input type="email" class="form-control w-50 mx-auto" id="remail" v-model="remail" required>
                   </div>
                   <div class="form-group mb-3">
-                      <label for="vote_id" class="form-label font-weight-bold">Voto (da 0 a 5):</label>
-                      <input type="number" class="form-control w-25 mx-auto" id="vote_id" v-model="vote_id" min="1" max="5" required>
-                  </div>
+
+                    <label for="vote" class="form-label font-weight-bold">Voto:</label>
+                    <div class="star-rating">
+                        <span
+                            v-for="(star, index) in stars"
+                            class="star"
+                            @click="setRating(index + 1)"
+                            :class="{ 'selected': star }"
+                            :key="index"
+                        >&#9733;</span>
+                    </div>
+                </div>
+
+
                   <button type="submit" class="btn btn-primary mb-3">Invia Voto</button>
                 </form>
               </div>
@@ -299,20 +331,37 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-img{
-  height: 200px;
-  width: 100%;
+img {
+    height: 200px;
+    width: 100%;
 }
 
-.min_height-350{
-  min-height: 350px;
+.min_height-350 {
+    min-height: 350px;
 }
 
-.custom_card{
+.custom_card {
     height: auto;
 }
 
 .btn-footer a {
     text-decoration: none; /* Rimuove la sottolineatura dal collegamento */
+}
+
+.star-rating {
+    font-size: 24px;
+}
+
+.star {
+    color: #ccc; /* Colore delle stelle non selezionate */
+    cursor: pointer;
+}
+
+.star.selected {
+    color: #ffcc00; /* Colore delle stelle selezionate */
+}
+
+.star:hover {
+    color: #ffcc00; /* Cambia colore quando il mouse passa sopra */
 }
 </style>
