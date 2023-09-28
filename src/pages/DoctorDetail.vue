@@ -18,7 +18,7 @@ export default {
                 name: '',
                 surname: '',
                 text: '',
-                /* rating: '', // Aggiungi il rating */
+                rating: '',
             },
             success: false,
             errors: [],
@@ -76,7 +76,7 @@ export default {
             name: this.name,
             surname: this.surname,
             text: this.text,
-            rating: this.rating, // Aggiungi il rating
+            rating: this.rating,
         };
 
         axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
