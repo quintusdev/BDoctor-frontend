@@ -76,20 +76,17 @@ export default {
 
             <!--Grid column-->
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase mb-4">Link Esterni</h5>
+                <h5 class="text-uppercase mb-4">Privacy</h5>
                 <!-- LISTA LINK UTILI -->
                 <ul class="list-unstyled">
                     <li class="mb-4">
-                        <a href="#!" class="text-white"><i class="fas fa-house pe-3"></i>Il nostro centro</a>
+                        <a href="#!" class="text-white"><i class="fa-solid fa-lock pe-3"></i>Privacy Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#!" class="text-white"><i class="fa-solid fa-magnifying-glass pe-3"></i>Trova un professionista</a>
+                        <a href="#!" class="text-white"><i class="fa-solid fa-cookie-bite pe-3"></i>Cookie Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a href="#!" class="text-white"><i class="fa-solid fa-question pe-3 pl-2"></i>Come funziona?</a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#!" class="text-white"><i class="fa-solid fa-laptop-medical pe-3"></i>Chi Siamo</a>
+                        <a href="#!" class="text-white"><i class="fa-solid fa-file-signature pe-3"></i>Termini e Condizioni</a>
                     </li>
                 </ul>
             </div>
