@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import AppJumbotronPagine from '../components/AppJumbotronPagine.vue';
 import AppSelectSpecialization from '../components/AppSelectSpecialization.vue';
 import AppSelectVotes from '../components/AppSelectVotes.vue';
 import AppSelectReviews from '../components/AppSelectReviews.vue';
@@ -13,6 +14,7 @@ export default {
   components: {
     // AppLoader,
     DoctorCard,
+    AppJumbotronPagine,
     AppSelectSpecialization,
     AppSelectVotes,
     AppSelectReviews,
@@ -24,13 +26,13 @@ export default {
   data() {
     return {
       store,
+      searchTerm: '', // Termine di ricerca inserito dall'utente
       doctors: [],
-      menuItems: [
-        {
-          label: 'Ricerca Avanzata',
-          routeName: 'advance-search'
-        },
-      ]
+      selectedSpecialization: '', // Specializzazione selezionata nel menu a tendina
+
+      // Filtri
+      filterOption1: false,
+      filterOption2: false,
     };
   },
   created() {
@@ -104,22 +106,19 @@ export default {
 </script>
 
 <template>
+  <AppJumbotronPagine />
   <div class="container">
     <div class="row">
-
       <div class="col-12 my-3">
-        <h1>Ricerca</h1>
+        <h1>Ricerca Avanzata</h1>
         <div class="col-12 d-flex flex-row">
           <div class="">
             <h6>Nome e Cognome</h6>
             <AppSearch @search="nameSearched" />
           </div>
           <AppSelectSpecialization @search="nameSearched" />
-          <button class="btn btn-primary ms-2 align-self-end" v-for="(item, index) in menuItems" :key="index">
-            <router-link class="link-nav-utente" :to="{ name: item.routeName }"><strong>{{
-              item.label }}</strong></router-link>
-          </button>
-
+          <AppSelectVotes @search="nameSearched" />
+          <AppSelectReviews @search="nameSearched" />
         </div>
       </div>
     </div>
@@ -154,8 +153,5 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.link-nav-utente {
-  color: white;
-  text-decoration: none;
-}
+@use '../styles/generals.scss';
 </style>

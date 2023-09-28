@@ -32,18 +32,19 @@ export default {
             <div class="row ">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-5">
                             <!-- Immagine profilo -->
                             <div class="card-image-top  justify-content-center align-items-center">
-                                <img :src="`${doctorData.picture}`" alt="img">
+                                <img :src="'http://127.0.0.1:8000/storage/' + doctorData.picture" alt="img">
                             </div>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-7">
                             <div class="special">
                                 <h6>Specializzazioni:</h6>
                                 <!-- visualizzo le specializzazioni di ciascun dottore -->
                                 <ul>
-                                    <li v-for="specialization in doctorData.specializations" :key="specialization.id">
+                                    <li v-for="  specialization   in   doctorData.specializations  "
+                                        :key="specialization.id">
                                         {{ specialization.name }}
                                     </li>
                                 </ul>
@@ -57,7 +58,7 @@ export default {
                             <hr>
                             <h6><strong>Voto Medio</strong></h6>
                             <ul v-if="doctorData.avr_vote !== null">
-                                <h6 v-for="avr_vote in doctorData.avr_vote" :key="avr_vote.id">
+                                <h6 v-for="  avr_vote   in   doctorData.avr_vote  " :key="avr_vote.id">
                                     {{ avr_vote }}
                                 </h6>
                             </ul>
@@ -67,7 +68,7 @@ export default {
                             <div>
                                 <h6><strong>Recensioni</strong></h6>
                                 <ul v-if="reviews.text > 0">
-                                    <li v-for="review in reviews" :key="review.id">{{ review.text }}</li>
+                                    <li v-for="  review   in   reviews  " :key="review.id">{{ review.text }}</li>
                                 </ul>
                                 <div v-else>
                                     <h6>Nessuna Recensione</h6>
@@ -94,10 +95,6 @@ img {
 
 .min_height-350 {
     min-height: 350px;
-}
-
-.custom_card {
-    height: 500px;
 }
 
 .btn-footer a {

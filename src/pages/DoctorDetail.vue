@@ -4,81 +4,81 @@ import { store } from '../store.js'
 import EditReview from '../components/EditReview.vue';
 
 export default {
-    name: "DoctorDetail",
-    props: {
-        doctorData: Object,
+  name: "DoctorDetail",
+  props: {
+    doctorData: Object,
+  },
+  data() {
+    return {
+      store,
+      doctors: [],
+      localDoctorData: { ...this.doctorData },
+      editDoctorData: { ...this.doctorData },
+      text: '',
+      // rating: null,
+      name: '', // Inizializza il campo name con una stringa vuota
+      surname: '', // Inizializza il campo surname con una stringa vuota
+      email: ''
+    };
+  },
+  created() {
+    this.getDoctorDetail();
+  },
+  methods: {
+    getDoctorDetail() {
+      const doctorId = this.$route.params.doctor_id; // Ottenere l'ID dal parametro nell'URL
+      axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}`).then((response) => {
+        if (response.data.success) {
+          this.localDoctorData = response.data.results;
+          this.editDoctorData = { ...this.localDoctorData };
+        }
+        else {
+          // Gestisci il caso in cui il dottore non sia stato trovato
+          console.error('Dottore non trovato');
+        }
+      })
+        .catch((error) => {
+          // Gestisci eventuali errori nella chiamata API
+          console.error('Errore nella chiamata API:', error);
+        });
     },
-    data() {
-        return {
-            store,
-            doctors: [],
-            localDoctorData: { ...this.doctorData },
-            editDoctorData: { ...this.doctorData },
-            text: '',
-            // rating: null,
-            name: '', // Inizializza il campo name con una stringa vuota
-            surname: '', // Inizializza il campo surname con una stringa vuota
-            email: ''
-        };
+    submitReview() {
+      // Inserisci un console.log per verificare i dati prima dell'invio
+      console.log('Dati inviati:', {
+        doctor_id: this.localDoctorData.id,
+        text: this.text,
+        name: this.name,
+        surname: this.surname,
+        email: this.email,
+      });
+
+      // Invia la recensione e il voto al server
+      const doctorId = this.localDoctorData.id; // ID del medico corrente
+      axios.post(`/api/reviews`, {
+        doctor_id: doctorId,
+        text: this.text,
+        name: this.name,
+        surname: this.surname,
+        email: this.email,
+      })
+        .then(response => {
+          // Gestisci la risposta di successo
+          console.log('Recensione inviata con successo:', response.data);
+
+          // Reimposta la form
+          this.text = '';
+          this.name = '';
+          this.surname = '';
+          this.email = '';
+        })
+        .catch(error => {
+          // Gestisci gli errori nella richiesta
+          console.error('Errore nell\'invio della recensione:', error);
+        });
     },
-    created() {
-        this.getDoctorDetail();
-    },
-    methods: {
-        getDoctorDetail() {
-            const doctorId = this.$route.params.doctor_id; // Ottenere l'ID dal parametro nell'URL
-            axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}`).then((response) => {
-                if (response.data.success) {
-                    this.localDoctorData = response.data.results;
-                    this.editDoctorData = { ...this.localDoctorData };
-                }
-                else {
-                    // Gestisci il caso in cui il dottore non sia stato trovato
-                    console.error('Dottore non trovato');
-                }
-            })
-                .catch((error) => {
-                // Gestisci eventuali errori nella chiamata API
-                console.error('Errore nella chiamata API:', error);
-            });
-        },
-        submitReview() {
-  // Inserisci un console.log per verificare i dati prima dell'invio
-  console.log('Dati inviati:', {
-    doctor_id: this.localDoctorData.id,
-    text: this.text,
-    name: this.name,
-    surname: this.surname,
-    email: this.email,
-  });
 
-  // Invia la recensione e il voto al server
-  const doctorId = this.localDoctorData.id; // ID del medico corrente
-  axios.post(`/api/reviews`, {
-    doctor_id: doctorId,
-    text: this.text,
-    name: this.name,
-    surname: this.surname,
-    email: this.email,
-  })
-  .then(response => {
-    // Gestisci la risposta di successo
-    console.log('Recensione inviata con successo:', response.data);
-
-    // Reimposta la form
-    this.text = '';
-    this.name = '';
-    this.surname = '';
-    this.email = '';
-  })
-  .catch(error => {
-    // Gestisci gli errori nella richiesta
-    console.error('Errore nell\'invio della recensione:', error);
-  });
-},
-
-        components: { EditReview }
-    }
+    components: { EditReview }
+  }
 }
 </script>
 
@@ -87,15 +87,16 @@ export default {
     <div class="row">
       <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user.name }} {{ localDoctorData.user.surname }}</h3>
-            </div>
-            <div class="card-body">
+          <div class="card-header">
+            <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user.name }} {{
+              localDoctorData.user.surname }}</h3>
+          </div>
+          <div class="card-body">
             <h6>Foto Profilo:</h6>
-                <img :src="localDoctorData.picture" alt="Immagine profilo">
+            <img :src="'http://127.0.0.1:8000/storage/' + localDoctorData.picture" alt="Immagine profilo">
             <hr>
-            <h6>CV del Medico:</h6>
-                <img :src="localDoctorData.cv" alt="File CV">
+            <a :href="'http://127.0.0.1:8000/storage/' + localDoctorData.cv" download="localDoctorData.cv">Scarica il
+              CV</a>
             <hr>
             <h6>Specializzazioni:</h6>
             <ul>
@@ -112,35 +113,35 @@ export default {
             <hr>
             <h6>E-Mail:</h6>
             <p>{{ localDoctorData.user.email }}</p>
-            </div>
-            <div class="card-footer text-center">
-                <h4>Lascia una recensione</h4>
-                <form @submit="submitReview">
-                    <div class="form-group">
-                        <label for="name">Nome:</label>
-                        <input type="text" id="name" v-model="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="surname">Cognome:</label>
-                        <input type="text" id="surname" v-model="surname" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" v-model="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="text">Recensione:</label>
-                        <textarea id="text" v-model="text" required></textarea>
-                    </div>
-                    <!-- <div class="form-group">
+          </div>
+          <div class="card-footer text-center">
+            <h4>Lascia una recensione</h4>
+            <form @submit="submitReview">
+              <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" v-model="name" required>
+              </div>
+
+              <div class="form-group">
+                <label for="surname">Cognome:</label>
+                <input type="text" id="surname" v-model="surname" required>
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" v-model="email" required>
+              </div>
+              <div class="form-group">
+                <label for="text">Recensione:</label>
+                <textarea id="text" v-model="text" required></textarea>
+              </div>
+              <!-- <div class="form-group">
                         <label for="rating">Voto (da 1 a 5):</label>
                         <input type="number" id="rating" v-model="rating" min="1" max="5" required>
                     </div> -->
-                    <button type="submit">Invia Recensione</button>
-                </form>
-            </div>
+              <button type="submit">Invia Recensione</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -148,20 +149,21 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-img{
+img {
   height: 200px;
   width: 100%;
 }
 
-.min_height-350{
+.min_height-350 {
   min-height: 350px;
 }
 
-.custom_card{
-    height: auto;
+.custom_card {
+  height: auto;
 }
 
-    .btn-footer a {
-        text-decoration: none; /* Rimuove la sottolineatura dal collegamento */
-    }
+.btn-footer a {
+  text-decoration: none;
+  /* Rimuove la sottolineatura dal collegamento */
+}
 </style>
