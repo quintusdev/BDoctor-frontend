@@ -8,25 +8,24 @@ export default {
     components: {
         DoctorDetail,
     },
-    props:{
+    props: {
         doctorData: Object,
     },
     data() {
         return {
             store,
             doctors: [],
+            reviews: [], // Inizializza l'array delle recensioni come vuoto
         }
     },
     methods: {
-        truncateText(text) {
-            if (text.length > 100) {
-                return text.substr(0, 50) + '...';
-            }
-
-            return text
-        }
+        
+    },
+    created() {
+        this.doctorData.picture
     }
 }
+
 </script>
 
 <template>
@@ -38,18 +37,19 @@ export default {
             <div class="row ">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-5">
                             <!-- Immagine profilo -->
-                            <div class="card-image-top w-100 justify-content-center align-items-center">
-                                <img :src="`${store.baseUrl}/storage/${doctorData.picture}`" alt="img">
+                            <div class="card-image-top  justify-content-center align-items-center">
+                                <img :src="'http://127.0.0.1:8000/storage/' + doctorData.picture" alt="img">
                             </div>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-7">
                             <div class="special">
                                 <h6>Specializzazioni:</h6>
                                 <!-- visualizzo le specializzazioni di ciascun dottore -->
                                 <ul>
-                                    <li v-for="specialization in doctorData.specializations" :key="specialization.id">
+                                    <li v-for="  specialization   in   doctorData.specializations  "
+                                        :key="specialization.id">
                                         {{ specialization.name }}
                                     </li>
                                 </ul>
@@ -61,24 +61,27 @@ export default {
                             <h6><strong>Numero di Telefono:</strong></h6>
                             <h6> {{ doctorData.phone }}</h6>
                             <hr>
-                            <h6><strong>Voto</strong></h6>
-                            <ul v-if="doctorData.votes.length > 0">
-                                <li v-for="vote in doctorData.votes" :key="vote.id">
-                                    {{ vote.value }}
-                                </li>
+                            <h6><strong>Voto Medio</strong></h6>
+                            <ul v-if="doctorData.avr_vote !== null">
+                                <h6 v-for="  avr_vote   in   doctorData.avr_vote  " :key="avr_vote.id">
+                                    {{ avr_vote }}
+                                </h6>
                             </ul>
                             <div v-else>
                                 <h6>Nessuna Valutazione</h6>
                             </div>
-                            <h6><strong>Recensioni</strong></h6>
-                            <ul v-if="doctorData.reviews.length > 0">
-                                <li v-for="review in doctorData.reviews" :key="review.id">
-                                    {{ reviews.text }}
-                                </li>
-                            </ul>
-                            <div v-else>
-                                <h6>Nessuna Recensione</h6>
+
+
+                            <div>
+                                <h6><strong>Recensioni</strong></h6>
+                                <div v-if="doctorData.reviews_count > 0">
+                                    {{ doctorData.reviews_count }}
+                                </div>
+                                <div v-else>
+                                    <h6>Nessuna Recensione</h6>
+                                </div>
                             </div>
+
 
                         </div>
                     </div>
@@ -87,11 +90,8 @@ export default {
         </div>
         <div class="card-footer text-center">
             <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
-            <router-link :to="'/doctors/' + doctorData.id" class="text-black">
-                <div class="btn btn-sm btn-warning btn-footer w-50">
-                    <strong>Dettagli profilo e contatti</strong>
-                </div>
-            </router-link>   
+            <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctorData.user.id } }"
+                v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
         </div>
     </div>
 </template>
@@ -102,13 +102,6 @@ img {
     width: 100%;
 }
 
-.min_height-350 {
-    min-height: 350px;
-}
-
-.custom_card {
-    height: 500px;
-}
 
 .btn-footer a {
     text-decoration: none;

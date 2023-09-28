@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 import { store } from '../store.js'
-import EditReview from '../components/EditReview.vue';
 
 export default {
     name: "DoctorDetail",
@@ -13,59 +12,285 @@ export default {
             store,
             doctors: [],
             localDoctorData: { ...this.doctorData },
-            editDoctorData: { ...this.doctorData },
+            /* form data recensioni */
+            reviewFormData: {
+                doctor_id: this.$route.params.doctor_id,
+                email: '',
+                name: '',
+                surname: '',
+                text: '',
+            },
+            success: false,
+            errors: [],
+            /* form data voto */
+            ratingFormData: {
+              rname: '',
+              rsurname: '',
+              remail:'',
+              vote_id: '',
+            },
+            success: false,
+            errors: [],
+            /* form data messaggi */
+            messageFormData: {
+                doctor_id: this.$route.params.doctor_id,
+                email: '',
+                name: '',
+                surname: '',
+                text: '',
+            },
+            success: false,
+            errors: [],
         };
     },
     created() {
         this.getDoctorDetail();
+        this.localDoctorData.specializations;
     },
     methods: {
-        getDoctorDetail() {
-            const doctorId = this.$route.params.doctor_id; // Ottenere l'ID dal parametro nell'URL
-            axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}`).then((response) => {
-                if (response.data.success) {
-                    this.localDoctorData = response.data.results;
-                    this.editDoctorData = { ...this.localDoctorData };
-                }
-                else {
-                    // Gestisci il caso in cui il dottore non sia stato trovato
-                    console.error('Dottore non trovato');
-                }
-            })
-                .catch((error) => {
-                // Gestisci eventuali errori nella chiamata API
-                console.error('Errore nella chiamata API:', error);
-            });
+      getDoctorDetail() {
+        const doctorId = this.$route.params.doctor_id; // Ottenere l'ID dal parametro nell'URL
+        axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}`).then((response) => {
+            if (response.data.success) {
+                this.localDoctorData = response.data.results;
+                this.editDoctorData = { ...this.localDoctorData };
+                // Ora, esegui una chiamata separata per ottenere le specializzazioni
+                axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}/specializations`)
+                    .then((specializationsResponse) => {
+                        // Verifica che la risposta contenga i dati delle specializzazioni
+                        if (specializationsResponse.data) {
+                            // Assegna i dati delle specializzazioni al dottore corrispondente
+                            this.localDoctorData.specializations = specializationsResponse.data.results;
+                            this.editDoctorData.specializations = specializationsResponse.data.results;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Errore nella chiamata API delle specializzazioni:', error);
+                    });
+            }
+            else {
+                // Gestisci il caso in cui il dottore non sia stato trovato
+                console.error('Dottore non trovato');
+            }
+        })
+        .catch((error) => {
+            // Gestisci eventuali errori nella chiamata API
+            console.error('Errore nella chiamata API:', error);
+        });
+      },
+      submitReview(e) {
+        e.preventDefault();
+        const reviewFormData = {
+            doctor_id: this.$route.params.doctor_id,
+            email: this.email,
+            name: this.name,
+            surname: this.surname,
+            text: this.text,
+        };
+
+        axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
+          this.success = response.data.success;
+          if (this.success) {
+              alert('Recensione inviata con successo!');
+              this.doctor_id = '';
+              this.email = '';
+              this.name = '';
+              this.surname = '';
+              this.text = '';
+          } else {
+              this.errors = response.data.errors;
+              console.log(this.errors);
+          }
+        });
+      },
+      submitRating() {
+      // Esempio di validazione lato client
+      /* if (this.vote_id < 1 || this.vote_id > 5) {
+          alert('Il voto deve essere compreso tra 1 e 5.');
+          return; // Non inviare la richiesta se la validazione fallisce
+      } */
+
+      const ratingFormData = {
+          doctor_id: this.$route.params.doctor_id,
+          rname: this.rname,
+          rsurname: this.rsurname,
+          remail: this.remail,
+          vote_id: this.vote_id,
+      };
+
+      axios.post(`${this.store.baseUrl}/api/vote_doctor`, ratingFormData)
+          .then((response) => {
+              this.success = response.data.success;
+              if (this.success) {
+                  alert('Voto inviato con successo!');
+                  this.doctor_id = '';
+                  this.rname = '';
+                  this.rsurname = '';
+                  this.remail = '';
+                  this.vote_id = '';
+              } else {
+                  this.errors = response.data.errors;
+                  console.log(this.errors);
+              }
+          })
+          .catch((error) => {
+              console.error(error);
+          });
+      },
+        submitMessage(e) {
+        e.preventDefault();
+        const messageFormData = {
+            user_id: this.$route.params.doctor_id,
+            memail: this.memail,
+            mname: this.mname,
+            msurname: this.msurname,
+            mtext: this.mtext,
+        };
+
+        axios.post(`${this.store.baseUrl}/api/messages`, messageFormData).then((response) => {
+            this.success = response.data.success;
+            if (response.data.success) {
+                alert('Messaggio inviato con successo!');
+                this.user_id = '';
+                this.memail = '';
+                this.mname = '';
+                this.msurname = '';
+                this.mtext = '';
+            } else {
+                this.errors = response.data.errors;
+                console.log(this.errors);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
         },
-    },
-    components: { EditReview }
+      },
 }
+
 </script>
 
 <template>
-  <div class="container mt-5" v-if="localDoctorData">
+  <div class="container mt-5 mb-5" v-if="localDoctorData">
     <div class="row">
       <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h3>{{ localDoctorData.user.name }} {{ localDoctorData.user.surname }}</h3>
+        <div class="card mt-5">
+          <div class="card-header text-center">
+              <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user?.name }} {{ localDoctorData.user?.surname }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h6>Foto Profilo:</h6>
+                  <img :src="`http://localhost:8000/storage/${localDoctorData?.picture}`" alt="Immagine profilo" style="width: 400px; height:400px;" class="justify-content-center align-items-center">
+              </div>
+              <div class="col-md-6">
+                <h6>CV del Medico:</h6>
+                  <a :href="`http://localhost:8000/storage/${localDoctorData?.cv}`" target="_blank">Visualizza CV</a>
+                <hr>
+                <h6>Specializzazioni:</h6>
+                <ul>
+                  <div v-for="specialization in localDoctorData.specializations" :key="specialization.id">
+                    <li v-if="specialization">
+                      {{ specialization.name }}
+                    </li>
+                  </div>
+                </ul>
+                <hr>
+                <h6>Indirizzo:</h6>
+                <p>{{ localDoctorData?.address }}</p>
+                <hr>
+                <h6>Numero di Telefono:</h6>
+                <p>{{ localDoctorData?.phone }}</p>
+                <hr>
+                <h6>E-Mail:</h6>
+                <p>{{ localDoctorData.user?.email }}</p>
+              </div>
             </div>
-            <div class="card-body">
-            <h6>Specializzazioni:</h6>
-            <ul>
-              <!-- <li v-for="specialization in localDoctorData.specializations" :key="specialization.id">
-                {{ specialization.name }}
-              </li> -->
-            </ul>
-            <h6>Indirizzo:</h6>
-            <p>{{ localDoctorData.address }}</p>
-            <h6>Numero di Telefono:</h6>
-            <p>{{ localDoctorData.phone }}</p>
-            <!-- Altri dettagli del medico -->
+          </div>
+          <div class="card-footer text-center">
+            <div class="row">
+              <div class="content-footer col-md-6 my-4">
+                <h5>Lascia una recensione</h5>
+                <form method="post" @submit="submitReview" class="text-center">
+                  <div class="form-group mb-3">
+                      <label for="name" class="form-label font-weight-bold text-left">Nome:</label>
+                      <input type="text" class="form-control w-50 mx-auto" id="name" v-model="name" required>
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                      <label for="surname" class="form-label font-weight-bold">Cognome:</label>
+                      <input type="text" class="form-control w-50 mx-auto" id="surname" v-model="surname" required>
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                      <label for="email" class="form-label font-weight-bold">Email:</label>
+                      <input type="email" class="form-control w-50 mx-auto" id="email" v-model="email" required>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="text" class="form-label font-weight-bold">Recensione:</label>
+                      <textarea id="text" class="form-control w-50 mx-auto" v-model="text" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary mb-3">Invia Recensione</button>
+                </form>
+              </div>
+              <div class="content-footer col-md-6 my-4">
+                <h5>Lascia un voto</h5>
+                <form method="post" @submit="submitRating" class="text-center">
+                  <div class="form-group mb-3">
+                      <label for="rname" class="form-label font-weight-bold text-left">Nome:</label>
+                      <input type="text" class="form-control w-50 mx-auto" id="rname" v-model="rname" required>
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                      <label for="rsurname" class="form-label font-weight-bold">Cognome:</label>
+                      <input type="text" class="form-control w-50 mx-auto" id="rsurname" v-model="rsurname" required>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="remail" class="form-label font-weight-bold">Email:</label>
+                      <input type="email" class="form-control w-50 mx-auto" id="remail" v-model="remail" required>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="vote_id" class="form-label font-weight-bold">Voto (da 0 a 5):</label>
+                      <input type="number" class="form-control w-25 mx-auto" id="vote_id" v-model="vote_id" min="1" max="5" required>
+                  </div>
+                </form>
+                <button type="submit" class="btn btn-primary mb-3">Invia Voto</button>
+              </div>
+              <div class="content-footer col-md-6 my-4">
+                <h5>Invia un messaggio</h5>
+                <form method="post" @submit="submitMessage">
+                    <div class="form-group mb-3">
+                        <label for="mname" class="form-label">Nome:</label>
+                        <input type="text" class="form-control w-50 mx-auto" id="mname" v-model="mname" required>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="msurname" class="form-label">Cognome:</label>
+                        <input type="text" class="form-control w-50 mx-auto" id="msurname" v-model="msurname" required>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="memail" class="form-label">Email:</label>
+                        <input type="email" class="form-control w-50 mx-auto" id="memail" v-model="memail" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="mtext" class="form-label">Messaggio da inviare:</label>
+                        <textarea id="mtext" class="form-control w-50 mx-auto" v-model="mtext" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-3">Invia Messaggio</button>
+                </form>
+              </div>
             </div>
-            <div class="card-footer text-center">
-                <!-- <EditReview :editDoctorData="editDoctorData" /> -->
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 justify-content-between">
+              <a href="/doctors" class="col-5 btn btn-md btn-warning mx-5 my-4"><strong>Torna alla Ricerca Avanzata</strong></a>
+              <a href="/" class="col-5 btn btn-md btn-success mx-5 my-4"><strong>Torna alla Home</strong></a>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -86,7 +311,7 @@ img{
     height: auto;
 }
 
-    .btn-footer a {
-        text-decoration: none; /* Rimuove la sottolineatura dal collegamento */
-    }
+.btn-footer a {
+    text-decoration: none; /* Rimuove la sottolineatura dal collegamento */
+}
 </style>

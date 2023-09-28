@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 import AppJumbotronHome from '../components/AppJumbotronHome.vue';
-
 export default {
   components: {
     AppJumbotronHome,
@@ -36,6 +35,7 @@ export default {
   <div>
     <AppJumbotronHome />
     <div class="container">
+
       <div class="row">
         <div class="col-12">
           <h1>HomePage</h1>
@@ -55,6 +55,7 @@ export default {
       </div>
     </div>
   </div>
+
 </template>
 
 <style lang="">
