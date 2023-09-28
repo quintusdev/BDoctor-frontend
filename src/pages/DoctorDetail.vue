@@ -16,6 +16,7 @@ export default {
             surname: '', // Inizializza il campo surname con una stringa vuota
             email: '',
             text: '',
+            vote_id: ''
         };
     },
     created() {
@@ -61,7 +62,7 @@ export default {
             name: this.name,
             surname: this.surname,
             text: this.text,
-            rating: this.rating, // Aggiungi il rating
+            vote_id: this.vote_id
         };
 
         axios.post(`${this.store.baseUrl}/api/reviews`, formData)
@@ -74,12 +75,13 @@ export default {
                     this.name = '';
                     this.surname = '';
                     this.text = '';
-                    this.rating = '';
+                    this.vote_id = '';
                 } else {
                     this.errors = response.data.errors;
                     console.log(this.errors);
                 }
-            });
+        });
+        
     }
     },
   }
@@ -142,8 +144,8 @@ export default {
                         <textarea id="text" v-model="text" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="rating">Voto (da 0 a 5):</label>
-                        <input type="number" id="rating" v-model="rating" min="0" max="5" required>
+                        <label for="vote_id">Voto (da 1 a 5):</label>
+                        <input type="number" id="vote_id" v-model="vote_id" min="1" max="5" required>
                     </div>
                     <button type="submit">Invia Recensione</button>
                 </form>
