@@ -19,8 +19,13 @@ export default {
         }
     },
     methods: {
+        
+    },
+    created() {
+        this.doctorData.picture
     }
 }
+
 </script>
 
 <template>
@@ -74,6 +79,7 @@ export default {
                                     <h6>Nessuna Recensione</h6>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
