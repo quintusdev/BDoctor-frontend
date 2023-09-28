@@ -133,7 +133,7 @@ export default {
 
         submitMessage(e) {
         e.preventDefault();
-        const formData = {
+        const messageformData = {
             doctor_id: this.$route.params.doctor_id,
             email: this.email,
             name: this.name,
@@ -141,7 +141,7 @@ export default {
             text: this.text,
         };
 
-        axios.post(`${this.store.baseUrl}/api/reviews`, formData)
+        axios.post(`${this.store.baseUrl}/api/reviews`, messageformData)
             .then((response) => {
                 this.success = response.data.success;
                 if (this.success) {
@@ -158,32 +158,6 @@ export default {
         });
         
     }
-        const messageFormData = {
-            user_id: this.$route.params.doctor_id,
-            memail: this.memail,
-            mname: this.mname,
-            msurname: this.msurname,
-            mtext: this.mtext,
-        };
-
-        axios.post(`${this.store.baseUrl}/api/messages`, messageFormData).then((response) => {
-            this.success = response.data.success;
-            if (response.data.success) {
-                alert('Messaggio inviato con successo!');
-                this.user_id = '';
-                this.memail = '';
-                this.mname = '';
-                this.msurname = '';
-                this.mtext = '';
-            } else {
-                this.errors = response.data.errors;
-                console.log(this.errors);
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-
     },
 },
 
