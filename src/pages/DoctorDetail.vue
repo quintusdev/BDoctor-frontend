@@ -12,10 +12,26 @@ export default {
             store,
             doctors: [],
             localDoctorData: { ...this.doctorData },
-            name: '', // Inizializza il campo name con una stringa vuota
-            surname: '', // Inizializza il campo surname con una stringa vuota
-            email: '',
-            text: '',
+            reviewFormData: {
+                doctor_id: this.$route.params.doctor_id,
+                email: '',
+                name: '',
+                surname: '',
+                text: '',
+                rating: '', // Aggiungi il rating
+            },
+            success: false,
+            errors: [],
+            messageFormData: {
+                doctor_id: this.$route.params.doctor_id,
+                email: '',
+                name: '',
+                surname: '',
+                text: '',
+                rating: '', // Aggiungi il rating
+            },
+            success: false,
+            errors: [],
         };
     },
     created() {
@@ -54,44 +70,71 @@ export default {
         });
       },
       submitReview(e) {
+    e.preventDefault();
+    const reviewFormData = {
+        doctor_id: this.$route.params.doctor_id,
+        email: this.email,
+        name: this.name,
+        surname: this.surname,
+        text: this.text,
+        rating: this.rating, // Aggiungi il rating
+    };
+
+    axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
+        this.success = response.data.success;
+        if (this.success) {
+            alert('Recensione inviata con successo!');
+            this.doctor_id = '';
+            this.email = '';
+            this.name = '';
+            this.surname = '';
+            this.text = '';
+            this.rating = '';
+        } else {
+            this.errors = response.data.errors;
+            console.log(this.errors);
+        }
+    });
+},
+
+        submitMessage(e) {
         e.preventDefault();
-        const formData = {
-            doctor_id: this.$route.params.doctor_id,
-            email: this.email,
-            name: this.name,
-            surname: this.surname,
-            text: this.text,
-            rating: this.rating, // Aggiungi il rating
+        const messageFormData = {
+            user_id: this.$route.params.doctor_id,
+            memail: this.memail,
+            mname: this.mname,
+            msurname: this.msurname,
+            mtext: this.mtext,
         };
 
-        axios.post(`${this.store.baseUrl}/api/reviews`, formData)
-            .then((response) => {
-                this.success = response.data.success;
-                if (this.success) {
-                    alert('Form inviato con successo!');
-                    this.doctor_id = '';
-                    this.email = '';
-                    this.name = '';
-                    this.surname = '';
-                    this.text = '';
-                    this.rating = '';
-                } else {
-                    this.errors = response.data.errors;
-                    console.log(this.errors);
-                }
-            });
-    }
+        axios.post(`${this.store.baseUrl}/api/messages`, messageFormData).then((response) => {
+            this.success = response.data.success;
+            if (response.data.success) {
+                alert('Messaggio inviato con successo!');
+                this.user_id = '';
+                this.memail = '';
+                this.mname = '';
+                this.msurname = '';
+                this.mtext = '';
+            } else {
+                this.errors = response.data.errors;
+                console.log(this.errors);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     },
-  }
+},
+}
 
 </script>
 
 <template>
-  <div class="container mt-5" v-if="localDoctorData">
+  <div class="container mt-5 mb-5" v-if="localDoctorData">
     <div class="row">
       <div class="col-12">
-        <div class="card">
-
+        <div class="card mt-5">
             <div class="card-header">
                 <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user?.name }} {{ localDoctorData.user?.surname }}</h3>
             </div>
@@ -121,32 +164,61 @@ export default {
               <p>{{ localDoctorData.user?.email }}</p>
             </div>
             <div class="card-footer text-center">
-                <h4>Lascia una recensione</h4>
-                <form method="post" @submit="submitReview">
-                    <div class="form-group">
-                        <label for="name">Nome:</label>
-                        <input type="text" id="name" v-model="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="surname">Cognome:</label>
-                        <input type="text" id="surname" v-model="surname" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" v-model="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="text">Recensione:</label>
-                        <textarea id="text" v-model="text" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="rating">Voto (da 0 a 5):</label>
-                        <input type="number" id="rating" v-model="rating" min="0" max="5" required>
-                    </div>
-                    <button type="submit">Invia Recensione</button>
-                </form>
+                <div class="row">
+                    <div class="content-footer col-6 col-md-6">
+                    <h4>Lascia una recensione</h4>
+                    <form method="post" @submit="submitReview">
+                        <div class="form-group">
+                            <label for="name">Nome:</label>
+                            <input type="text" id="name" v-model="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="surname">Cognome:</label>
+                            <input type="text" id="surname" v-model="surname" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" v-model="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="text">Recensione:</label>
+                            <textarea id="text" v-model="text" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="rating">Voto (da 0 a 5):</label>
+                            <input type="number" id="rating" v-model="rating" min="0" max="5" required>
+                        </div>
+                        <button type="submit">Invia Recensione</button>
+                    </form>
+                </div>
+                <div class="content-footer col-6 col-md-6">
+                    <h4>Invia un messaggio</h4>
+                    <form method="post" @submit="submitMessage">
+                        <div class="form-group">
+                            <label for="mname">Nome:</label>
+                            <input type="text" id="mname" v-model="mname" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="msurname">Cognome:</label>
+                            <input type="text" id="msurname" v-model="msurname" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="memail">Email:</label>
+                            <input type="email" id="memail" v-model="memail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mtext">Messaggio da inviare:</label>
+                            <textarea id="mtext" v-model="mtext" required></textarea>
+                        </div>
+                        <button type="submit">Invia Messaggio</button>
+                    </form>
+                </div>
+
+                </div>
             </div>
         </div>
       </div>
