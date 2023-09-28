@@ -26,7 +26,6 @@ export default {
             <option v-for="(specialization, index) in store.specializations" :key="index">
                 {{ specialization }}</option>
         </select>
-
     </div>
 </template>
 <style lang="">
