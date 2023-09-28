@@ -8,32 +8,18 @@ export default {
     doctorData: Object,
   },
   data() {
-        return {
-        store,
-        doctors: [],
-        localDoctorData: { ...this.doctorData },
-        reviewFormData: {
-            doctor_id: this.$route.params.doctor_id,
-            email: '',
-            name: '',
-            surname: '',
-            text: '',
-            rating: '', // Aggiungi il rating
-        },
-        success: false,
-        errors: [],
-        messageFormData: {
-            doctor_id: this.$route.params.doctor_id,
-            email: '',
-            name: '',
-            surname: '',
-            text: '',
-            rating: '', // Aggiungi il rating
-        },
-        success: false,
-        errors: [],
-        };
-    },
+    return {
+      store,
+      doctors: [],
+      localDoctorData: { ...this.doctorData },
+      editDoctorData: { ...this.doctorData },
+      text: '',
+      vote_id: '',
+      name: '', // Inizializza il campo name con una stringa vuota
+      surname: '', // Inizializza il campo surname con una stringa vuota
+      email: ''
+    };
+  },
   created() {
     this.getDoctorDetail();
   },
@@ -54,6 +40,33 @@ export default {
           // Gestisci eventuali errori nella chiamata API
           console.error('Errore nella chiamata API:', error);
         });
+    },
+    data() {
+        return {
+            store,
+            doctors: [],
+            localDoctorData: { ...this.doctorData },
+            reviewFormData: {
+                doctor_id: this.$route.params.doctor_id,
+                name: '', // Inizializza il campo name con una stringa vuota
+                surname: '', // Inizializza il campo surname con una stringa vuota
+                email: '',
+                text: '',
+                vote_id: '',
+                },
+            success: false,
+            errors: [],
+            messageFormData: {
+                doctor_id: this.$route.params.doctor_id,
+                email: '',
+                name: '',
+                surname: '',
+                text: '',
+            },
+            success: false,
+            errors: [],
+
+        };
     },
     created() {
         this.getDoctorDetail();
@@ -98,7 +111,7 @@ export default {
         name: this.name,
         surname: this.surname,
         text: this.text,
-        rating: this.rating, // Aggiungi il rating
+        vote_id: this.vote_id,
     };
 
     axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
@@ -110,7 +123,7 @@ export default {
             this.name = '';
             this.surname = '';
             this.text = '';
-            this.rating = '';
+            this.vote_id = '';
         } else {
             this.errors = response.data.errors;
             console.log(this.errors);
@@ -120,34 +133,34 @@ export default {
 
         submitMessage(e) {
         e.preventDefault();
-        const messageFormData = {
-            user_id: this.$route.params.doctor_id,
-            memail: this.memail,
-            mname: this.mname,
-            msurname: this.msurname,
-            mtext: this.mtext,
+        const messageformData = {
+            doctor_id: this.$route.params.doctor_id,
+            email: this.email,
+            name: this.name,
+            surname: this.surname,
+            text: this.text,
         };
 
-        axios.post(`${this.store.baseUrl}/api/messages`, messageFormData).then((response) => {
-            this.success = response.data.success;
-            if (response.data.success) {
-                alert('Messaggio inviato con successo!');
-                this.user_id = '';
-                this.memail = '';
-                this.mname = '';
-                this.msurname = '';
-                this.mtext = '';
-            } else {
-                this.errors = response.data.errors;
-                console.log(this.errors);
-            }
-        })
-        .catch((error) => {
-            console.error(error);
+        axios.post(`${this.store.baseUrl}/api/reviews`, messageformData)
+            .then((response) => {
+                this.success = response.data.success;
+                if (this.success) {
+                    alert('Form inviato con successo!');
+                    this.doctor_id = '';
+                    this.email = '';
+                    this.name = '';
+                    this.surname = '';
+                    this.text = '';
+                } else {
+                    this.errors = response.data.errors;
+                    console.log(this.errors);
+                }
         });
+        
+    }
     },
-    },
-  },
+},
+
 }
 
 </script>
@@ -209,9 +222,9 @@ export default {
                             <textarea id="text" v-model="text" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="rating">Voto (da 0 a 5):</label>
-                            <input type="number" id="rating" v-model="rating" min="0" max="5" required>
-                        </div>
+                           <label for="vote_id">Voto (da 1 a 5):</label>
+                           <input type="number" id="vote_id" v-model="vote_id" min="1" max="5" required>
+                         </div>
                         <button type="submit">Invia Recensione</button>
                     </form>
                 </div>
