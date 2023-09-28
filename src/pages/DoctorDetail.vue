@@ -14,7 +14,7 @@ export default {
       localDoctorData: { ...this.doctorData },
       editDoctorData: { ...this.doctorData },
       text: '',
-      // rating: null,
+      vote_id: '',
       name: '', // Inizializza il campo name con una stringa vuota
       surname: '', // Inizializza il campo surname con una stringa vuota
       email: ''
@@ -48,12 +48,12 @@ export default {
             localDoctorData: { ...this.doctorData },
             reviewFormData: {
                 doctor_id: this.$route.params.doctor_id,
+                name: '', // Inizializza il campo name con una stringa vuota
+                surname: '', // Inizializza il campo surname con una stringa vuota
                 email: '',
-                name: '',
-                surname: '',
                 text: '',
-                rating: '', // Aggiungi il rating
-            },
+                vote_id: '',
+                },
             success: false,
             errors: [],
             messageFormData: {
@@ -62,10 +62,10 @@ export default {
                 name: '',
                 surname: '',
                 text: '',
-                rating: '', // Aggiungi il rating
             },
             success: false,
             errors: [],
+
         };
     },
     created() {
@@ -111,7 +111,7 @@ export default {
         name: this.name,
         surname: this.surname,
         text: this.text,
-        rating: this.rating, // Aggiungi il rating
+        vote_id: this.vote_id,
     };
 
     axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
@@ -123,7 +123,7 @@ export default {
             this.name = '';
             this.surname = '';
             this.text = '';
-            this.rating = '';
+            this.vote_id = '';
         } else {
             this.errors = response.data.errors;
             console.log(this.errors);
@@ -133,6 +133,31 @@ export default {
 
         submitMessage(e) {
         e.preventDefault();
+        const formData = {
+            doctor_id: this.$route.params.doctor_id,
+            email: this.email,
+            name: this.name,
+            surname: this.surname,
+            text: this.text,
+        };
+
+        axios.post(`${this.store.baseUrl}/api/reviews`, formData)
+            .then((response) => {
+                this.success = response.data.success;
+                if (this.success) {
+                    alert('Form inviato con successo!');
+                    this.doctor_id = '';
+                    this.email = '';
+                    this.name = '';
+                    this.surname = '';
+                    this.text = '';
+                } else {
+                    this.errors = response.data.errors;
+                    console.log(this.errors);
+                }
+        });
+        
+    }
         const messageFormData = {
             user_id: this.$route.params.doctor_id,
             memail: this.memail,
@@ -158,6 +183,7 @@ export default {
         .catch((error) => {
             console.error(error);
         });
+
     },
 },
 
@@ -222,9 +248,9 @@ export default {
                             <textarea id="text" v-model="text" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="rating">Voto (da 0 a 5):</label>
-                            <input type="number" id="rating" v-model="rating" min="0" max="5" required>
-                        </div>
+                           <label for="vote_id">Voto (da 1 a 5):</label>
+                           <input type="number" id="vote_id" v-model="vote_id" min="1" max="5" required>
+                         </div>
                         <button type="submit">Invia Recensione</button>
                     </form>
                 </div>
