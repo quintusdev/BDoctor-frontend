@@ -134,91 +134,103 @@ export default {
     <div class="row">
       <div class="col-12">
         <div class="card mt-5">
-            <div class="card-header">
-                <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user?.name }} {{ localDoctorData.user?.surname }}</h3>
+          <div class="card-header text-center">
+              <h3 v-if="localDoctorData && localDoctorData.user">{{ localDoctorData.user?.name }} {{ localDoctorData.user?.surname }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h6>Foto Profilo:</h6>
+                  <img :src="`http://localhost:8000/storage/${localDoctorData?.picture}`" alt="Immagine profilo" style="width: 400px; height:400px;" class="justify-content-center align-items-center">
+              </div>
+              <div class="col-md-6">
+                <h6>CV del Medico:</h6>
+                  <a :href="`http://localhost:8000/storage/${localDoctorData?.cv}`" target="_blank">Visualizza CV</a>
+                <hr>
+                <h6>Specializzazioni:</h6>
+                <ul>
+                  <div v-for="specialization in localDoctorData.specializations" :key="specialization.id">
+                    <li v-if="specialization">
+                      {{ specialization.name }}
+                    </li>
+                  </div>
+                </ul>
+                <hr>
+                <h6>Indirizzo:</h6>
+                <p>{{ localDoctorData?.address }}</p>
+                <hr>
+                <h6>Numero di Telefono:</h6>
+                <p>{{ localDoctorData?.phone }}</p>
+                <hr>
+                <h6>E-Mail:</h6>
+                <p>{{ localDoctorData.user?.email }}</p>
+              </div>
             </div>
-            <div class="card-body">
-              <h6>Foto Profilo:</h6>
-              <img :src="`http://localhost:8000/storage/${localDoctorData?.picture}`" alt="Immagine profilo" style="width: 300px;">
-              <hr>
-              <h6>CV del Medico:</h6>
-              <a :href="`http://localhost:8000/storage/${localDoctorData?.cv}`" target="_blank">Visualizza CV</a>
-              <hr>
-              <h6>Specializzazioni:</h6>
-              <ul>
-                <div v-for="specialization in localDoctorData.specializations" :key="specialization.id">
-                  <li v-if="specialization">
-                    {{ specialization.name }}
-                  </li>
-                </div>
-              </ul>
-              <hr>
-              <h6>Indirizzo:</h6>
-              <p>{{ localDoctorData?.address }}</p>
-              <hr>
-              <h6>Numero di Telefono:</h6>
-              <p>{{ localDoctorData?.phone }}</p>
-              <hr>
-              <h6>E-Mail:</h6>
-              <p>{{ localDoctorData.user?.email }}</p>
+          </div>
+          <div class="card-footer text-center">
+            <div class="row">
+              <div class="content-footer col-md-6 my-4">
+                <h5>Lascia una recensione</h5>
+                <form method="post" @submit="submitReview" class="text-center">
+                  <div class="form-group mb-3">
+                      <label for="name" class="form-label font-weight-bold text-left">Nome:</label>
+                      <input type="text" class="form-control w-50 mx-auto" id="name" v-model="name" required>
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                      <label for="surname" class="form-label font-weight-bold">Cognome:</label>
+                      <input type="text" class="form-control w-50 mx-auto" id="surname" v-model="surname" required>
+                  </div>
+                  
+                  <div class="form-group mb-3">
+                      <label for="email" class="form-label font-weight-bold">Email:</label>
+                      <input type="email" class="form-control w-50 mx-auto" id="email" v-model="email" required>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="text" class="form-label font-weight-bold">Recensione:</label>
+                      <textarea id="text" class="form-control w-50 mx-auto" v-model="text" required></textarea>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="rating" class="form-label font-weight-bold">Voto (da 0 a 5):</label>
+                      <input type="number" class="form-control w-25 mx-auto" id="rating" v-model="rating" min="0" max="5" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary mb-3">Invia Recensione</button>
+                </form>
+              </div>
+              <div class="content-footer col-md-6 my-4">
+                <h5>Invia un messaggio</h5>
+                <form method="post" @submit="submitMessage">
+                    <div class="form-group mb-3">
+                        <label for="mname" class="form-label">Nome:</label>
+                        <input type="text" class="form-control w-50 mx-auto" id="mname" v-model="mname" required>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="msurname" class="form-label">Cognome:</label>
+                        <input type="text" class="form-control w-50 mx-auto" id="msurname" v-model="msurname" required>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label for="memail" class="form-label">Email:</label>
+                        <input type="email" class="form-control w-50 mx-auto" id="memail" v-model="memail" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="mtext" class="form-label">Messaggio da inviare:</label>
+                        <textarea id="mtext" class="form-control w-50 mx-auto" v-model="mtext" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-3">Invia Messaggio</button>
+                </form>
+              </div>
             </div>
-            <div class="card-footer text-center">
-                <div class="row">
-                    <div class="content-footer col-6 col-md-6">
-                    <h4>Lascia una recensione</h4>
-                    <form method="post" @submit="submitReview">
-                        <div class="form-group">
-                            <label for="name">Nome:</label>
-                            <input type="text" id="name" v-model="name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="surname">Cognome:</label>
-                            <input type="text" id="surname" v-model="surname" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" v-model="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="text">Recensione:</label>
-                            <textarea id="text" v-model="text" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="rating">Voto (da 0 a 5):</label>
-                            <input type="number" id="rating" v-model="rating" min="0" max="5" required>
-                        </div>
-                        <button type="submit">Invia Recensione</button>
-                    </form>
-                </div>
-                <div class="content-footer col-6 col-md-6">
-                    <h4>Invia un messaggio</h4>
-                    <form method="post" @submit="submitMessage">
-                        <div class="form-group">
-                            <label for="mname">Nome:</label>
-                            <input type="text" id="mname" v-model="mname" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="msurname">Cognome:</label>
-                            <input type="text" id="msurname" v-model="msurname" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="memail">Email:</label>
-                            <input type="email" id="memail" v-model="memail" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="mtext">Messaggio da inviare:</label>
-                            <textarea id="mtext" v-model="mtext" required></textarea>
-                        </div>
-                        <button type="submit">Invia Messaggio</button>
-                    </form>
-                </div>
-
-                </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-12 justify-content-between">
+              <a href="/doctors" class="col-5 btn btn-md btn-warning mx-5 my-4"><strong>Torna alla Ricerca Avanzata</strong></a>
+              <a href="/" class="col-5 btn btn-md btn-success mx-5 my-4"><strong>Torna alla Home</strong></a>
             </div>
+          </div>
         </div>
       </div>
     </div>
