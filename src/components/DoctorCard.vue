@@ -93,9 +93,6 @@ img {
     width: 100%;
 }
 
-.min_height-350 {
-    min-height: 350px;
-}
 
 .btn-footer a {
     text-decoration: none;
