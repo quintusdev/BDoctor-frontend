@@ -109,6 +109,7 @@ export default {
             this.vote_id = rating; // Imposta il valore del voto numerico
         },
 
+
         submitRating(e) {
             e.preventDefault();
             // Esempio di validazione lato client
@@ -116,6 +117,22 @@ export default {
                 alert('Il voto deve essere compreso tra 1 e 5.');
                 return; // Non inviare la richiesta se la validazione fallisce
             }
+
+        axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
+          this.success = response.data.success;
+          if (this.success) {
+              alert('Recensione inviata con successo!');
+              this.doctor_id = '';
+              this.email = '';
+              this.name = '';
+              this.surname = '';
+              this.text = '';
+          } else {
+              this.errors = response.data.errors;
+              console.log(this.errors);
+          }
+        });
+      },
 
             const ratingFormData = {
                 doctor_id: this.$route.params.doctor_id,
@@ -212,6 +229,7 @@ export default {
               </div>
             </div>
           </div>
+          <!-- sezione form -->
           <div class="card-footer text-center">
             <div class="row">
               <div class="content-footer col-md-6 my-4">
@@ -255,6 +273,7 @@ export default {
                       <input type="email" class="form-control w-50 mx-auto" id="remail" v-model="remail" required>
                   </div>
                   <div class="form-group mb-3">
+
                     <label for="vote" class="form-label font-weight-bold">Voto:</label>
                     <div class="star-rating">
                         <span
@@ -266,6 +285,7 @@ export default {
                         >&#9733;</span>
                     </div>
                 </div>
+
 
                   <button type="submit" class="btn btn-primary mb-3">Invia Voto</button>
                 </form>
