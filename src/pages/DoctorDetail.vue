@@ -39,6 +39,7 @@ export default {
         this.localDoctorData.specializations;
     },
     methods: {
+        /* funzione doctor */
       getDoctorDetail() {
         const doctorId = this.$route.params.doctor_id; // Ottenere l'ID dal parametro nell'URL
         axios.get(`${this.store.baseUrl}/api/doctors/${doctorId}`).then((response) => {
