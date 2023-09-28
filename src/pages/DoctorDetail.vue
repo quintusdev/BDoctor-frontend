@@ -11,6 +11,8 @@ export default {
         return {
             store,
             doctors: [],
+            success: false,
+            errors: [],
             localDoctorData: { ...this.doctorData },
             /* form data recensioni */
             reviewFormData: {
@@ -20,27 +22,23 @@ export default {
                 surname: '',
                 text: '',
             },
-            success: false,
-            errors: [],
             /* form data voto */
             ratingFormData: {
+              doctor_id: this.$route.params.doctor_id,
               rname: '',
               rsurname: '',
               remail:'',
               vote_id: '',
             },
-            success: false,
-            errors: [],
+
             /* form data messaggi */
             messageFormData: {
                 doctor_id: this.$route.params.doctor_id,
-                email: '',
-                name: '',
-                surname: '',
-                text: '',
+                memail: '',
+                mname: '',
+                msurname: '',
+                mtext: '',
             },
-            success: false,
-            errors: [],
         };
     },
     created() {
@@ -99,16 +97,16 @@ export default {
               this.text = '';
           } else {
               this.errors = response.data.errors;
-              console.log(this.errors);
           }
         });
       },
-      submitRating() {
+      submitRating(e) {
+        e.preventDefault();
       // Esempio di validazione lato client
-      /* if (this.vote_id < 1 || this.vote_id > 5) {
+      if (this.vote_id < 1 || this.vote_id > 5) {
           alert('Il voto deve essere compreso tra 1 e 5.');
           return; // Non inviare la richiesta se la validazione fallisce
-      } */
+      }
 
       const ratingFormData = {
           doctor_id: this.$route.params.doctor_id,
@@ -118,7 +116,7 @@ export default {
           vote_id: this.vote_id,
       };
 
-      axios.post(`${this.store.baseUrl}/api/vote_doctor`, ratingFormData)
+      axios.post(`${this.store.baseUrl}/api/vote`, ratingFormData)
           .then((response) => {
               this.success = response.data.success;
               if (this.success) {
@@ -130,7 +128,6 @@ export default {
                   this.vote_id = '';
               } else {
                   this.errors = response.data.errors;
-                  console.log(this.errors);
               }
           })
           .catch((error) => {
@@ -158,7 +155,6 @@ export default {
                 this.mtext = '';
             } else {
                 this.errors = response.data.errors;
-                console.log(this.errors);
             }
         })
         .catch((error) => {
@@ -254,8 +250,8 @@ export default {
                       <label for="vote_id" class="form-label font-weight-bold">Voto (da 0 a 5):</label>
                       <input type="number" class="form-control w-25 mx-auto" id="vote_id" v-model="vote_id" min="1" max="5" required>
                   </div>
+                  <button type="submit" class="btn btn-primary mb-3">Invia Voto</button>
                 </form>
-                <button type="submit" class="btn btn-primary mb-3">Invia Voto</button>
               </div>
               <div class="content-footer col-md-6 my-4">
                 <h5>Invia un messaggio</h5>
