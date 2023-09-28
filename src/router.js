@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage.vue';
 import DoctorList from './pages/DoctorList.vue';
 import ComeFunziona from './pages/ComeFunziona.vue';
 import DoctorDetail from './pages/DoctorDetail.vue';
+import AdvanceSearch from './pages/AdvanceSearch.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -28,6 +29,11 @@ const router = createRouter({
             name: 'DoctorDetail',
             component: DoctorDetail,
             props: true // Per passare i parametri come props alla componente
+        },
+        {
+            path: '/ricerca-avanzata',
+            name: 'advance-search',
+            component: AdvanceSearch
         },
     ]
 });
