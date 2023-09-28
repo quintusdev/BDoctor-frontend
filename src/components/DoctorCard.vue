@@ -70,6 +70,8 @@ export default {
                             <div v-else>
                                 <h6>Nessuna Valutazione</h6>
                             </div>
+
+
                             <div>
                                 <h6><strong>Recensioni</strong></h6>
                                 <div v-if="doctorData.reviews_count > 0">
@@ -79,6 +81,7 @@ export default {
                                     <h6>Nessuna Recensione</h6>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>

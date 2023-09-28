@@ -32,6 +32,7 @@ export default {
           // Gestisci eventuali errori nella chiamata API
           console.error('Errore nella chiamata API:', error);
         });
+
     },
     data() {
       return {
@@ -158,7 +159,7 @@ export default {
       },
     },
 
-  }
+},
 }
 
 </script>
@@ -252,10 +253,8 @@ export default {
                   <button type="submit">Invia Messaggio</button>
                 </form>
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -263,17 +262,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-img {
+img{
   height: 200px;
   width: 100%;
 }
 
-.min_height-350 {
+.min_height-350{
   min-height: 350px;
 }
 
-.custom_card {
-  height: auto;
+.custom_card{
+    height: auto;
 }
 
 .btn-footer a {
