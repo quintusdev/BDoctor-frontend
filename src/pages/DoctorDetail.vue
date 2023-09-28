@@ -34,10 +34,10 @@ export default {
             /* form data messaggi */
             messageFormData: {
                 doctor_id: this.$route.params.doctor_id,
-                email: '',
-                name: '',
-                surname: '',
-                text: '',
+                memail: '',
+                mname: '',
+                msurname: '',
+                mtext: '',
             },
             success: false,
             errors: [],
@@ -105,10 +105,10 @@ export default {
       },
       submitRating() {
       // Esempio di validazione lato client
-      /* if (this.vote_id < 1 || this.vote_id > 5) {
+      if (this.vote_id < 1 || this.vote_id > 5) {
           alert('Il voto deve essere compreso tra 1 e 5.');
           return; // Non inviare la richiesta se la validazione fallisce
-      } */
+      }
 
       const ratingFormData = {
           doctor_id: this.$route.params.doctor_id,
@@ -208,6 +208,7 @@ export default {
               </div>
             </div>
           </div>
+          <!-- sezione form -->
           <div class="card-footer text-center">
             <div class="row">
               <div class="content-footer col-md-6 my-4">
@@ -254,8 +255,8 @@ export default {
                       <label for="vote_id" class="form-label font-weight-bold">Voto (da 0 a 5):</label>
                       <input type="number" class="form-control w-25 mx-auto" id="vote_id" v-model="vote_id" min="1" max="5" required>
                   </div>
+                  <button type="submit" class="btn btn-primary mb-3">Invia Voto</button>
                 </form>
-                <button type="submit" class="btn btn-primary mb-3">Invia Voto</button>
               </div>
               <div class="content-footer col-md-6 my-4">
                 <h5>Invia un messaggio</h5>

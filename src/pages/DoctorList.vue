@@ -104,8 +104,9 @@ export default {
 </script>
 
 <template>
+  <AppJumbotronPagine />
   <div class="container">
-    <div class="row">
+    <div class="row mt-5">
       <div class="col-12 my-3">
         <h1>Ricerca</h1>
         <div class="col-12 d-flex flex-row">
@@ -114,6 +115,8 @@ export default {
             <AppSearch @search="nameSearched" />
           </div>
           <AppSelectSpecialization @search="nameSearched" />
+          <AppSelectVotes />
+          <AppSelectReviews/>
           <button class="btn btn-primary ms-2 align-self-end" v-for="(item, index) in menuItems" :key="index">
             <router-link class="link-nav-utente" :to="{ name: item.routeName }"><strong>{{
               item.label }}</strong></router-link>
@@ -125,11 +128,18 @@ export default {
   <!-- SEZIONE PROFESSIONISTI IN EVIDENZA -->
   <div class="container">
     <div class="row">
-      <div class="col-12">
-        <h1>Sezione in evidenza:</h1>
-        <!-- <div class="col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
-          <DoctorCard :doctorData="doctor" />
-        </div> -->
+      <div class="col-12 my-3">
+        <h4>Professionisti in evidenza</h4>
+        <!-- Contenuto della tua home -->
+        <div v-if="loading">Caricamento...</div>
+        <div v-else>
+            <!-- Mostra i dati recuperati qui -->
+            <div v-for="doctor in doctors" :key="doctor.id">
+            <h2>{{ doctor.name }} {{ doctor.surname }}</h2>
+            <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" />
+            <p>{{ doctor.specialization_name }}</p>
+            </div>
+        </div>
       </div>
     </div>
     <div class="row" v-if="store.doctors.length > 0">

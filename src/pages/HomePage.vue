@@ -81,7 +81,7 @@ export default {
     <AppJumbotronHome />
     <div class="container">
         <div class="row">
-            <div class="col-12 my-3">
+            <div class="col-12 mt-5">
                 <h1>Ricerca</h1>
                 <div class="col-12 d-flex flex-row">
                 <div class="">
@@ -96,16 +96,16 @@ export default {
                 </div>
             </div>
             <div class="col-12 my-3">
-            <!-- Contenuto della tua home -->
-            <div v-if="loading">Caricamento...</div>
-            <div v-else>
-                <!-- Mostra i dati recuperati qui -->
-                <div v-for="doctor in doctors" :key="doctor.id">
-                <h2>{{ doctor.name }} {{ doctor.surname }}</h2>
-                <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" />
-                <p>{{ doctor.specialization_name }}</p>
+                <!-- Contenuto della tua home -->
+                <div v-if="loading">Caricamento...</div>
+                <div v-else>
+                    <!-- Mostra i dati recuperati qui -->
+                    <div v-for="doctor in doctors" :key="doctor.id">
+                    <h2>{{ doctor.name }} {{ doctor.surname }}</h2>
+                    <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" />
+                    <p>{{ doctor.specialization_name }}</p>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
