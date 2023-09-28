@@ -8,18 +8,32 @@ export default {
     doctorData: Object,
   },
   data() {
-    return {
-      store,
-      doctors: [],
-      localDoctorData: { ...this.doctorData },
-      editDoctorData: { ...this.doctorData },
-      text: '',
-      // rating: null,
-      name: '', // Inizializza il campo name con una stringa vuota
-      surname: '', // Inizializza il campo surname con una stringa vuota
-      email: ''
-    };
-  },
+        return {
+        store,
+        doctors: [],
+        localDoctorData: { ...this.doctorData },
+        reviewFormData: {
+            doctor_id: this.$route.params.doctor_id,
+            email: '',
+            name: '',
+            surname: '',
+            text: '',
+            rating: '', // Aggiungi il rating
+        },
+        success: false,
+        errors: [],
+        messageFormData: {
+            doctor_id: this.$route.params.doctor_id,
+            email: '',
+            name: '',
+            surname: '',
+            text: '',
+            rating: '', // Aggiungi il rating
+        },
+        success: false,
+        errors: [],
+        };
+    },
   created() {
     this.getDoctorDetail();
   },
@@ -40,33 +54,6 @@ export default {
           // Gestisci eventuali errori nella chiamata API
           console.error('Errore nella chiamata API:', error);
         });
-    },
-    data() {
-        return {
-            store,
-            doctors: [],
-            localDoctorData: { ...this.doctorData },
-            reviewFormData: {
-                doctor_id: this.$route.params.doctor_id,
-                email: '',
-                name: '',
-                surname: '',
-                text: '',
-                rating: '', // Aggiungi il rating
-            },
-            success: false,
-            errors: [],
-            messageFormData: {
-                doctor_id: this.$route.params.doctor_id,
-                email: '',
-                name: '',
-                surname: '',
-                text: '',
-                rating: '', // Aggiungi il rating
-            },
-            success: false,
-            errors: [],
-        };
     },
     created() {
         this.getDoctorDetail();
@@ -159,8 +146,8 @@ export default {
             console.error(error);
         });
     },
-},
-
+    },
+  },
 }
 
 </script>
