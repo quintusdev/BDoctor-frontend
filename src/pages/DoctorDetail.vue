@@ -100,7 +100,6 @@ export default {
                 }
             });
         },
-
         setRating(rating) {
             // Imposta lo stato delle stelle in base al voto selezionato
             for (let i = 0; i < this.stars.length; i++) {
@@ -108,8 +107,6 @@ export default {
             }
             this.vote_id = rating; // Imposta il valore del voto numerico
         },
-
-
         submitRating(e) {
             e.preventDefault();
             // Esempio di validazione lato client
@@ -117,22 +114,6 @@ export default {
                 alert('Il voto deve essere compreso tra 1 e 5.');
                 return; // Non inviare la richiesta se la validazione fallisce
             }
-
-        axios.post(`${this.store.baseUrl}/api/reviews`, reviewFormData).then((response) => {
-          this.success = response.data.success;
-          if (this.success) {
-              alert('Recensione inviata con successo!');
-              this.doctor_id = '';
-              this.email = '';
-              this.name = '';
-              this.surname = '';
-              this.text = '';
-          } else {
-              this.errors = response.data.errors;
-              console.log(this.errors);
-          }
-        });
-      },
 
             const ratingFormData = {
                 doctor_id: this.$route.params.doctor_id,
@@ -203,11 +184,11 @@ export default {
             <div class="row">
               <div class="col-md-6">
                 <h6>Foto Profilo:</h6>
-                  <img :src="`http://localhost:8000/storage/${localDoctorData?.picture}`" alt="Immagine profilo" style="width: 400px; height:400px;" class="justify-content-center align-items-center">
+                <img :src="'http://localhost:8000/storage/' + localDoctorData?.picture" alt="Immagine profilo" style="width: 400px; height:400px;" class="justify-content-center align-items-center">
               </div>
               <div class="col-md-6">
                 <h6>CV del Medico:</h6>
-                  <a :href="`http://localhost:8000/storage/${localDoctorData?.cv}`" target="_blank">Visualizza CV</a>
+                  <a :href="'http://localhost:8000/storage/' + (localDoctorData ? localDoctorData.cv : '')" target="_blank">Visualizza CV</a>
                 <hr>
                 <h6>Specializzazioni:</h6>
                 <ul>
@@ -229,7 +210,6 @@ export default {
               </div>
             </div>
           </div>
-          <!-- sezione form -->
           <div class="card-footer text-center">
             <div class="row">
               <div class="content-footer col-md-6 my-4">
@@ -273,7 +253,6 @@ export default {
                       <input type="email" class="form-control w-50 mx-auto" id="remail" v-model="remail" required>
                   </div>
                   <div class="form-group mb-3">
-
                     <label for="vote" class="form-label font-weight-bold">Voto:</label>
                     <div class="star-rating">
                         <span
@@ -285,7 +264,6 @@ export default {
                         >&#9733;</span>
                     </div>
                 </div>
-
 
                   <button type="submit" class="btn btn-primary mb-3">Invia Voto</button>
                 </form>
@@ -362,6 +340,6 @@ img {
 }
 
 .star:hover {
-    color: #ffcc00; /* Cambia colore quando il mouse passa sopra */
+    color: #ffcc00; /* Cambia colore quando il mouse passa sopra */
 }
 </style>
