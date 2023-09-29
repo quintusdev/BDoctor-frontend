@@ -5,6 +5,7 @@ import AppSelectSpecialization from '../components/AppSelectSpecialization.vue';
 import AppSelectVotes from '../components/AppSelectVotes.vue';
 import AppSelectReviews from '../components/AppSelectReviews.vue';
 import AppSearch from '../components/AppSearch.vue';
+import DoctorDetail from './DoctorDetail.vue';
 export default {
   components: {
     AppJumbotronHome,
@@ -12,6 +13,10 @@ export default {
     AppSelectVotes,
     AppSelectReviews,
     AppSearch,
+    DoctorDetail,
+  },
+  props: {
+      doctorData: Object,
   },
   data() {
     return {
@@ -80,34 +85,42 @@ export default {
   <div>
     <AppJumbotronHome />
     <div class="container">
-        <div class="row">
-            <div class="col-12 mt-5">
-                <h1>Ricerca</h1>
-                <div class="col-12 d-flex flex-row">
-                <div class="">
-                    <h6>Nome e Cognome</h6>
-                    <AppSearch @search="nameSearched" />
-                </div>
-                <AppSelectSpecialization @search="nameSearched" />
-                <button class="btn btn-primary ms-2 align-self-end" v-for="(item, index) in menuItems" :key="index">
-                    <router-link class="link-nav-utente" :to="{ name: item.routeName }"><strong>{{
-                    item.label }}</strong></router-link>
-                </button>
-                </div>
+      <div class="row">
+        <div class="col-12 my-3">
+            <h1>Ricerca</h1>
+            <div class="col-12 d-flex flex-row">
+            <div class="">
+                <h6>Nome e Cognome</h6>
+                <AppSearch @search="nameSearched" />
             </div>
-            <div class="col-12 my-3">
-                <!-- Contenuto della tua home -->
-                <div v-if="loading">Caricamento...</div>
-                <div v-else>
-                    <!-- Mostra i dati recuperati qui -->
-                    <div v-for="doctor in doctors" :key="doctor.id">
-                    <h2>{{ doctor.name }} {{ doctor.surname }}</h2>
-                    <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" />
-                    <p>{{ doctor.specialization_name }}</p>
-                    </div>
-                </div>
+            <AppSelectSpecialization @search="nameSearched" />
+            <button class="btn btn-primary ms-2 align-self-end" v-for="(item, index) in menuItems" :key="index">
+                <router-link class="link-nav-utente" :to="{ name: item.routeName }"><strong>{{
+                item.label }}</strong></router-link>
+            </button>
             </div>
         </div>
+        <div class="col-12 my-3">
+            <!-- Contenuto della tua home -->
+            <div v-if="loading">Caricamento...</div>
+            <div v-else>  
+              <!-- Mostra i dati recuperati qui -->
+              <div class="row d-flex">
+                <h1 class="text-center mt-3 mb-5 text-uppercase">Dottori In Evidenza</h1>
+                  <div class="col-md-3" v-for="doctor in doctors" :key="doctor.id">
+                    <div class="card d-flex flex-column my-2" style="width: 20rem;">
+                      <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" class="card-img-top" style="height: 300px;">
+                        <div class="card-body">
+                          <h2 class="card-title">{{ doctor.name }} {{ doctor.surname }}</h2>
+                          <p class="card-text" style="height: 100px; overflow: hidden;">{{ doctor.specialization_names }}</p>
+                          <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctorData.user.id } }" v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -117,5 +130,5 @@ export default {
     .link-nav-utente {
         color: white;
         text-decoration: none;
-        }
+        }   
 </style>
