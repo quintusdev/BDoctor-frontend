@@ -40,11 +40,12 @@ export default {
     this.nameSearched()
   },
   computed: {
+    // Filtra i dottori sulla base dell'averageRating
     filteredDoctors() {
-        const filtered = this.store.doctors.filter((doctor) => {
-            return doctor.average_vote >= this.store.VoteSelected;
-        });
-        return filtered;
+      return this.doctors.filter((doctor) => {
+        // Confronta l'averageRating del dottore con il valore selezionato
+        return doctor.averageRating >= this.store.VoteSelected;
+      });
     },
   },
   methods: {
@@ -63,7 +64,7 @@ export default {
       }
 
       if (store.VoteSelected !== '') {
-        queryParams.push(`avr_vote=${store.VoteSelected}`);
+        queryParams.push(`average_vote=${store.VoteSelected}`);
       }
 
       if (queryParams.length > 0) {
@@ -87,8 +88,7 @@ export default {
       // Ora, per ogni dottore, esegui una chiamata separata per ottenere la media dei voti
       this.doctors.forEach((doctor) => {
       // Effettua una richiesta API per ottenere la media dei voti del dottore
-      axios.get(`${this.store.baseUrl}/api/doctor/${doctor.id}/average_votes`)
-          .then((averageVotes) => {
+      axios.get(`${this.store.baseUrl}/api/doctor/${doctor.id}/average_votes`).then((averageVotes) => {
               // Assegna la media dei voti al dottore corrispondente
               doctor.averageRating = averageVotes.data.average_vote;
           })
