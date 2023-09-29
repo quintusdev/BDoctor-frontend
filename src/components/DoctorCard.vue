@@ -16,9 +16,23 @@ export default {
             reviews: [],
         }
     },
+    computed: {
+    // Calcola la media dei voti sulla base dei dati presenti nell'array "votes"
+    averageRating() {
+      if (!this.doctorData || !this.doctorData.votes || this.doctorData.votes.length === 0) {
+        return 0; // Nessun voto disponibile, la media è 0
+      }
+
+      const totalVotes = this.doctorData.votes.reduce((total, vote) => total + parseInt(vote.value), 0);
+      const average = totalVotes / this.doctorData.votes.length;
+
+      // Arrotonda la media e converte in un intero
+      return parseInt(average.toFixed(2));
+    },
     methods: {
         
     },
+},
 }
 </script>
 
@@ -54,9 +68,9 @@ export default {
                     <hr>
                     <div class="col-6 my-4">
                         <h5>Voto Medio:</h5>
-                        <p>{{ doctorData.averageRating }}</p>
+                        <p>{{ averageRating }}</p>
                     </div>
-                </div>
+             </div>
             </div>
         </div>
         <div class="card-footer text-center">
