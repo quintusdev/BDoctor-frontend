@@ -11,8 +11,6 @@ export default {
 
     methods: {
         sendSearch() {
-            console.log(store.SpecSelected)
-            console.log(store.VoteSelected)
             this.$emit('search')
         }
     },

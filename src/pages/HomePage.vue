@@ -52,7 +52,7 @@ export default {
       }
 
       if (store.VoteSelected !== '') {
-        queryParams.push(`avr_vote=${store.VoteSelected}`);
+        queryParams.push(`average_vote=${store.VoteSelected}`);
       }
 
       if (queryParams.length > 0) {
