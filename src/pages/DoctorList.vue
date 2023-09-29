@@ -44,7 +44,7 @@ export default {
     filteredDoctors() {
       return this.doctors.filter((doctor) => {
         // Confronta l'averageRating del dottore con il valore selezionato
-        return doctor.averageRating >= this.store.VoteSelected;
+        return doctor.averageRating >= parseInt(this.store.VoteSelected);
       });
     },
   },
