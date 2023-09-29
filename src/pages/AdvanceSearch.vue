@@ -50,19 +50,20 @@ export default {
       if (store.nameSearched !== '') {
         queryParams.push(`name=${store.nameSearched}`);
       }
-      console.log(this.nameSearched)
 
       if (store.SpecSelected !== '') {
         queryParams.push(`specialization=${store.SpecSelected}`);
       }
 
       if (store.VoteSelected !== '') {
-        queryParams.push(`avr_vote=${store.VoteSelected}`);
+        queryParams.push(`average_vote=${store.VoteSelected}`);
       }
 
       if (queryParams.length > 0) {
         myUrl += '?' + queryParams.join('&');
       }
+
+      this.$forceUpdate();
 
       axios.get(myUrl).then((response) => {
         store.doctors = response.data.results;
@@ -78,6 +79,18 @@ export default {
           if (response.data && response.data.results) {
             // Assegna i dati dei dottori all'array doctors
             this.doctors = response.data.results;
+
+            // Ora, per ogni dottore, esegui una chiamata separata per ottenere la media dei voti
+            this.doctors.forEach((doctor) => {
+            // Effettua una richiesta API per ottenere la media dei voti del dottore
+            axios.get(`${this.store.baseUrl}/api/doctor/${doctor.id}/average_votes`).then((averageVotes) => {
+                    // Assegna la media dei voti al dottore corrispondente
+                    doctor.averageRating = averageVotes.data.average_vote;
+                })
+                .catch((error) => {
+                    console.error('Errore nella chiamata API della media dei voti:', error);
+                });
+            });
             // Ora, per ogni dottore, esegui una chiamata separata per ottenere le specializzazioni
             this.doctors.forEach((doctor) => {
               axios.get(`${this.store.baseUrl}/api/doctors/${doctor.id}/specializations`)
