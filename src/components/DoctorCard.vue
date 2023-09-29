@@ -10,20 +10,35 @@ export default {
     },
     props: {
         doctorData: Object,
+        filteredDoctors: Array,
     },
     data() {
         return {
             store,
             doctors: [],
-            reviews: [], // Inizializza l'array delle recensioni come vuoto
+            reviews: [],
         }
+    },
+    created() {
+        this.doctorData.picture
+    },
+    computed: {
+    // Calcola la lista dei dottori filtrati in base al filtro dei voti
+    filteredDoctors() {
+        if (!this.filterByVote) {
+        return this.doctorData; // Nessun filtro, restituisci tutti i dottori
+        }
+
+        return this.doctorData.filter((doctor) => {
+        // Filtra i dottori in base al valore del filtro
+        return doctor.average_vote >= this.filterByVote;
+        });
+    },
     },
     methods: {
         
     },
-    created() {
-        this.doctorData.picture
-    }
+    
 }
 
 </script>
@@ -61,28 +76,17 @@ export default {
                             <h6><strong>Numero di Telefono:</strong></h6>
                             <h6> {{ doctorData.phone }}</h6>
                             <hr>
-                            <h6><strong>Voto Medio</strong></h6>
-                            <ul v-if="doctorData.avr_vote !== null">
-                                <h6 v-for="  avr_vote   in   doctorData.avr_vote  " :key="avr_vote.id">
-                                    {{ avr_vote }}
-                                </h6>
-                            </ul>
-                            <div v-else>
-                                <h6>Nessuna Valutazione</h6>
-                            </div>
-
-
                             <div>
-                                <h6><strong>Recensioni</strong></h6>
-                                <div v-if="doctorData.reviews_count > 0">
-                                    {{ doctorData.reviews_count }}
-                                </div>
+                                <div>
+                                <h6>Media dei voti:</h6>
+                                <ul v-if="doctorData.average_vote !== null">
+                                <li>{{ doctorData.average_vote }}</li>
+                                </ul>
                                 <div v-else>
-                                    <h6>Nessuna Recensione</h6>
+                                <h6>Nessuna Valutazione</h6>
                                 </div>
                             </div>
-
-
+                        </div>
                         </div>
                     </div>
                 </div>

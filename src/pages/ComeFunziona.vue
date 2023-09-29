@@ -4,7 +4,6 @@ export default {
     components: {
         AppJumbotronPagine,
     }
-
 }
 </script>
 
@@ -19,8 +18,8 @@ export default {
             </div>
         </div>
         <div class="row">
-            <div class="col-6 text-center">
-                <img src="../../img/profile.png" alt="Medico professionista">
+            <div class="col-6 text-center mt-5">
+                <img src="https://static.italiaoggi.it/content_upload/img/2335/59/2335590/medici-387052.jpg" alt="Medici" style="width: 600px" class="rounded-5">
             </div>
             <div class="col-6 text-center">
                 <h2 class="m-4">Come funziona?</h2>
@@ -41,6 +40,7 @@ export default {
         </div>
     </div>
 </template>
+
 <style lang="">
     
 </style>
