@@ -125,23 +125,29 @@ export default {
 <template>
   <AppJumbotronPagine />
   <div class="container">
-    <div class="row mt-5">
-      <div class="col-12 my-3">
+    <div class="row d-flex flex-row mt-5">
+      
         <h1>Ricerca</h1>
-        <div class="col-12 d-flex flex-row">
-          <div class="">
-            <h6>Nome e Cognome</h6>
-            <AppSearch @search="nameSearched" />
-          </div>
+        <div class="col-12 col-md-2 my-1">
+          <h6>Nome e Cognome</h6>
+          <AppSearch @search="nameSearched" />
+        </div>
+        <div class="col-12 col-md-3 my-1">
           <AppSelectSpecialization @search="nameSearched" />
+        </div>
+        <div class="col-12 col-md-3 my-1">
           <AppSelectVotes />
+        </div>
+        <div class="col-12 col-md-3 my-1">
           <AppSelectReviews/>
-          <button class="btn btn-primary ms-2 align-self-end" v-for="(item, index) in menuItems" :key="index">
+        </div>
+        <div class="col-12 col-md-1 my-1 mt-4">
+          <button class="btn btn-primary ms-2 align-self-end mt-2" v-for="(item, index) in menuItems" :key="index">
             <router-link class="link-nav-utente" :to="{ name: item.routeName }"><strong>{{
               item.label }}</strong></router-link>
           </button>
         </div>
-      </div>
+        
     </div>
   </div>
   <!-- SEZIONE PROFESSIONISTI IN EVIDENZA -->
@@ -163,7 +169,7 @@ export default {
     </div>
     <div class="row" v-if="store.doctors.length > 0">
       <h1 class="text-center my-4">Dottori</h1>
-      <div class="col-6 my-1" v-for="doctor in filteredDoctors" :key="doctor.id">
+      <div class="col-12 col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
         <DoctorCard :doctorData="doctor" />
       </div>
     </div>
@@ -182,3 +188,4 @@ export default {
   text-decoration: none;
 }
 </style>
+

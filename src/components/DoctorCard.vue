@@ -52,40 +52,38 @@ export default {
                             </div>
                         </div>
                         <div class="col-12 col-md-7">
-                    <div class="special">
-                        <h6>Specializzazioni:</h6>
-                        <!-- visualizzo le specializzazioni di ciascun dottore -->
-                        <ul>
-                            <li v-for="specialization in doctorData.specializations" :key="specialization.id">
-                                {{ specialization.name }}
-                            </li>
-                        </ul>
+                            <div class="special">
+                                <h6>Specializzazioni:</h6>
+                                <!-- visualizzo le specializzazioni di ciascun dottore -->
+                                <ul>
+                                    <li v-for="specialization in doctorData.specializations" :key="specialization.id">
+                                        {{ specialization.name }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <hr>
+                            <h6><strong>Indirizzo:</strong></h6>
+                            <h6>{{ doctorData.address }}</h6>
+                            <hr>
+                            <h6><strong>Numero di Telefono:</strong></h6>
+                            <h6> {{ doctorData.phone }}</h6>
+                            <hr>
+                            <div class="col-6 my-4">
+                                <h5>Voto Medio:</h5>
+                                <p>{{ averageRating }}</p>
+                            </div>
+                        </div>
                     </div>
-                    <hr>
-                    <h6><strong>Indirizzo:</strong></h6>
-                    <h6>{{ doctorData.address }}</h6>
-                    <hr>
-                    <h6><strong>Numero di Telefono:</strong></h6>
-                    <h6> {{ doctorData.phone }}</h6>
-                    <hr>
-                    <div class="col-6 my-4">
-                        <h5>Voto Medio:</h5>
-                        <p>{{ averageRating }}</p>
-                    </div>
-             </div>
+                </div>
+                <div class="card-footer text-center">
+                    <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
+                    <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctorData.user.id } }"
+                        v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
+                </div>
             </div>
         </div>
-        <div class="card-footer text-center">
-            <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
-            <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctorData.user.id } }"
-                v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
-        </div>
-    </div>
     </div>
 </template>
-
-
-
 
 <style lang="scss" scoped>
 img {
