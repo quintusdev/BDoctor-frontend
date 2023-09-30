@@ -11,7 +11,7 @@ export default {
 
     methods: {
         sendSearch() {
-            this.$emit('search')
+            this.$emit('search');
         }
     },
 }

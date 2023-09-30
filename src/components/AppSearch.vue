@@ -20,7 +20,7 @@ export default {
 <template lang="">
     <div class="input-group">
         <input v-model="store.nameSearched" type="text" class="form-control" 
-        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder=" Cerca Dottore" @keyup.enter="$emit('search')" >
+        aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder=" Cerca Dottore" @change="$emit('search')" >
     </div>
 </template>
 <style lang="">

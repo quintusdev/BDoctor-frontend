@@ -39,6 +39,15 @@ export default {
   mounted() {
     this.nameSearched()
   },
+  computed: {
+    // Filtra i dottori sulla base dell'averageRating
+    filteredDoctors() {
+      return this.doctors.filter((doctor) => {
+        // Confronta l'averageRating del dottore con il valore selezionato
+        return doctor.averageRating >= parseInt(this.store.VoteSelected);
+      });
+    },
+  },
   methods: {
     nameSearched() {
       let myUrl = `${store.baseUrl}/api/doctors/search`;
@@ -55,7 +64,7 @@ export default {
       }
 
       if (store.VoteSelected !== '') {
-        queryParams.push(`avr_vote=${store.VoteSelected}`);
+        queryParams.push(`average_vote=${store.VoteSelected}`);
       }
 
       if (queryParams.length > 0) {
@@ -70,35 +79,45 @@ export default {
     },
 
     getDoctors() {
-      axios.get(`${this.store.baseUrl}/api/doctors`)
-        .then((response) => {
-          // Verifica che la risposta contenga i dati dei dottori
-          if (response.data && response.data.results) {
-            // Assegna i dati dei dottori all'array doctors
-            this.doctors = response.data.results;
-            // Ora, per ogni dottore, esegui una chiamata separata per ottenere le specializzazioni
-            this.doctors.forEach((doctor) => {
-              axios.get(`${this.store.baseUrl}/api/doctors/${doctor.id}/specializations`)
-                .then((specializationsResponse) => {
-                  // Verifica che la risposta contenga i dati delle specializzazioni
-                  if (specializationsResponse.data) {
-                    // Assegna i dati delle specializzazioni al dottore corrispondente
-                    doctor.specializations = specializationsResponse.data.results;
-                  }
-                })
-                .catch((error) => {
-                  console.error('Errore nella chiamata API delle specializzazioni:', error);
-                });
-            });
-          } else {
-            console.error('La risposta API non contiene i dati dei dottori:', response.data.results);
+  axios.get(`${this.store.baseUrl}/api/doctors`).then((response) => {
+      // Verifica che la risposta contenga i dati dei dottori
+      if (response.data && response.data.results) {
+        // Assegna i dati dei dottori all'array doctors
+        this.doctors = response.data.results;
+
+      // Ora, per ogni dottore, esegui una chiamata separata per ottenere la media dei voti
+      this.doctors.forEach((doctor) => {
+      // Effettua una richiesta API per ottenere la media dei voti del dottore
+      axios.get(`${this.store.baseUrl}/api/doctor/${doctor.id}/average_votes`).then((averageVotes) => {
+              // Assegna la media dei voti al dottore corrispondente
+              doctor.averageRating = averageVotes.data.average_vote;
+          })
+          .catch((error) => {
+              console.error('Errore nella chiamata API della media dei voti:', error);
+          });
+      });
+          
+      // Ora, esegui una chiamata separata per ottenere le specializzazioni del dottore
+      axios.get(`${this.store.baseUrl}/api/doctors/${doctor.id}/specializations`)
+        .then((specializationsResponse) => {
+          // Verifica che la risposta contenga i dati delle specializzazioni
+          if (specializationsResponse.data) {
+            // Assegna i dati delle specializzazioni al dottore corrispondente
+            doctor.specializations = specializationsResponse.data.results;
           }
         })
         .catch((error) => {
-          console.error('Errore nella chiamata API dei dottori:', error);
+          console.error('Errore nella chiamata API delle specializzazioni:', error);
         });
-    },
-  }
+      } else {
+        console.error('La risposta API non contiene i dati dei dottori:', response.data.results);
+      }
+    })
+    .catch((error) => {
+      console.error('Errore nella chiamata API dei dottori:', error);
+    });
+  }   
+},
 };
 
 </script>
@@ -144,7 +163,7 @@ export default {
     </div>
     <div class="row" v-if="store.doctors.length > 0">
       <h1 class="text-center my-4">Dottori</h1>
-      <div class="col-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
+      <div class="col-6 my-1" v-for="doctor in filteredDoctors" :key="doctor.id">
         <DoctorCard :doctorData="doctor" />
       </div>
     </div>
