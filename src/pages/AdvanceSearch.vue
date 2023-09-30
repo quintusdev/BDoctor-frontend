@@ -146,22 +146,24 @@ export default {
         </div> -->
       </div>
     </div>
+  </div>
 
-    <div class="row" v-if="store.doctors.length > 0">
-      <h1 class="text-center my-4">Dottori</h1>
-      <div class="col-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
-        <DoctorCard :doctorData="doctor" />
+    <div class="container">
+      <div class="row d-flex flex-row" v-if="store.doctors.length > 0">
+        <h1 class="text-center my-4">Dottori</h1>
+        <div class="col-12 col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
+          <DoctorCard :doctorData="doctor" />
+        </div>
       </div>
-    </div>
-    <div class="row" v-else>
-      <h1 class="text-center my-4">Dottori</h1>
-      <div class="alert alert-danger" role="alert">
-        Nessun dottore trovato
+      <div class="row d-flex flex-row" v-else>
+        <h1 class="text-center my-4">Dottori</h1>
+        <div class="alert alert-danger" role="alert">
+          Nessun dottore trovato
+        </div>
+        <!--       <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
+          <DoctorCard :doctorData="doctor" />
+        </div> -->
       </div>
-      <!--       <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
-        <DoctorCard :doctorData="doctor" />
-      </div> -->
-    </div>
   </div>
 </template>
 
