@@ -121,19 +121,23 @@ export default {
 <template>
   <AppJumbotronPagine />
   <div class="container">
-    <div class="row">
-      <div class="col-12 my-3">
+    <div class="row d-flex flex-row mt-5">
+      
         <h1>Ricerca Avanzata</h1>
-        <div class="col-12 d-flex flex-row">
-          <div class="">
+        <div class="col-12 col-md-3 my-1">
             <h6>Nome e Cognome</h6>
             <AppSearch @search="nameSearched" />
-          </div>
+        </div>
+        <div class="col-12 col-md-3 my-1">
           <AppSelectSpecialization @search="nameSearched" />
+        </div>
+        <div class="col-12 col-md-3 my-1">
           <AppSelectVotes @search="nameSearched" />
+        </div>
+        <div class="col-12 col-md-3 my-1">
           <AppSelectReviews @search="nameSearched" />
         </div>
-      </div>
+      
     </div>
   </div>
   <!-- SEZIONE PROFESSIONISTI IN EVIDENZA -->
