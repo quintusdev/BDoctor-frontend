@@ -173,7 +173,7 @@ export default {
 </script>
 
 <template>
-  <div class="container mt-5 mb-5" v-if="localDoctorData">
+  <div class="container mt-5 mb-5 " v-if="localDoctorData">
     <div class="row">
       <div class="col-12">
         <div class="card mt-5">

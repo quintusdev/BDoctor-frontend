@@ -49,22 +49,21 @@ export default {
             <h5><strong>{{ doctorData.user.name }} {{ doctorData.user.surname }}</strong></h5>
         </div>
         <div class="card-body">
-            <div class="row ">
+            <div class="row">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-5">
+                    <div class="row flex">
+                        <div class="col-12 col-md-5">
                             <!-- Immagine profilo -->
-                            <div class="card-image-top  justify-content-center align-items-center">
-                                <img :src="'http://127.0.0.1:8000/storage/' + doctorData.picture" alt="img">
+                            <div class="card-image-top d-flex justify-content-center align-items-center">
+                                <img class="img-fluid" :src="'http://127.0.0.1:8000/storage/' + doctorData.picture" alt="img">
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-12 col-md-7">
                             <div class="special">
                                 <h6>Specializzazioni:</h6>
                                 <!-- visualizzo le specializzazioni di ciascun dottore -->
                                 <ul>
-                                    <li v-for="  specialization   in   doctorData.specializations  "
-                                        :key="specialization.id">
+                                    <li v-for="specialization in doctorData.specializations" :key="specialization.id">
                                         {{ specialization.name }}
                                     </li>
                                 </ul>
@@ -87,7 +86,6 @@ export default {
                                 </div>
                             </div>
                         </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -98,7 +96,11 @@ export default {
                 v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
         </div>
     </div>
+    </div>
 </template>
+
+
+
 
 <style lang="scss" scoped>
 img {
