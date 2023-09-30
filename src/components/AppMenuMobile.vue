@@ -15,10 +15,10 @@ export default {
           label: 'Come Funziona',
           routeName: 'come-funziona'
         },
-        {
-          label: 'Chi siamo',
-          routeName: 'home'
-        },
+        //{
+        //  label: 'Chi siamo',
+        //  routeName: 'home'
+        //},
       ]
     }
   },

@@ -24,12 +24,12 @@ export default {
             <!--Grid column-->
             <div class="col-lg-3 col-md-6 mb-4 mr-4 mb-md-0">
 
-                <div class="bg-white shadow-1-strong rounded d-flex align-items-center justify-content-center mb-4 mx-auto">
+                <div class="bg-white shadow-1-strong rounded d-flex align-items-center justify-content-center mb-2 mx-auto">
                     <img src="./img/Logo-BDoctor.png" height="50" alt="Logo Aziendale"
                         loading="lazy" />
                     </div>
 
-                <p class="text-center">BDoctor: Trova medici specialisti.<br> Mettiti in contatto e ottieni assistenza di alta qualità.<br> Semplice e veloce!</p>
+                <p class="text-center">BDoctor: Trova medici specialisti.<br> Mettiti in contatto e ottieni assistenza di alta qualità. Semplice e veloce!</p>
 
                 <ul class="list-unstyled d-flex flex-row justify-content-center">
                     <!-- LINK SOCIAL -->
@@ -67,9 +67,9 @@ export default {
                     <li class="mb-4">
                         <a href="#!" class="text-white"><i class="fa-solid fa-question pe-3 pl-2"></i>Come funziona?</a>
                     </li>
-                    <li class="mb-4">
+                    <!-- <li class="mb-4">
                         <a href="#!" class="text-white"><i class="fa-solid fa-laptop-medical pe-3"></i>Chi Siamo</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!--Grid column-->

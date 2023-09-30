@@ -9,19 +9,27 @@ export default {
 
 <template lang="">
     <AppJumbotronPagine />
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="m-4">BDoctor: il miglior alleato per la tua salute</h2>
                 <hr>
-                <p>Benvenuti su <strong>BDoctor</strong>, il luogo ideale per trovare i professionisti della salute che soddisferanno le vostre esigenze.<br> La nostra missione è semplificare il processo di <strong>ricerca di professionisti medici qualificati </strong><br> e garantire che ogni vostro passo verso la salute sia ben informato e senza complicazioni.</p>
+                <p>Benvenuti su <strong>BDoctor</strong>, il luogo ideale per trovare i professionisti della salute che soddisferanno le vostre esigenze. La nostra missione è semplificare il processo di <strong>ricerca di professionisti medici qualificati </strong> e garantire che ogni vostro passo verso la salute sia ben informato e senza complicazioni.</p>
+            </div>
+            <div class="col-12 text-center mt-5">
+                <img src="https://static.italiaoggi.it/content_upload/img/2335/59/2335590/medici-387052.jpg" alt="Medici" style="width: 600px" class="rounded-5 img-fluid">
+            </div>
+            <div class="col-12 text-center">
+                <h2 class="m-4">Chi Siamo</h2>
+                <hr>
+                <p>Siamo BDoctor, una piattaforma dedicata a connettere i pazienti con i professionisti della salute. Crediamo che trovare il medico giusto non dovrebbe essere un compito arduo. Per questo, ci impegniamo a rendere il processo il più semplice possibile. Offriamo un’ampia varietà di specializzazioni mediche, rendendo facile per te trovare il professionista giusto per le tue esigenze. Ogni medico sulla nostra piattaforma è altamente qualificato e impegnato a fornire cure di alta qualità. Con BDoctor, il tuo viaggio verso la salute è sempre ben informato e senza complicazioni. </p>
             </div>
         </div>
+    </div>
+    <div class="container">
         <div class="row">
-            <div class="col-6 text-center mt-5">
-                <img src="https://static.italiaoggi.it/content_upload/img/2335/59/2335590/medici-387052.jpg" alt="Medici" style="width: 600px" class="rounded-5">
-            </div>
-            <div class="col-6 text-center">
+            
+            <div class="col-12 text-center">
                 <h2 class="m-4">Come funziona?</h2>
                 <hr>
                 <p class="m-2">Presso Bdoctor, abbiamo reso il processo di ricerca di un professionista medico facile e trasparente. Ecco come funziona il nostro servizio:</p>
