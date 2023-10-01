@@ -17,22 +17,22 @@ export default {
         }
     },
     computed: {
-    // Calcola la media dei voti sulla base dei dati presenti nell'array "votes"
-    averageRating() {
-      if (!this.doctorData || !this.doctorData.votes || this.doctorData.votes.length === 0) {
-        return 0; // Nessun voto disponibile, la media è 0
-      }
+        // Calcola la media dei voti sulla base dei dati presenti nell'array "votes"
+        averageRating() {
+            if (!this.doctorData || !this.doctorData.votes || this.doctorData.votes.length === 0) {
+                return 0; // Nessun voto disponibile, la media è 0
+            }
 
-      const totalVotes = this.doctorData.votes.reduce((total, vote) => total + parseInt(vote.value), 0);
-      const average = totalVotes / this.doctorData.votes.length;
+            const totalVotes = this.doctorData.votes.reduce((total, vote) => total + parseInt(vote.value), 0);
+            const average = totalVotes / this.doctorData.votes.length;
 
-      // Arrotonda la media e converte in un intero
-      return parseInt(average.toFixed(2));
+            // Arrotonda la media e converte in un intero
+            return parseInt(average.toFixed(2));
+        },
+        methods: {
+
+        },
     },
-    methods: {
-        
-    },
-},
 }
 </script>
 
@@ -48,7 +48,8 @@ export default {
                         <div class="col-12 col-md-5">
                             <!-- Immagine profilo -->
                             <div class="card-image-top d-flex justify-content-center align-items-center">
-                                <img class="img-fluid" :src="'http://127.0.0.1:8000/storage/' + doctorData.picture" alt="img">
+                                <img class="img-fluid" :src="'http://127.0.0.1:8000/storage/' + doctorData.picture"
+                                    alt="img">
                             </div>
                         </div>
                         <div class="col-12 col-md-7">
