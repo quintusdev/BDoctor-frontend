@@ -334,7 +334,7 @@ export default {
           <div class="container">
             <div class="row">
               <div class="col-12 justify-content-between">
-                <a href="/doctors" class="col-5 btn btn-md btn-warning mx-5 my-4"><strong>Torna alla Ricerca Avanzata</strong></a>
+                <a href="/ricerca-avanzata" class="col-5 btn btn-md btn-warning mx-5 my-4"><strong>Torna alla Ricerca Avanzata</strong></a>
                 <a href="/" class="col-5 btn btn-md btn-success mx-5 my-4"><strong>Torna alla Home</strong></a>
               </div>
             </div>
