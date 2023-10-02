@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import { store } from '../store.js';
 import AppJumbotronHome from '../components/AppJumbotronHome.vue';
 import AppSelectSpecialization from '../components/AppSelectSpecialization.vue';
 import AppSelectVotes from '../components/AppSelectVotes.vue';
@@ -20,6 +21,7 @@ export default {
   },
   data() {
     return {
+      store,
       doctors: [], // Inizializziamo un array vuoto per memorizzare i dati dei medici
       loading: true, // Indica se la chiamata API è in corso
       menuItems: [
