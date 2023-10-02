@@ -105,23 +105,21 @@ export default {
             <div v-if="loading">Caricamento...</div>
             <div v-else>  
               <!-- Mostra i dati recuperati qui -->
-              <div class="row d-flex flex-row">
-                <h1 class="text-center mt-3 mb-5 text-uppercase">Dottori In Evidenza</h1>
-                <div class="col-12 col-md-3 mb-5" v-for="doctor in doctors" :key="doctor.id">
-                  <div class="card d-flex flex-column my-2" style="width: 20rem;">
-                    <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" class="card-img-top img-fluid">
+              <div class="row d-flex flex-row card-container">
+                <h1 class="text-center mt-3 mb-5">Dottori in Evidenza</h1>
+                <div class="col-12 col-md-3 mb-5 doctor-card" v-for="doctor in doctors" :key="doctor.id">
+                    <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" class="card-img-top img-fluid doctor-image">
                     <div class="card-body">
                       <h2 class="card-title">{{ doctor.name }} {{ doctor.surname }}</h2>
-                      <div class="card-text" style="height: 100px; overflow: hidden;">
+                      <div class="card-text" style="height: 30px; overflow: hidden;">
                         {{ doctor.specialization_names }}
                       </div>
+                      <div>
+                        <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctor.id } }" v-if="doctorData && doctorData.user && doctorData.user.id">
+                          <button class="btn btn-primary">Vedi Profilo</button>
+                        </router-link>
+                      </div>
                     </div>
-                    <div class="card-footer">
-                      <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctor.id } }" v-if="doctorData && doctorData.user && doctorData.user.id">
-                        <button class="btn btn-primary">Vedi Profilo</button>
-                      </router-link>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -135,5 +133,35 @@ export default {
     .link-nav-utente {
         color: white;
         text-decoration: none;
-        }   
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .doctor-card {
+    flex: 1;
+    max-width: calc(25% - 20px); /* Imposta la larghezza massima in base al numero di colonne desiderate */
+    /* margin-right: 20px; */
+    /* margin-bottom: 20px; */ /* Rimuovi il margine inferiore */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(#3057A6, 0.5); /* Aumenta il raggio dell'ombra */
+    transition: box-shadow 0.3s ease; /* Aggiungi una transizione per un effetto di sfumatura */
+    }
+    .doctor-card:hover {
+        box-shadow: 0 10px 30px rgba(#3057A6, 0.8); /* Ombra più evidente al passaggio del mouse */
+    }
+
+    .doctor-image {
+        max-height: 50%; /* Imposta l'altezza massima al 50% dell'altezza della card */
+        object-fit: cover; /* Per garantire che l'immagine riempia correttamente lo spazio disponibile */
+    }
+
+    /* Imposta l'altezza massima per le card */
+    .doctor-card .card {
+        flex-grow: 1;
+    }
 </style>
