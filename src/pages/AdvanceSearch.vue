@@ -3,7 +3,6 @@ import axios from 'axios';
 import AppJumbotronPagine from '../components/AppJumbotronPagine.vue';
 import AppSelectSpecialization from '../components/AppSelectSpecialization.vue';
 import AppSelectVotes from '../components/AppSelectVotes.vue';
-import AppSelectReviews from '../components/AppSelectReviews.vue';
 import AppSearch from '../components/AppSearch.vue';
 import { store } from '../store.js';
 // import AppLoader from '../components/AppLoader.vue';
@@ -17,7 +16,6 @@ export default {
     AppJumbotronPagine,
     AppSelectSpecialization,
     AppSelectVotes,
-    AppSelectReviews,
     AppSearch,
   },
   props: {

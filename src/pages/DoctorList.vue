@@ -2,7 +2,6 @@
 import axios from 'axios';
 import AppSelectSpecialization from '../components/AppSelectSpecialization.vue';
 import AppSelectVotes from '../components/AppSelectVotes.vue';
-import AppSelectReviews from '../components/AppSelectReviews.vue';
 import AppSearch from '../components/AppSearch.vue';
 import { store } from '../store.js';
 // import AppLoader from '../components/AppLoader.vue';
@@ -15,7 +14,6 @@ export default {
     DoctorCard,
     AppSelectSpecialization,
     AppSelectVotes,
-    AppSelectReviews,
     AppSearch,
   },
   props: {
@@ -157,7 +155,7 @@ export default {
             <!-- Mostra i dati recuperati qui -->
             <div v-for="doctor in doctors" :key="doctor.id">
             <h2>{{ doctor.name }} {{ doctor.surname }}</h2>
-              <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" />
+            <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" />
             <p>{{ doctor.specialization_name }}</p>
             </div>
         </div>

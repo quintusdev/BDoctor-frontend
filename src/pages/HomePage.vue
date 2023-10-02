@@ -3,7 +3,6 @@ import axios from 'axios';
 import AppJumbotronHome from '../components/AppJumbotronHome.vue';
 import AppSelectSpecialization from '../components/AppSelectSpecialization.vue';
 import AppSelectVotes from '../components/AppSelectVotes.vue';
-import AppSelectReviews from '../components/AppSelectReviews.vue';
 import AppSearch from '../components/AppSearch.vue';
 import DoctorDetail from './DoctorDetail.vue';
 export default {
@@ -11,7 +10,6 @@ export default {
     AppJumbotronHome,
     AppSelectSpecialization,
     AppSelectVotes,
-    AppSelectReviews,
     AppSearch,
     DoctorDetail,
   },
