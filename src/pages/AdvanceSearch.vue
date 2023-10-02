@@ -136,31 +136,20 @@ export default {
       
     </div>
   </div>
-  <!-- SEZIONE PROFESSIONISTI IN EVIDENZA -->
+  <!-- per primi andrebbero visualizzate le schede in evidenza -->
   <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h1>Sezione in evidenza:</h1>
-        <!-- <div class="col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
-          <DoctorCard :doctorData="doctor" />
-        </div> -->
+    <div class="row d-flex flex-row" v-if="store.doctors.length > 0">
+      <h1 class="text-center my-4">Risultati di ricerca</h1>
+      <div class="col-12 col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
+        <DoctorCard :doctorData="doctor" />
       </div>
     </div>
-  </div>
-
-    <div class="container">
-      <div class="row d-flex flex-row" v-if="store.doctors.length > 0">
-        <h1 class="text-center my-4">Dottori</h1>
-        <div class="col-12 col-md-6 my-1" v-for="doctor in store.doctors" :key="doctor.id">
-          <DoctorCard :doctorData="doctor" />
-        </div>
+    <div class="row d-flex flex-row" v-else>
+      <h1 class="text-center my-4">Risultati di ricerca</h1>
+      <div class="alert alert-danger" role="alert">
+        Nessun dottore trovato
       </div>
-      <div class="row d-flex flex-row" v-else>
-        <h1 class="text-center my-4">Dottori</h1>
-        <div class="alert alert-danger" role="alert">
-          Nessun dottore trovato
-        </div>
-      </div>
+    </div>
   </div>
 </template>
 

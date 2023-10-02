@@ -49,7 +49,7 @@ export default {
                             <!-- Immagine profilo -->
                             <div class="card-image-top d-flex justify-content-center align-items-center">
                                 <img class="img-fluid" :src="'http://127.0.0.1:8000/storage/' + doctorData.picture"
-                                    alt="img">
+                                    alt="img" style="max-height: 100%; max-width: 100%; height: auto; width: auto;">
                             </div>
                         </div>
                         <div class="col-12 col-md-7">
@@ -79,7 +79,7 @@ export default {
                 <div class="card-footer text-center">
                     <!-- collegamento alla pagina del contatto del messaggio del cliente inviare al backend -->
                     <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctorData.user.id } }"
-                        v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
+                        v-if="doctorData && doctorData.user && doctorData.user.id"><button class="btn btn-sm btn-primary">Vai ai dettagli del medico</button></router-link>
                 </div>
             </div>
         </div>
