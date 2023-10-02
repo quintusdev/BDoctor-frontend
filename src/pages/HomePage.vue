@@ -107,7 +107,7 @@ export default {
               <!-- Mostra i dati recuperati qui -->
               <div class="row d-flex flex-row">
                 <h1 class="text-center mt-3 mb-5 text-uppercase">Dottori In Evidenza</h1>
-                <div class="col-12 col-md-3 mb-5"" v-for="doctor in doctors" :key="doctor.id">
+                <div class="col-12 col-md-3 mb-5" v-for="doctor in doctors" :key="doctor.id">
                   <div class="card d-flex flex-column my-2" style="width: 20rem;">
                     <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" class="card-img-top img-fluid">
                     <div class="card-body">
