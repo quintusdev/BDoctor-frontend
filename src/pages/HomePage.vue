@@ -1,13 +1,11 @@
 <script>
 import axios from 'axios';
-import { store } from '../store.js';
 import AppJumbotronHome from '../components/AppJumbotronHome.vue';
 import AppSelectSpecialization from '../components/AppSelectSpecialization.vue';
 import AppSelectVotes from '../components/AppSelectVotes.vue';
 import AppSelectReviews from '../components/AppSelectReviews.vue';
 import AppSearch from '../components/AppSearch.vue';
 import DoctorDetail from './DoctorDetail.vue';
-
 export default {
   components: {
     AppJumbotronHome,
@@ -22,7 +20,6 @@ export default {
   },
   data() {
     return {
-      store,
       doctors: [], // Inizializziamo un array vuoto per memorizzare i dati dei medici
       loading: true, // Indica se la chiamata API è in corso
       menuItems: [
@@ -103,16 +100,16 @@ export default {
             </button>
             </div>
         </div>
-        <div class="col-12 my-3">
+        <div class="container">
             <!-- Contenuto della tua home -->
             <div v-if="loading">Caricamento...</div>
             <div v-else>  
               <!-- Mostra i dati recuperati qui -->
-              <div class="row d-flex">
+              <div class="row d-flex flex-row">
                 <h1 class="text-center mt-3 mb-5 text-uppercase">Dottori In Evidenza</h1>
-                  <div class="col-md-3" v-for="doctor in doctors" :key="doctor.id">
-                    <div class="card d-flex flex-column my-2" style="width: 20rem;">
-                      <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" class="card-img-top" style="height: 300px;">
+                  <div class="col-12 col-md-3 mb-5" v-for="doctor in doctors" :key="doctor.id">
+                    <div class="card">
+                      <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" class="card-img-top img-fluid" >
                         <div class="card-body">
                           <h2 class="card-title">{{ doctor.name }} {{ doctor.surname }}</h2>
                           <p class="card-text" style="height: 100px; overflow: hidden;">{{ doctor.specialization_names }}</p>
