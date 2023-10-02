@@ -107,23 +107,28 @@ export default {
               <!-- Mostra i dati recuperati qui -->
               <div class="row d-flex flex-row">
                 <h1 class="text-center mt-3 mb-5 text-uppercase">Dottori In Evidenza</h1>
-                  <div class="col-12 col-md-3 mb-5" v-for="doctor in doctors" :key="doctor.id">
-                    <div class="card">
-                      <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" class="card-img-top img-fluid" >
-                        <div class="card-body">
-                          <h2 class="card-title">{{ doctor.name }} {{ doctor.surname }}</h2>
-                          <p class="card-text" style="height: 100px; overflow: hidden;">{{ doctor.specialization_names }}</p>
-                          <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctorData.user.id } }" v-if="doctorData && doctorData.user && doctorData.user.id">Vai alla pagina del medico</router-link>
-                        </div>
+                <div class="col-12 col-md-3 mb-5"" v-for="doctor in doctors" :key="doctor.id">
+                  <div class="card d-flex flex-column my-2" style="width: 20rem;">
+                    <img :src="doctor.picture ? getImg(doctor.picture) : getImg('profile_default.jpg')" alt="Doctor's Picture" class="card-img-top img-fluid">
+                    <div class="card-body">
+                      <h2 class="card-title">{{ doctor.name }} {{ doctor.surname }}</h2>
+                      <div class="card-text" style="height: 100px; overflow: hidden;">
+                        {{ doctor.specialization_names }}
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <router-link :to="{ name: 'DoctorDetail', params: { doctor_id: doctor.id } }" v-if="doctorData && doctorData.user && doctorData.user.id">
+                        <button class="btn btn-primary">Vedi Profilo</button>
+                      </router-link>
                     </div>
                   </div>
+                </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
 </template>
 
 <style lang="scss" scoped>
