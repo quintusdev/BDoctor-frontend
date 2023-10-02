@@ -63,8 +63,6 @@ export default {
         myUrl += '?' + queryParams.join('&');
       }
 
-      this.$forceUpdate();
-
       axios.get(myUrl).then((response) => {
         store.doctors = response.data.results;
         store.load = false
@@ -83,7 +81,7 @@ export default {
             // Ora, per ogni dottore, esegui una chiamata separata per ottenere la media dei voti
             this.doctors.forEach((doctor) => {
             // Effettua una richiesta API per ottenere la media dei voti del dottore
-            axios.get(`${this.store.baseUrl}/api/doctor/${doctor.id}/average_votes`).then((averageVotes) => {
+            axios.get(`${this.store.baseUrl}/api/doctor/${doctor.id}/averageVotes`).then((averageVotes) => {
                     // Assegna la media dei voti al dottore corrispondente
                     doctor.averageRating = averageVotes.data.average_vote;
                 })
@@ -164,9 +162,6 @@ export default {
         <div class="alert alert-danger" role="alert">
           Nessun dottore trovato
         </div>
-        <!--       <div class="col-md-6 my-1" v-for="doctor in doctors" :key="doctor.id">
-          <DoctorCard :doctorData="doctor" />
-        </div> -->
       </div>
   </div>
 </template>
